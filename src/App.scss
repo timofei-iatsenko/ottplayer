@@ -1,0 +1,17 @@
+.app {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
+.channels-container {
+  overflow-y: scroll;
+  width: 400px;
+  height: 100%;
+}
+
+.main-container {
+  flex-grow: 1;
+
+}

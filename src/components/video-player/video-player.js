@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import videojs from '../libs/video.js';
+import videojs from '../../libs/video.js';
 import './video-player.scss';
 import 'video.js/dist/video-js.css';
 

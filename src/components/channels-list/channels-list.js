@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Channel } from '../entities/channel.model';
+import { Channel } from '../../entities/channel.model';
 import './channels-list.scss';
 
 export class ChannelsList extends Component {

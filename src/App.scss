@@ -5,13 +5,20 @@
   width: 100%;
 }
 
-.channels-container {
-  overflow-y: scroll;
+.side-panel {
   width: 400px;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    flex: 0 0 auto;
+  }
 }
 
-.main-container {
+.main-panel {
   flex-grow: 1;
+}
 
+.channels-container {
 }

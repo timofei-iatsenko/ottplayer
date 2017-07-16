@@ -1,0 +1,48 @@
+.channels-list {
+  &__checkbox {
+    width: 30px;
+
+    input {
+      clip: rect(1px, 1px, 1px, 1px);
+      position: absolute;
+
+      &:checked + label {
+        color: #404a52;
+
+        &:before {
+          font-size: 16px;
+          background: #028982 no-repeat center center;
+          border: none;
+          color: #fff;
+        }
+      }
+    }
+
+    label {
+      $size: 20px;
+      font-size: 0;
+      color: #000;
+      cursor: pointer;
+      display: block;
+      min-height: $size;
+      padding: 0 0 0 ($size+5);
+      position: relative;
+
+      &:before {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #dde3eb;
+        box-sizing: border-box;
+        content: '✔';
+        height: $size;
+        left: 0;
+        margin-right: 10px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: $size;
+      }
+    }
+  }
+}

@@ -5,5 +5,6 @@ export class Channel {
     this.logo = data.logo;
     this.archive = data.archive;
     this.stream = data.stream;
+    this.groupTitle = data.groupTitle;
   }
 }

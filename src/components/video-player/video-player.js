@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import videojs from '../../libs/video.js';
 import './video-player.scss';
 import 'video.js/dist/video-js.css';
@@ -36,9 +37,7 @@ export class VideoPlayer extends Component {
           type: 'application/x-mpegURL',
         });
       });
-
     }
-    console.log(nextProps)
   }
 
   shouldComponentUpdate(nextProps, nextState) {

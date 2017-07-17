@@ -1,6 +1,6 @@
 @import '../../commons/mixins';
 
-.list-switcher {
+.save-bar {
   @include sidebar-header;
 
   &__current-mode-title {

@@ -1,5 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Channel } from '../../entities/channel.model';
+import without from 'lodash/without';
 import './selectable-channels-list.scss';
 
 export class SelectableChannelsList extends Component {
@@ -9,8 +11,32 @@ export class SelectableChannelsList extends Component {
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
   };
 
+  state = {
+    selected: []
+  };
+
+  /**
+   * @param {Channel} channel
+   */
+  handleCheckBoxChange(channel) {
+    let selected;
+
+    if (this.isSelected(channel)) {
+      selected = without(this.state.selected, channel.id);
+    } else {
+      selected = this.state.selected.slice(0);
+      selected.push(channel.id);
+    }
+
+    this.setState({ selected });
+    this.props.onSelectionChange(selected);
+  }
+
+  isSelected(channel) {
+    return this.state.selected.indexOf(channel.id) !== -1;
+  }
+
   render() {
-    //
     return (
       <div className="channels-list">
         {this.props.channels.map(
@@ -19,9 +45,10 @@ export class SelectableChannelsList extends Component {
            */
           (channel) =>
           <div className="channels-list__item" onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
-            <div className="channels-list__checkbox">
-              <input type="checkbox" id={`channel${channel.id}`}/>
-              <label onClick={(e) => e.stopPropagation()} htmlFor={`channel${channel.id}`}>Select</label>
+            <div onClick={(e) => e.stopPropagation()} className="channels-list__checkbox">
+              <input defaultChecked={this.isSelected(channel)} type="checkbox" id={`channel${channel.id}`}
+                     onChange={() => this.handleCheckBoxChange(channel)}/>
+              <label htmlFor={`channel${channel.id}`}>Select</label>
             </div>
             <div className="channels-list__icon"><img src={channel.logo} alt=""/></div>
             <div className="channels-list__details">

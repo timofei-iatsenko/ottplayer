@@ -4,11 +4,11 @@ import { ChannelsList } from './components/channels-list/channels-list';
 import { GroupedChannelsList } from './components/grouped-channels-list/grouped-channels-list';
 import { SelectableChannelsList } from './components/selectable-channels-list/selectable-channels-list';
 import { VideoPlayer } from './components/video-player/video-player';
+import { SaveBar } from './components/save-bar/save-bar';
 import { ListSwitcher } from './components/list-switcher/list-switcher';
 import { ChannelListMode } from './components/list-switcher/channel-list-modes';
 import { Playlist } from './entities/playlist.model';
 import ScrollArea from 'react-scrollbar';
-
 
 class App extends Component {
   constructor() {
@@ -16,7 +16,8 @@ class App extends Component {
 
     this.state = {
       currentChannel: null,
-      currentChannelListType: ChannelListMode.favourites,
+      selectedChannels: [],
+      currentChannelListType: ChannelListMode.grouped,
       currentKey: '00XE8DMEI7',
       channels: [],
     };
@@ -53,12 +54,21 @@ class App extends Component {
     });
   }
 
+  saveFavourites() {
+    console.log('save favourites!');
+    this.exitFromFavouritesEditor();
+  }
+
+  exitFromFavouritesEditor() {
+    this.setState({ currentChannelListType: ChannelListMode.all })
+  }
+
   switchChannelListType(type) {
     this.setState({ currentChannelListType: type });
   }
 
-  handleSelectionChange(r) {
-    console.log(r);
+  handleSelectionChange(selection) {
+    this.setState({selectedChannels: selection});
   }
 
   getChannelsList() {
@@ -73,7 +83,7 @@ class App extends Component {
         return (
           <SelectableChannelsList channels={this.state.channels}
                                   onChangeChannel={this.changeChannel.bind(this)}
-                                  onSelectionChange={this.handleSelectionChange}></SelectableChannelsList>
+                                  onSelectionChange={this.handleSelectionChange.bind(this)}></SelectableChannelsList>
         );
 
       default:
@@ -89,8 +99,14 @@ class App extends Component {
       <div className="app">
         <div className="side-panel">
           <div className="side-panel__header">
-            <ListSwitcher onSwitch={this.switchChannelListType.bind(this)}
-                          current={this.state.currentChannelListType}></ListSwitcher>
+            {this.state.currentChannelListType === ChannelListMode.favourites ? (
+              <SaveBar saveDisabled={this.state.selectedChannels.length === 0}
+                       onSave={this.saveFavourites.bind(this)}
+                       onCancel={this.exitFromFavouritesEditor.bind(this)}/>
+            ) : (
+              <ListSwitcher onSwitch={this.switchChannelListType.bind(this)}
+                            current={this.state.currentChannelListType}/>
+            )}
           </div>
 
           <ScrollArea smoothScrolling={true} className="channels-container">

@@ -1,0 +1,69 @@
+// https://github.com/sass/sass/issues/659#issuecomment-64819075
+@function char($character-code) {
+  @if function-exists("selector-append") {
+    @return unquote("\"\\#{$character-code}\"");
+  }
+
+  @return str-slice("\x", 1, 1) + $character-code;
+}
+
+// http://sass-lang.com/documentation/file.SASS_REFERENCE.html#maps
+$icons: (
+  play: 'f101',
+  play-circle: 'f102',
+  pause: 'f103',
+  volume-mute: 'f104',
+  volume-low: 'f105',
+  volume-mid: 'f106',
+  volume-high: 'f107',
+  fullscreen-enter: 'f108',
+  fullscreen-exit: 'f109',
+  square: 'f10a',
+  spinner: 'f10b',
+  subtitles: 'f10c',
+  captions: 'f10d',
+  chapters: 'f10e',
+  share: 'f10f',
+  cog: 'f110',
+  circle: 'f111',
+  circle-outline: 'f112',
+  circle-inner-circle: 'f113',
+  hd: 'f114',
+  cancel: 'f115',
+  replay: 'f116',
+  facebook: 'f117',
+  gplus: 'f118',
+  linkedin: 'f119',
+  twitter: 'f11a',
+  tumblr: 'f11b',
+  pinterest: 'f11c',
+  audio-description: 'f11d',
+  audio: 'f11e',
+);
+
+// NOTE: This is as complex as we want to get with SCSS functionality.
+//
+// Now that we have a map of icons above, we can iterate over that map and create an icon class
+// for each icon in that list. The iterator below produces CSS classes like this:
+//
+// .vjs-icon-play {
+//   font-family: VideoJS;
+//   font-weight: normal;
+//   font-style: normal;
+// }
+// .vjs-icon-play:before { content: "\25b6"; }
+//
+// We can then use @extend in the codebase when we need to add an icon to a class. @extend builds up
+// the selectors for you so you can avoid duplication. This is generally a bad idea, but since each
+// icon should only be extended one or two other places, we'll roll with it.
+@each $name, $content in $icons {
+  .vjs-icon-#{$name} {
+    font-family: $icon-font-family;
+    font-weight: normal;
+    font-style: normal;
+
+    &:before {
+      content: char($content);
+    }
+  }
+}

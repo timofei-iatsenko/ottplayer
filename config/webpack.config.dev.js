@@ -193,9 +193,6 @@ module.exports = {
             },
           },
           {
-            loader: 'resolve-url-loader',
-          },
-          {
             loader: require.resolve('sass-loader'),
             options: {
               sourcemaps: true,

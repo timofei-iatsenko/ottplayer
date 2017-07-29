@@ -38,7 +38,7 @@ export class VideoPlayer extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     return false;
   }
 

@@ -45,10 +45,16 @@ class App extends Component {
     return (this.currentChannel.stream || '').replace('{KEY}', this.state.currentKey)
   }
 
-  changeChannel(channel) {
+ /**
+  * @param {History} history
+  * @param {Channel} channel
+  * */
+  changeChannel(history, channel) {
     this.setState({
       currentChannel: channel,
     });
+
+    history.push('/channel/' + channel.urlSlug);
   }
 
   saveFavourites(favourites){
@@ -65,22 +71,25 @@ class App extends Component {
       <FavouritesEditor channels={this.state.channels}
                         favourites={this.state.favourites}
                         onChangeChannel={this.changeChannel.bind(this)}
-                        onSave={(f) => {this.saveFavourites(f); history.goBack()}}
-                        onCancel={() => history.goBack()}/>);
+                        onSave={(f) => {this.saveFavourites(f); history.push('/')}}
+                        onCancel={() => history.push('/')}/>);
 
-    const channelsPanel = () => (
+    const channelsPanel = ({history}) => (
       <ChannelsPanel channels={this.state.channels}
+                     current={this.state.currentChannel}
                      favourites={this.state.favourites}
-                     onChangeChannel={this.changeChannel.bind(this)}/>);
+                     onChangeChannel={this.changeChannel.bind(this, history)}/>);
 
     return (
       <Router>
         <div className={styles.app}>
           <Route exact path="/" render={channelsPanel}/>
+          <Route exact path="/channel/:id" render={channelsPanel}/>
+
           <Route exact path='/edit-favourites' render={favouritesEditor}/>
 
           <div className={styles.mainPanel}>
-            <VideoPlayer src={this.streamUrl}></VideoPlayer>
+            {/*<VideoPlayer src={this.streamUrl}></VideoPlayer>*/}
           </div>
         </div>
       </Router>

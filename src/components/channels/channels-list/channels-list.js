@@ -7,8 +7,13 @@ export class ChannelsList extends Component {
   static propTypes = {
     onChangeChannel: PropTypes.func,
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
+    current: PropTypes.instanceOf(Channel),
     control: PropTypes.func,
   };
+
+  isActive(chanel) {
+    return chanel === this.props.current;
+  }
 
   render() {
     return (
@@ -18,7 +23,8 @@ export class ChannelsList extends Component {
            * @param {Channel} channel
            */
           (channel) =>
-          <button className={styles.item} onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
+          <button className={this.isActive(channel) ? styles.itemActive : styles.item}
+                  onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
             {this.props.control && this.props.control(channel)}
             <div className={styles.icon}><img src={channel.logo} alt=""/></div>
             <div className={styles.details}>

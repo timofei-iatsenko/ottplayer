@@ -9,6 +9,7 @@ export class GroupedChannelsList extends Component {
   static propTypes = {
     onChangeChannel: PropTypes.func,
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
+    current: PropTypes.instanceOf(Channel),
   };
 
   static contextTypes = {
@@ -47,7 +48,9 @@ export class GroupedChannelsList extends Component {
               { group.name }
             </button>
             <div className={this.isExpanded(group) ? styles.bodyExpanded : styles.bodyCollapsed}>
-              <ChannelsList channels={group.channels} onChangeChannel={this.props.onChangeChannel}/>
+              <ChannelsList channels={group.channels}
+                            current={this.props.current}
+                            onChangeChannel={this.props.onChangeChannel}/>
             </div>
           </div>
         )}

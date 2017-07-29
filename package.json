@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/react-router-dom": "^4.0.7",
     "lodash": "^4.17.4",
     "object-assign": "4.1.1",
     "promise": "7.1.1",
@@ -13,6 +14,7 @@
     "react-router-dom": "^4.1.1",
     "react-scrollbar": "^0.5.1",
     "resolve-url-loader": "^2.1.0",
+    "transliteration": "^1.6.2",
     "video.js": "^5.19.2",
     "videojs-contrib-hls": "^5.4.1"
   },

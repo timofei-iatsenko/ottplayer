@@ -15,6 +15,7 @@ export class ChannelsPanel extends Component {
     favourites: PropTypes.arrayOf(PropTypes.number).isRequired,
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
     onChangeChannel: PropTypes.func.isRequired,
+    current: PropTypes.instanceOf(Channel),
   };
 
   modeStorage = LocalStorageFactory.create('channelsPanelMode');
@@ -37,7 +38,9 @@ export class ChannelsPanel extends Component {
     if (this.state.currentListMode === ChannelListMode.grouped) {
       return (
         <GroupedChannelsList
-          channels={this.props.channels} onChangeChannel={this.props.onChangeChannel}/>
+          channels={this.props.channels}
+          current={this.props.current}
+          onChangeChannel={this.props.onChangeChannel}/>
       );
     }
 
@@ -48,14 +51,18 @@ export class ChannelsPanel extends Component {
 
       return (
         <ChannelsList
-          channels={this.getFavouritesChannels()} onChangeChannel={this.props.onChangeChannel}/>
+          channels={this.getFavouritesChannels()}
+          current={this.props.current}
+          onChangeChannel={this.props.onChangeChannel}/>
       );
     }
 
 
     return (
       <ChannelsList
-        channels={this.props.channels} onChangeChannel={this.props.onChangeChannel}/>
+        channels={this.props.channels}
+        current={this.props.current}
+        onChangeChannel={this.props.onChangeChannel}/>
     );
   }
 

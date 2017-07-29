@@ -25,7 +25,6 @@ class App extends Component {
 
   componentWillMount() {
     this.loadPlaylist().then((playlist) => {
-
       this.setState({
         channels: playlist.channels,
       })
@@ -33,7 +32,7 @@ class App extends Component {
   }
 
   loadPlaylist() {
-    const url = 'http://localhost:3005/playlist?url=myott.tv';
+    const url = 'http://localhost:3001/playlist?url=myott.tv';
     return window.fetch(url).then(r => r.json()).then((d) => new Playlist(d.playlist));
   }
 
@@ -100,7 +99,8 @@ class App extends Component {
         <div className="side-panel">
           <div className="side-panel__header">
             {this.state.currentChannelListType === ChannelListMode.favourites ? (
-              <SaveBar saveDisabled={this.state.selectedChannels.length === 0}
+              <SaveBar className=""
+                saveDisabled={this.state.selectedChannels.length === 0}
                        onSave={this.saveFavourites.bind(this)}
                        onCancel={this.exitFromFavouritesEditor.bind(this)}/>
             ) : (

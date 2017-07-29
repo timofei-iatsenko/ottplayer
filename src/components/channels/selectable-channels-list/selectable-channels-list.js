@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Channel } from '../../entities/channel.model';
+import { Channel } from '../../../entities/channel.model';
 import without from 'lodash/without';
 import selectableStyles from './selectable-channels-list.scss';
-import channelListStyles from './../channels-list/channels-list.scss';
+import channelListStyles from '../channels-list/channels-list.scss';
 
 const styles = {};
 Object.assign(styles, selectableStyles, channelListStyles);

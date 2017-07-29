@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styles from './App.scss';
-import { ChannelsList } from './components/channels-list/channels-list';
-import { GroupedChannelsList } from './components/grouped-channels-list/grouped-channels-list';
-import { SelectableChannelsList } from './components/selectable-channels-list/selectable-channels-list';
+import { ChannelsList } from './components/channels/channels-list/channels-list';
+import { GroupedChannelsList } from './components/channels/grouped-channels-list/grouped-channels-list';
+import { SelectableChannelsList } from './components/channels/selectable-channels-list/selectable-channels-list';
 import { VideoPlayer } from './components/video-player/video-player';
 import { SaveBar } from './components/save-bar/save-bar';
 import { ListSwitcher } from './components/list-switcher/list-switcher';

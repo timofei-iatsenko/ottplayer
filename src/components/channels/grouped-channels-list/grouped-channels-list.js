@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Channel } from '../../entities/channel.model';
+import { Channel } from '../../../entities/channel.model';
 import { ChannelsList } from '../channels-list/channels-list';
 import styles from './grouped-channels-list.scss';
 import groupBy from 'lodash/groupBy';

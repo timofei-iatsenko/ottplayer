@@ -10,7 +10,7 @@ import './list-switcher.scss';
 
 export class ListSwitcher extends Component {
   static propTypes = {
-    onSwitch: PropTypes.func.isRequired,
+    onSwitch: PropTypes.func,
     current: PropTypes.number.isRequired,
   };
 

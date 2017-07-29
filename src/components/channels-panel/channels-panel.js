@@ -17,18 +17,23 @@ export class ChannelsPanel extends Component {
     onChangeChannel: PropTypes.func.isRequired,
   };
 
-  storage = LocalStorageFactory.create('channelsPanelMode');
+  modeStorage = LocalStorageFactory.create('channelsPanelMode');
 
   state = {
-    currentListMode: this.storage.get(ChannelListMode.grouped),
+    currentListMode: this.modeStorage.get(ChannelListMode.grouped),
   };
 
   switchListMode(type) {
     this.setState({ currentListMode: type });
-    this.storage.set(type);
+    this.modeStorage.set(type);
   }
 
-  getChannelsList() {
+
+  getFavouritesChannels() {
+    return this.props.channels.filter((channel) => this.props.favourites.includes(channel.id))
+  }
+
+  getChannelsListElement() {
     if (this.state.currentListMode === ChannelListMode.grouped) {
       return (
         <GroupedChannelsList
@@ -36,10 +41,17 @@ export class ChannelsPanel extends Component {
       );
     }
 
-    if (this.state.currentListMode === ChannelListMode.favourites
-      && this.props.favourites.length === 0) {
-      return <NoFavourites/>
+    if (this.state.currentListMode === ChannelListMode.favourites) {
+      if (this.props.favourites.length === 0) {
+        return <NoFavourites/>
+      }
+
+      return (
+        <ChannelsList
+          channels={this.getFavouritesChannels()} onChangeChannel={this.props.onChangeChannel}/>
+      );
     }
+
 
     return (
       <ChannelsList
@@ -53,7 +65,7 @@ export class ChannelsPanel extends Component {
       current={this.state.currentListMode}/>;
 
     return (
-      <SidePanel header={header} body={this.getChannelsList()}/>
+      <SidePanel header={header} body={this.getChannelsListElement()}/>
     );
   }
 }

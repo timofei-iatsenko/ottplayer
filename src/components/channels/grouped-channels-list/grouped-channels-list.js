@@ -12,18 +12,13 @@ export class GroupedChannelsList extends Component {
     current: PropTypes.instanceOf(Channel),
   };
 
-  static contextTypes = {
-    scrollArea: PropTypes.object.isRequired
-  };
 
   state = {
     expanded: {}
   };
 
   toggleGroup(group) {
-    this.setState({ expanded: { ...this.state.expanded, [group.name]: !this.state.expanded[group.name] } }, () => {
-      this.context.scrollArea.refresh();
-    })
+    this.setState({ expanded: { ...this.state.expanded, [group.name]: !this.state.expanded[group.name] } })
   }
 
   isExpanded(group) {

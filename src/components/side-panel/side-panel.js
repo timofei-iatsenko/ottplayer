@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './side-panel.scss';
-import ScrollArea from 'react-scrollbar';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export class SidePanel extends Component {
   static propTypes = {
@@ -16,9 +16,9 @@ export class SidePanel extends Component {
           {this.props.header}
         </div>
 
-        <ScrollArea smoothScrolling={true}>
+        <Scrollbars >
           {this.props.body}
-        </ScrollArea>
+        </Scrollbars>
       </div>
     );
   }

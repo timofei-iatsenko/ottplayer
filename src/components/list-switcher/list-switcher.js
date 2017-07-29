@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import Star from 'react-icons/lib/fa/star';
 import List from 'react-icons/lib/fa/align-justify';
 import Folder from 'react-icons/lib/fa/folder';

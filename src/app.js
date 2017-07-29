@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './App.scss';
+import styles from './app.scss';
 import { ChannelsList } from './components/channels/channels-list/channels-list';
 import { GroupedChannelsList } from './components/channels/grouped-channels-list/grouped-channels-list';
 import { SelectableChannelsList } from './components/channels/selectable-channels-list/selectable-channels-list';

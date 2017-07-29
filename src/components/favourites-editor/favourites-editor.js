@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { SidePanel } from '../side-panel/side-panel';
-import { SaveBar } from '../save-bar/save-bar';
+import { SaveBar } from './save-bar/save-bar';
 import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';
 import { Channel } from '../../entities/channel.model';
 

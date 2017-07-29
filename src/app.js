@@ -8,20 +8,18 @@ import { ChannelsPanel } from './components/channels-panel/channels-panel';
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom'
+import { LocalStorageFactory } from './libs/storage';
 
 class App extends Component {
-  constructor() {
-    super();
+  favouritesStorage = LocalStorageFactory.create('favourites');
 
-    this.state = {
-      currentChannel: null,
-      favourites: [],
-      currentKey: '00XE8DMEI7',
-      channels: [],
-    };
-  }
+  state = {
+    currentChannel: null,
+    favourites: this.favouritesStorage.get([]),
+    currentKey: '00XE8DMEI7',
+    channels: [],
+  };
 
   componentWillMount() {
     this.loadPlaylist().then((playlist) => {
@@ -53,6 +51,11 @@ class App extends Component {
     });
   }
 
+  saveFavourites(favourites){
+    this.favouritesStorage.set(favourites);
+    this.setState({favourites});
+  }
+
   exitFromFavouritesEditor() {
     this.setState({ currentChannelListType: ChannelListMode.all })
   }
@@ -60,7 +63,9 @@ class App extends Component {
   render() {
     const favouritesEditor = ({history}) => (
       <FavouritesEditor channels={this.state.channels}
+                        favourites={this.state.favourites}
                         onChangeChannel={this.changeChannel.bind(this)}
+                        onSave={(f) => {this.saveFavourites(f); history.goBack()}}
                         onCancel={() => history.goBack()}/>);
 
     const channelsPanel = () => (

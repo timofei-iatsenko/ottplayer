@@ -10,11 +10,8 @@ export class SelectableChannelsList extends Component {
   static propTypes = {
     onChangeChannel: PropTypes.func.isRequired,
     onSelectionChange: PropTypes.func.isRequired,
+    selected: PropTypes.arrayOf(PropTypes.number).isRequired,
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
-  };
-
-  state = {
-    selected: []
   };
 
   /**
@@ -24,9 +21,9 @@ export class SelectableChannelsList extends Component {
     let selected;
 
     if (this.isSelected(channel)) {
-      selected = without(this.state.selected, channel.id);
+      selected = without(this.props.selected, channel.id);
     } else {
-      selected = this.state.selected.slice(0);
+      selected = this.props.selected.slice(0);
       selected.push(channel.id);
     }
 
@@ -35,7 +32,7 @@ export class SelectableChannelsList extends Component {
   }
 
   isSelected(channel) {
-    return this.state.selected.indexOf(channel.id) !== -1;
+    return this.props.selected.indexOf(channel.id) !== -1;
   }
 
   getControl() {

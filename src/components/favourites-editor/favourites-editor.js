@@ -9,23 +9,15 @@ import { LocalStorageFactory } from '../../libs/storage';
 export class FavouritesEditor extends Component {
   static propTypes = {
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
+    favourites: PropTypes.arrayOf(PropTypes.number).isRequired,
     onChangeChannel: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired,
   };
 
   state = {
-    selectedChannels: [],
+    selectedChannels: this.props.favourites,
   };
-
-  constructor() {
-    super();
-    this.storage = LocalStorageFactory.create('favourites');
-  }
-
-  saveFavourites() {
-    this.storage.set(this.state.selectedChannels);
-    this.props.onCancel();
-  }
 
   handleSelectionChange(selection) {
     this.setState({ selectedChannels: selection });
@@ -34,14 +26,14 @@ export class FavouritesEditor extends Component {
   render() {
     const header = <SaveBar
       saveDisabled={this.state.selectedChannels.length === 0}
-      onSave={this.saveFavourites.bind(this)}
+      onSave={() => this.props.onSave(this.state.selectedChannels)}
       onCancel={this.props.onCancel}/>;
 
     const body = <SelectableChannelsList
       channels={this.props.channels}
+      selected={this.state.selectedChannels}
       onChangeChannel={this.props.onChangeChannel}
       onSelectionChange={this.handleSelectionChange.bind(this)} />;
-
 
     return (
       <SidePanel header={header} body={body}/>

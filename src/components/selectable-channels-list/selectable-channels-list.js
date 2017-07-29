@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Channel } from '../../entities/channel.model';
 import without from 'lodash/without';
-import './selectable-channels-list.scss';
+import selectableStyles from './selectable-channels-list.scss';
+import channelListStyles from './../channels-list/channels-list.scss';
+
+const styles = {};
+Object.assign(styles, selectableStyles, channelListStyles);
+
 
 export class SelectableChannelsList extends Component {
   static propTypes = {
@@ -38,22 +43,22 @@ export class SelectableChannelsList extends Component {
 
   render() {
     return (
-      <div className="channels-list">
+      <div className={styles.channelsList}>
         {this.props.channels.map(
           /**
            * @param {Channel} channel
            */
           (channel) =>
-          <div className="channels-list__item" onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
-            <div onClick={(e) => e.stopPropagation()} className="channels-list__checkbox">
+          <div className={styles.item} onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
+            <div onClick={(e) => e.stopPropagation()} className={styles.checkbox}>
               <input defaultChecked={this.isSelected(channel)} type="checkbox" id={`channel${channel.id}`}
                      onChange={() => this.handleCheckBoxChange(channel)}/>
               <label htmlFor={`channel${channel.id}`}>Select</label>
             </div>
-            <div className="channels-list__icon"><img src={channel.logo} alt=""/></div>
-            <div className="channels-list__details">
-              <h5 className="channels-list__name">{channel.name}</h5>
-              <div className="channels-list__current-program"></div>
+            <div className={styles.icon}><img src={channel.logo} alt=""/></div>
+            <div className={styles.details}>
+              <h5 className={styles.name}>{channel.name}</h5>
+              <div className={styles.currentProgram}></div>
             </div>
           </div>
         )}

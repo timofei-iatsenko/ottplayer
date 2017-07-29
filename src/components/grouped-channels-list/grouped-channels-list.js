@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Channel } from '../../entities/channel.model';
 import { ChannelsList } from '../channels-list/channels-list';
-import './grouped-channels-list.scss';
+import styles from './grouped-channels-list.scss';
 import groupBy from 'lodash/groupBy';
-import classNames from 'classnames';
 
 export class GroupedChannelsList extends Component {
   static propTypes = {
@@ -40,17 +39,14 @@ export class GroupedChannelsList extends Component {
     });
 
     return (
-      <div className="grouped-channels-list">
+      <div className={styles.groupedChannelsList}>
         {groups.map((group, i) =>
-          <div className="grouped-channels-list__group" key={ i }>
+          <div className={styles.group} key={ i }>
             <button onClick={() => {this.toggleGroup(group)}}
-                    className="grouped-channels-list__group-header">
+                    className={styles.header}>
               { group.name }
             </button>
-            <div className={classNames(
-              'grouped-channels-list__group-body',
-              { 'grouped-channels-list__group-body--expanded': this.isExpanded(group) }
-            )}>
+            <div className={this.isExpanded(group) ? styles.bodyExpanded : styles.bodyCollapsed}>
               <ChannelsList channels={group.channels} onChangeChannel={this.props.onChangeChannel}/>
             </div>
           </div>

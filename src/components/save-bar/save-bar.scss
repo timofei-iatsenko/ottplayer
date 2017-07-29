@@ -1,23 +1,8 @@
 @import '../../commons/mixins';
 
-.save-bar {
+.saveBar {
   @include sidebar-header;
-
-  &__current-mode-title {
-    font-size: 14px;
-    padding: 0;
-    margin: 0;
-  }
-
-  &__options {
-    margin-left: auto;
-  }
-
-  &__option {
-    width: 40px;
-    height: 30px;
-    cursor: pointer;
-    margin-left: 5px;
-  }
-
 }
+
+.btnSave {}
+.btnCancel {}

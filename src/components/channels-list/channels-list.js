@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Channel } from '../../entities/channel.model';
-import './channels-list.scss';
+import styles from './channels-list.scss';
 
 export class ChannelsList extends Component {
   static propTypes = {
@@ -11,17 +11,17 @@ export class ChannelsList extends Component {
 
   render() {
     return (
-      <div className="channels-list">
+      <div className={styles.channelsList}>
         {this.props.channels.map(
           /**
            * @param {Channel} channel
            */
           (channel) =>
-          <button className="channels-list__item" onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
-            <div className="channels-list__icon"><img src={channel.logo} alt=""/></div>
-            <div className="channels-list__details">
-              <h5 className="channels-list__name">{channel.name}</h5>
-              <div className="channels-list__current-program"></div>
+          <button className={styles.item} onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
+            <div className={styles.icon}><img src={channel.logo} alt=""/></div>
+            <div className={styles.details}>
+              <h5 className={styles.name}>{channel.name}</h5>
+              <div className={styles.currentProgram}></div>
             </div>
           </button>
         )}

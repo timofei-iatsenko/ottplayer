@@ -12,6 +12,7 @@
     "react-icons": "^2.2.5",
     "react-router-dom": "^4.1.1",
     "react-scrollbar": "^0.5.1",
+    "resolve-url-loader": "^2.1.0",
     "video.js": "^5.19.2",
     "videojs-contrib-hls": "^5.4.1"
   },

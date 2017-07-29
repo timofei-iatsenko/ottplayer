@@ -6,7 +6,7 @@ import List from 'react-icons/lib/fa/align-justify';
 import Folder from 'react-icons/lib/fa/folder';
 import { ChannelListMode } from './channel-list-modes';
 
-import './list-switcher.scss';
+import styles from './list-switcher.scss';
 
 export class ListSwitcher extends Component {
   static propTypes = {
@@ -45,15 +45,15 @@ export class ListSwitcher extends Component {
 
   render() {
     return (
-      <div className="list-switcher">
+      <div className={styles.listSwitcher}>
 
-        <h3 className="list-switcher__current-mode-title">
+        <h3 className={styles.currentModeTitle}>
           {this.current.title}
         </h3>
 
-        <div className="list-switcher__options">
+        <div className={styles.options}>
           {this.options.map((option, i) => (
-            <button className={classnames('list-switcher__option', {'list-switcher__option--current': this.isCurrent(option)})}
+            <button className={this.isCurrent(option) ? styles.optionCurrent : styles.option}
                     key={i}
                     onClick={() => this.props.onSwitch(option.type)}
                     title={option.btnTitle}>

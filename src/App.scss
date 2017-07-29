@@ -5,20 +5,20 @@
   width: 100%;
 }
 
-.side-panel {
+.sidePanel {
   width: 400px;
   height: 100%;
   display: flex;
   flex-direction: column;
-
-  &__header {
-    flex: 0 0 auto;
-  }
 }
 
-.main-panel {
+.sidePanelHeader {
+  flex: 0 0 auto;
+}
+
+.mainPanel {
   flex-grow: 1;
 }
 
-.channels-container {
+.channelsContainer {
 }

@@ -187,8 +187,13 @@ module.exports = {
           {
             loader: require.resolve('css-loader'),
             options: {
+              modules: true,
               importLoaders: 1,
+              sourcemaps: true,
             },
+          },
+          {
+            loader: 'resolve-url-loader',
           },
           {
             loader: require.resolve('sass-loader'),
@@ -202,16 +207,13 @@ module.exports = {
               // Necessary for external CSS imports to work
               // https://github.com/facebookincubator/create-react-app/issues/2677
               ident: 'postcss',
+              sourcemaps: true,
               plugins: () => [
                 require('postcss-flexbugs-fixes'),
                 autoprefixer({
                   browsers: [
-                    '>1%',
-                    'last 4 versions',
-                    'Firefox ESR',
-                    'not ie < 9', // React doesn't support IE8 anyway
+                    '>5%',
                   ],
-                  flexbox: 'no-2009',
                 }),
               ],
             },

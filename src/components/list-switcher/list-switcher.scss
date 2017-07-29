@@ -1,23 +1,27 @@
 @import '../../commons/mixins';
 
-.list-switcher {
+.listSwitcher {
   @include sidebar-header;
-
-  &__current-mode-title {
-    font-size: 14px;
-    padding: 0;
-    margin: 0;
-  }
-
-  &__options {
-    margin-left: auto;
-  }
-
-  &__option {
-    width: 40px;
-    height: 30px;
-    cursor: pointer;
-    margin-left: 5px;
-  }
-
 }
+
+.currentModeTitle {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.options {
+  margin-left: auto;
+}
+
+.option {
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.optionCurrent {
+  @extend .option;
+}
+

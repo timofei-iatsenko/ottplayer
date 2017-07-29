@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.scss';
+import styles from './App.scss';
 import { ChannelsList } from './components/channels-list/channels-list';
 import { GroupedChannelsList } from './components/grouped-channels-list/grouped-channels-list';
 import { SelectableChannelsList } from './components/selectable-channels-list/selectable-channels-list';
@@ -95,12 +95,12 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app">
-        <div className="side-panel">
-          <div className="side-panel__header">
+      <div className={styles.app}>
+        <div className={styles.sidePanel}>
+          <div className={styles.sidePanelHeader}>
             {this.state.currentChannelListType === ChannelListMode.favourites ? (
-              <SaveBar className=""
-                saveDisabled={this.state.selectedChannels.length === 0}
+              <SaveBar
+                      saveDisabled={this.state.selectedChannels.length === 0}
                        onSave={this.saveFavourites.bind(this)}
                        onCancel={this.exitFromFavouritesEditor.bind(this)}/>
             ) : (
@@ -109,13 +109,13 @@ class App extends Component {
             )}
           </div>
 
-          <ScrollArea smoothScrolling={true} className="channels-container">
+          <ScrollArea smoothScrolling={true} className={styles.channelsContainer}>
             {this.getChannelsList()}
           </ScrollArea>
         </div>
 
 
-        <div className="main-panel">
+        <div className={styles.channelsContainer}>
           <VideoPlayer src={this.streamUrl}></VideoPlayer>
         </div>
       </div>

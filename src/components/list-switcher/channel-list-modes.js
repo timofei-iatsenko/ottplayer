@@ -1,5 +1,5 @@
 export const ChannelListMode = {
-  favourites: 0,
-  all: 1,
-  grouped: 2,
+  favourites: 1,
+  all: 2,
+  grouped: 3,
 };

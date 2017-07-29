@@ -5,6 +5,11 @@ import { ChannelListMode } from './components/list-switcher/channel-list-modes';
 import { Playlist } from './entities/playlist.model';
 import { FavouritesEditor } from './components/favourites-editor/favourites-editor';
 import { ChannelsPanel } from './components/channels-panel/channels-panel';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 class App extends Component {
   constructor() {
@@ -12,7 +17,7 @@ class App extends Component {
 
     this.state = {
       currentChannel: null,
-      currentChannelListType: ChannelListMode.grouped,
+      favourites: [],
       currentKey: '00XE8DMEI7',
       channels: [],
     };
@@ -52,24 +57,28 @@ class App extends Component {
     this.setState({ currentChannelListType: ChannelListMode.all })
   }
 
-  switchChannelListType(type) {
-    this.setState({ currentChannelListType: type });
-  }
-
   render() {
+    const favouritesEditor = ({history}) => (
+      <FavouritesEditor channels={this.state.channels}
+                        onChangeChannel={this.changeChannel.bind(this)}
+                        onCancel={() => history.goBack()}/>);
+
+    const channelsPanel = () => (
+      <ChannelsPanel channels={this.state.channels}
+                     favourites={this.state.favourites}
+                     onChangeChannel={this.changeChannel.bind(this)}/>);
+
     return (
-      <div className={styles.app}>
-        <FavouritesEditor channels={this.state.channels}
-                          onChangeChannel={this.changeChannel.bind(this)}
-                          onCancel={this.exitFromFavouritesEditor.bind(this)}/>
+      <Router>
+        <div className={styles.app}>
+          <Route exact path="/" render={channelsPanel}/>
+          <Route exact path='/edit-favourites' render={favouritesEditor}/>
 
-        <ChannelsPanel channels={this.state.channels}
-                       onChangeChannel={this.changeChannel.bind(this)}/>
-
-        <div className={styles.mainPanel}>
-          <VideoPlayer src={this.streamUrl}></VideoPlayer>
+          <div className={styles.mainPanel}>
+            <VideoPlayer src={this.streamUrl}></VideoPlayer>
+          </div>
         </div>
-      </div>
+      </Router>
     );
   }
 }

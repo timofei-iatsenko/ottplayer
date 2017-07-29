@@ -4,6 +4,7 @@ import { SidePanel } from '../side-panel/side-panel';
 import { SaveBar } from '../save-bar/save-bar';
 import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';
 import { Channel } from '../../entities/channel.model';
+import { LocalStorageFactory } from '../../libs/storage';
 
 export class FavouritesEditor extends Component {
   static propTypes = {
@@ -16,8 +17,13 @@ export class FavouritesEditor extends Component {
     selectedChannels: [],
   };
 
+  constructor() {
+    super();
+    this.storage = LocalStorageFactory.create('favourites');
+  }
+
   saveFavourites() {
-    console.log('save favourites!');
+    this.storage.set(this.state.selectedChannels);
     this.props.onCancel();
   }
 

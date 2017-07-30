@@ -12,7 +12,7 @@ import { LocalStorageFactory } from '../../libs/storage';
 
 export class ChannelsPanel extends Component {
   static propTypes = {
-    favourites: PropTypes.arrayOf(PropTypes.number).isRequired,
+    favourites: PropTypes.arrayOf(PropTypes.string).isRequired,
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
     onChangeChannel: PropTypes.func.isRequired,
     current: PropTypes.instanceOf(Channel),

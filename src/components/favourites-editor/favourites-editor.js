@@ -8,7 +8,7 @@ import { Channel } from '../../entities/channel.model';
 export class FavouritesEditor extends Component {
   static propTypes = {
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
-    favourites: PropTypes.arrayOf(PropTypes.number).isRequired,
+    favourites: PropTypes.arrayOf(PropTypes.string).isRequired,
     onChangeChannel: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,

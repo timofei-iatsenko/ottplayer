@@ -12,10 +12,23 @@ export class GroupedChannelsList extends Component {
     current: PropTypes.instanceOf(Channel),
   };
 
+  groups = [];
+
+  componentWillMount() {
+    this.prepareData(this.props.channels, this.props.current);
+  }
+
+  componentWillReceiveProps(props) {
+    this.prepareData(props.channels, props.current);
+  }
 
   state = {
     expanded: {}
   };
+
+  expandGroup(group) {
+    this.setState({ expanded: { ...this.state.expanded, [group.name]: true } })
+  }
 
   toggleGroup(group) {
     this.setState({ expanded: { ...this.state.expanded, [group.name]: !this.state.expanded[group.name] } })
@@ -25,18 +38,31 @@ export class GroupedChannelsList extends Component {
     return this.state.expanded[group.name];
   }
 
-  render() {
-    const grouped = groupBy(this.props.channels, (channel) => channel.groupTitle);
-    const groups = Object.keys(grouped).map((name) => {
-      return {
+  /**
+   *
+   * @param {Channel[]} channels
+   * @param {Channel} current
+   */
+  prepareData(channels, current) {
+    const grouped = groupBy(channels, (channel) => channel.groupTitle);
+    this.groups = Object.keys(grouped).map((name) => {
+      const group = {
         name,
         channels: grouped[name],
-      }
-    });
+      };
 
+      if (current && group.channels.includes(current)) {
+        this.expandGroup(group);
+      }
+
+      return group;
+    });
+  }
+
+  render() {
     return (
       <div className={styles.groupedChannelsList}>
-        {groups.map((group, i) =>
+        {this.groups.map((group, i) =>
           <div className={styles.group} key={ i }>
             <button onClick={() => {this.toggleGroup(group)}}
                     className={styles.header}>

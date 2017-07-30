@@ -25,7 +25,6 @@ export class StorageProxy {
 
   get(defaultValue) {
     const value = JSON.parse(this.storage.getItem(this.key));
-    console.log(value);
     return value === null ? defaultValue : value;
   }
 

@@ -1,0 +1,36 @@
+@import '../../commons/mixins';
+
+.host {
+  padding: 20px;
+  font-size: 14px;
+  color: $gray;
+  display: flex;
+  align-items: center;
+}
+
+.noFavIcon {
+  $size: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $size;
+  width: $size;
+  border-radius: $size;
+  background-color: $porcelain;
+  margin-right: 15px;
+
+  & > svg {
+    color: gold;
+    height: $size / 2;
+    width: $size / 2;
+  }
+}
+
+.text {
+  line-height: 20px;
+}
+
+.action {
+
+}

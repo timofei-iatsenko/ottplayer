@@ -1,8 +1,14 @@
+@import './commons/mixins';
+
 body {
   margin: 0;
   padding: 0;
   font-family: 'Open Sans', sans-serif;
   height: 100%;
+}
+
+a {
+  color: $blue;
 }
 
 :global {

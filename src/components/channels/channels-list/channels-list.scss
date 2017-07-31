@@ -38,7 +38,7 @@ $row-height: 85px;
   margin-right: 10px;
   display: flex;
   align-items: center;
-  background-color: $light-gray;
+  background-color: $porcelain;
   box-sizing: border-box;
   padding: 10px;
 
@@ -48,11 +48,11 @@ $row-height: 85px;
   }
 
   .item:hover & {
-    background-color: mix($light-gray, $row-hovered);
+    background-color: mix($porcelain, $row-hovered);
   }
 
   .itemActive & {
-    background-color: mix($light-gray, $row-selected);
+    background-color: mix($porcelain, $row-selected);
   }
 }
 

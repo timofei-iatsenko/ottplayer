@@ -4,6 +4,7 @@ import { Channel } from '../../../entities/channel.model';
 import { ChannelsList } from '../channels-list/channels-list';
 import styles from './grouped-channels-list.scss';
 import groupBy from 'lodash/groupBy';
+import ArrowIcon from 'react-icons/lib/fa/angle-right';
 
 export class GroupedChannelsList extends Component {
   static propTypes = {
@@ -61,14 +62,19 @@ export class GroupedChannelsList extends Component {
 
   render() {
     return (
-      <div className={styles.groupedChannelsList}>
+      <div className={styles.host}>
         {this.groups.map((group, i) =>
-          <div className={styles.group} key={ i }>
+          <div className={this.isExpanded(group) ? styles.groupExpanded : styles.groupCollapsed} key={ i }>
             <div onClick={() => {this.toggleGroup(group)}}
                     className={styles.header}>
               { group.name }
+
+              <div className={styles.arrowIcon}>
+                <ArrowIcon />
+              </div>
+
             </div>
-            <div className={this.isExpanded(group) ? styles.bodyExpanded : styles.bodyCollapsed}>
+            <div className={styles.body}>
               <ChannelsList channels={group.channels}
                             current={this.props.current}
                             onChangeChannel={this.props.onChangeChannel}/>

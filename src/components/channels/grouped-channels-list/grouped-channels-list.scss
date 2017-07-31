@@ -1,7 +1,18 @@
-.groupedChannelsList {}
+.host {}
 
+@mixin onExpanded() {
+  .groupExpanded & {
+    @content;
+  }
+}
 
-.group {
+@mixin onCollapsed() {
+  .groupCollapsed & {
+    @content;
+  }
+}
+
+.groupCollapsed, .groupExpanded  {
   width: 100%;
   box-sizing: border-box;
   background-color: #ebf2f6;
@@ -23,10 +34,27 @@
   border-bottom: 1px solid #d8d8d8;
 }
 
-.bodyCollapsed {
-  display: none;
+
+.body {
+  @include onExpanded() {
+    display: block;
+  }
+  @include onCollapsed() {
+    display: none;
+  }
 }
 
-.bodyExpanded {
-  display: block;
+.arrowIcon {
+  $size: 18px;
+
+  margin-left: auto;
+
+  @include onExpanded() {
+   transform: rotate(90deg);
+  }
+
+  & > svg {
+    height: $size;
+    width: $size;
+  }
 }

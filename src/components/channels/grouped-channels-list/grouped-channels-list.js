@@ -64,10 +64,10 @@ export class GroupedChannelsList extends Component {
       <div className={styles.groupedChannelsList}>
         {this.groups.map((group, i) =>
           <div className={styles.group} key={ i }>
-            <button onClick={() => {this.toggleGroup(group)}}
+            <div onClick={() => {this.toggleGroup(group)}}
                     className={styles.header}>
               { group.name }
-            </button>
+            </div>
             <div className={this.isExpanded(group) ? styles.bodyExpanded : styles.bodyCollapsed}>
               <ChannelsList channels={group.channels}
                             current={this.props.current}

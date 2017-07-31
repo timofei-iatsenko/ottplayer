@@ -1,18 +1,26 @@
 .groupedChannelsList {}
 
+
 .group {
   width: 100%;
-  padding: 5px;
   box-sizing: border-box;
-  margin-bottom: 5px;
-  border: 0;
+  background-color: #ebf2f6;
 }
 
 .header {
   width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 20px;
   cursor: pointer;
-  height: 75px;
-  margin-bottom: 5px;
+
+  align-items: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+  height: 60px;
+  border: 0;
+  border-bottom: 1px solid #d8d8d8;
 }
 
 .bodyCollapsed {

@@ -1,29 +1,33 @@
-.channels-list {
-}
+@import '../../../commons/colors';
 
 .checkbox {
-  width: 30px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0, 0.6);
 
-  input {
+  & > input {
     clip: rect(1px, 1px, 1px, 1px);
     position: absolute;
 
     &:checked + label {
-      color: #404a52;
-
       &:before {
         font-size: 16px;
-        background: #028982 no-repeat center center;
+        background-color: $blue;
         border: none;
         color: #fff;
       }
     }
   }
 
-  label {
+  & > label {
     $size: 20px;
     font-size: 0;
-    color: #000;
     cursor: pointer;
     display: block;
     min-height: $size;
@@ -38,12 +42,11 @@
       box-sizing: border-box;
       content: '✔';
       height: $size;
-      left: 0;
-      margin-right: 10px;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
       width: $size;
+      left: 0;
+      top: 50%;
+      position: absolute;
+      transform: translateY(-50%);
     }
   }
 }

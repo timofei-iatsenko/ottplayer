@@ -26,8 +26,10 @@ export class ChannelsList extends Component {
           (channel) =>
           <div className={this.isActive(channel) ? styles.itemActive : styles.item}
                   onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
-            {this.props.control && this.props.control(channel)}
-            <div className={styles.icon}><img src={channel.logo} alt=""/></div>
+            <div className={styles.icon}>
+              {this.props.control && this.props.control(channel)}
+              <img src={channel.logo} alt=""/>
+            </div>
             <div className={styles.details}>
               <h5 className={styles.name}>{channel.name}</h5>
               <div className={styles.currentProgram}>Охотник за головами (16+)</div>

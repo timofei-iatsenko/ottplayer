@@ -40,6 +40,7 @@ $row-height: 85px;
   background-color: $canvas-bg;
   box-sizing: border-box;
   padding: 10px;
+  position: relative;
 
   img {
     max-width: 100%;

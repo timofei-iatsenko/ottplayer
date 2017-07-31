@@ -16,14 +16,16 @@ export class SaveBar extends Component {
   render() {
     return (
       <div className={styles.saveBar}>
-        <button className={styles.btnSave} disabled={this.props.saveDisabled} title="Save"
-                onClick={this.props.onSave}>
-          <Check/>
-        </button>
-        <button className={styles.btnCancel} title="Cancel"
-                onClick={this.props.onCancel}>
-          <Repeat/>
-        </button>
+        <div className={styles.btns}>
+          <button className={styles.btnSave} disabled={this.props.saveDisabled} title="Save"
+                  onClick={this.props.onSave}>
+            <Check/>
+          </button>
+          <button className={styles.btnCancel} title="Cancel"
+                  onClick={this.props.onCancel}>
+            <Repeat/>
+          </button>
+        </div>
       </div>
     );
   }

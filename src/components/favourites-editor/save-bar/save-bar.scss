@@ -4,5 +4,37 @@
   @include sidebar-header;
 }
 
-.btnSave {}
-.btnCancel {}
+.btns {
+  margin-left: auto;
+}
+
+.btnSave, .btnCancel {
+  color: #fff;
+  border: 0;
+  background: none;
+  width: 40px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: 10px;
+
+}
+
+@mixin makeColorfulBtn($base-color) {
+  background-color: $base-color;
+
+  &:disabled {
+    background-color: mix($base-color, $porcelain, 30%);
+  }
+
+  &:hover:not(:disabled) {
+    background-color: mix(#000, $base-color, 10%);
+  }
+}
+
+.btnSave {
+  @include makeColorfulBtn($blue);
+}
+
+.btnCancel {
+  @include makeColorfulBtn(#747e89);
+}

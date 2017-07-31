@@ -1,0 +1,50 @@
+@import '../../../commons/colors';
+
+.host {
+  display: flex;
+  align-items: center;
+}
+
+.startTime {
+  margin-right: 5px;
+}
+
+.endTime {
+  margin-left: 5px;
+}
+
+.startTime, .endTime {
+  font-size: 12px;
+  color: $black;
+}
+
+.bar, .barInner {
+  height: 4px;
+}
+
+.bar {
+  background-color: #cdced0;
+  flex: 1;
+  position: relative;
+}
+
+.barInner {
+  display: block;
+  position: absolute;
+  background-color: $blue;
+
+  &::after {
+    $size: 8px;
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -2px;
+    z-index: 1;
+    display: block;
+    height: $size;
+    width: $size;
+    border-radius: $size;
+    background-color: $blue;
+  }
+}
+

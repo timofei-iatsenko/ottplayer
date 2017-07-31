@@ -35,7 +35,6 @@ $row-height: 85px;
   $canvas-bg: $graphite;
   width: 115px;
   flex: 0 0 auto;
-  margin-right: 10px;
   display: flex;
   align-items: center;
   background-color: $canvas-bg;
@@ -58,8 +57,9 @@ $row-height: 85px;
 
 .details {
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
-  padding: 10px 5px;
+  padding: 10px 10px;
 }
 
 .name {
@@ -69,4 +69,7 @@ $row-height: 85px;
   font-size: 16px;
 }
 
-.currentProgram {}
+.currentProgram {
+  font-size: 14px;
+  margin-bottom: 10px;
+}

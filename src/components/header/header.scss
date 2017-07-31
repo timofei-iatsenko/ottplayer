@@ -1,0 +1,10 @@
+@import "../../commons/colors";
+
+.host {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 60px;
+  background-color: $graphite-black;
+  border-bottom: 1px solid $dark-black;
+}

@@ -4,6 +4,7 @@ import {
   Route,
 } from 'react-router-dom'
 import { Showcase } from './components/showcase/showcase';
+import { Header } from './components/header/header';
 
 class App extends Component {
 
@@ -25,6 +26,7 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <Header></Header>
           <Route exact path="/" render={showCase}/>
           <Route exact path="/channels/:channelSlug" render={showCase}/>
         </div>

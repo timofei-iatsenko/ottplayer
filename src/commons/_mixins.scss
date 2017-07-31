@@ -1,5 +1,12 @@
+@import "./colors";
+
 @mixin sidebar-header() {
   display: flex;
-  height: 40px;
+  box-sizing: border-box;
   align-items: center;
+  height: 50px;
+  padding: 0 20px;
+  color: #fff;
+  background-color: $graphite-black;
+  border-bottom: 1px solid $dark-black;
 }

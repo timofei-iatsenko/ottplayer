@@ -1,38 +1,66 @@
+@import '../../../commons/colors';
+
+
+$row-hovered: rgba($blue, .05);
+$row-selected: rgba($blue, .2);
+$row-height: 85px;
+
 .channelsList {
 }
 
-.item {
+%base-item {
   display: flex;
   width: 100%;
-  height: 75px;
-  padding: 5px;
-  box-sizing: border-box;
-  margin-bottom: 5px;
-  background-color: rgba(0, 0, 0, 0.2);
+  height: $row-height;
   border: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border-right: 1px solid $gray;
+  border-bottom: 1px solid $gray;
+  background-color: #fff;
+}
+
+.item {
+ @extend %base-item;
   cursor: pointer;
+  &:hover {
+    background-color: $row-hovered;
+  }
 }
 
 .itemActive {
-  @extend .item;
-  background-color: rgba(115, 133, 159, 0.4);
+  @extend %base-item;
+  background-color: $row-selected;
 }
 
 .icon {
   width: 115px;
-  height: 65px;
   flex: 0 0 auto;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+  background-color: $light-gray;
+  box-sizing: border-box;
+  padding: 10px;
 
   img {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  .item:hover & {
+    background-color: mix($light-gray, $row-hovered);
+  }
+
+  .itemActive & {
+    background-color: mix($light-gray, $row-selected);
   }
 }
 
 .details {
   display: flex;
   flex-direction: column;
+  padding: 10px 5px;
 }
 
 .name {

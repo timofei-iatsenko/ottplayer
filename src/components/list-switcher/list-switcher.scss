@@ -15,6 +15,9 @@
 }
 
 .option {
+  color: #fff;
+  border: 0;
+  background: none;
   width: 40px;
   height: 30px;
   cursor: pointer;
@@ -23,5 +26,6 @@
 
 .optionCurrent {
   @extend .option;
+  color: $blue;
 }
 

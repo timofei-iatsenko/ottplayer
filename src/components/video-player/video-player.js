@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import videojs from '../../libs/video.js';
 import './video-player.scss';
- // eslint-disable-line import/no-webpack-loader-syntax
 
 export class VideoPlayer extends Component {
   static propTypes = {
@@ -13,8 +12,8 @@ export class VideoPlayer extends Component {
     const self = this;
     this.player = videojs(this.refs.video, {
       autoplay: true,
+      fluid: true,
       controls: true,
-      height: 400
     }).ready(function() {
 
       if (self.props.src) {

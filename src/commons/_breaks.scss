@@ -1,0 +1,30 @@
+//Set up global media queries
+$smallest: 0px;
+$phone: 480px; // 480px: >= landscape phone
+$tablet: 768px; // 768px: >= portrait tablet
+$desktop: 1024px; // 1024: >= landscape tablet
+$x-large: 1440px; // 1440: >= xl desktop
+
+@mixin break($name) {
+  @if $name == 'xsmall' {
+    @media screen and (min-width: $smallest) {
+      @content;
+    }
+  } @else if $name == 'small' {
+    @media screen and (min-width: $phone) {
+      @content;
+    }
+  } @else if $name == 'medium' {
+    @media screen and (min-width: $tablet) {
+      @content;
+    }
+  } @else if $name == 'large' {
+    @media screen and (min-width: $desktop) {
+      @content;
+    }
+  } @else if $name == 'xl' {
+    @media screen and (min-width: $x-large) {
+      @content;
+    }
+  }
+}

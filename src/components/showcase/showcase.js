@@ -107,7 +107,9 @@ export class Showcase extends Component {
           </Switch>
 
           <div className={styles.mainPanel}>
-            {/*<VideoPlayer src={this.streamUrl}></VideoPlayer>*/}
+            <div className={styles.playerContainer}>
+              <VideoPlayer src={this.streamUrl}></VideoPlayer>
+            </div>
           </div>
         </div>
     );

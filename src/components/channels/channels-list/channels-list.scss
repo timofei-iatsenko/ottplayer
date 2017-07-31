@@ -1,6 +1,5 @@
 @import '../../../commons/colors';
 
-
 $row-hovered: rgba($blue, .05);
 $row-selected: rgba($blue, .2);
 $row-height: 85px;
@@ -33,12 +32,13 @@ $row-height: 85px;
 }
 
 .icon {
+  $canvas-bg: $graphite;
   width: 115px;
   flex: 0 0 auto;
   margin-right: 10px;
   display: flex;
   align-items: center;
-  background-color: $porcelain;
+  background-color: $canvas-bg;
   box-sizing: border-box;
   padding: 10px;
 
@@ -48,11 +48,11 @@ $row-height: 85px;
   }
 
   .item:hover & {
-    background-color: mix($porcelain, $row-hovered);
+    background-color: mix($canvas-bg, $row-hovered);
   }
 
   .itemActive & {
-    background-color: mix($porcelain, $row-selected);
+    background-color: mix($canvas-bg, $row-selected);
   }
 }
 

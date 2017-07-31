@@ -1,10 +1,14 @@
 .host {
-  display: flex;
-  position: fixed;
   height: 100%;
-  width: 100%;
+  display: flex;
 }
 
 .mainPanel {
   flex-grow: 1;
+}
+
+.playerContainer {
+  background-color: #000;
+  display: flex;
+  justify-content: center;
 }

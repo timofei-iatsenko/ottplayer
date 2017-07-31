@@ -16,12 +16,11 @@ export class SidePanel extends Component {
           {this.props.header}
         </div>
 
-
-        <Scrollbars autoHide className={styles.body}>
-          {this.props.body}
-        </Scrollbars>
-
-
+        <div className={styles.body}>
+          <Scrollbars autoHide >
+            {this.props.body}
+          </Scrollbars>
+        </div>
       </div>
     );
   }

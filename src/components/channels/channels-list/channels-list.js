@@ -23,7 +23,7 @@ export class ChannelsList extends Component {
            * @param {Channel} channel
            */
           (channel) =>
-          <button className={this.isActive(channel) ? styles.itemActive : styles.item}
+          <div className={this.isActive(channel) ? styles.itemActive : styles.item}
                   onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
             {this.props.control && this.props.control(channel)}
             <div className={styles.icon}><img src={channel.logo} alt=""/></div>
@@ -31,7 +31,7 @@ export class ChannelsList extends Component {
               <h5 className={styles.name}>{channel.name}</h5>
               <div className={styles.currentProgram}></div>
             </div>
-          </button>
+          </div>
         )}
       </div>
     );

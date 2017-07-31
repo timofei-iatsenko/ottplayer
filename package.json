@@ -5,6 +5,7 @@
   "dependencies": {
     "@types/react-router-dom": "^4.0.7",
     "lodash": "^4.17.4",
+    "normalize.css": "^7.0.0",
     "object-assign": "4.1.1",
     "promise": "7.1.1",
     "prop-types": "^15.5.10",

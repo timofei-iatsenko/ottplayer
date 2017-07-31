@@ -4,3 +4,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   height: 100%;
 }
+
+:global {
+  @import "~normalize.css";
+}

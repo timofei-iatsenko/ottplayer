@@ -77,7 +77,7 @@ export class Showcase extends Component {
       currentChannel: channel,
     });
 
-    history.push('/channels/' + channel.urlSlug);
+    history.push('/' + channel.urlSlug);
   }
 
   saveFavourites(favourites){
@@ -102,7 +102,7 @@ export class Showcase extends Component {
     return (
         <div className={styles.host}>
           <Switch>
-            <Route exact path={`channels/edit-favourites`} render={favouritesEditor}/>
+            <Route exact path={`/edit-favourites`} render={favouritesEditor}/>
             <Route path="/" render={channelsPanel}/>
           </Switch>
 

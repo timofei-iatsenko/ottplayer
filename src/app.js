@@ -15,11 +15,7 @@ class App extends Component {
 
   render() {
     const showCase = (routerProps) => {
-      const props = Object.assign({}, routerProps, {
-        currentKey: this.state.currentKey,
-        playlistUrl: this.state.playlistUrl,
-      });
-
+      const props = Object.assign({}, routerProps, this.state);
       return <Showcase {...props}/>;
     };
 
@@ -27,9 +23,7 @@ class App extends Component {
       <Router>
         <div className={styles.appWrap}>
           <div className={styles.container}>
-            {/*<Header></Header>*/}
-            <Route exact path="/" render={showCase}/>
-            <Route exact path="/channels/:channelSlug" render={showCase}/>
+            <Route path="/:channelSlug*" render={showCase}/>
           </div>
         </div>
       </Router>

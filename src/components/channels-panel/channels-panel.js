@@ -40,6 +40,7 @@ export class ChannelsPanel extends Component {
         <GroupedChannelsList
           channels={this.props.channels}
           current={this.props.current}
+          scrollbarController={this.scrollbarController}
           onChangeChannel={this.props.onChangeChannel}/>
       );
     }
@@ -53,6 +54,7 @@ export class ChannelsPanel extends Component {
         <ChannelsList
           channels={this.getFavouritesChannels()}
           current={this.props.current}
+          scrollbarController={this.scrollbarController}
           onChangeChannel={this.props.onChangeChannel}/>
       );
     }
@@ -62,6 +64,7 @@ export class ChannelsPanel extends Component {
       <ChannelsList
         channels={this.props.channels}
         current={this.props.current}
+        scrollbarController={this.scrollbarController}
         onChangeChannel={this.props.onChangeChannel}/>
     );
   }
@@ -72,7 +75,9 @@ export class ChannelsPanel extends Component {
       current={this.state.currentListMode}/>;
 
     return (
-      <SidePanel header={header} body={this.getChannelsListElement()}/>
+      <SidePanel provideScrollbarCtrl={(ctrl) => this.scrollbarController = ctrl}
+                 header={header}
+                 body={this.getChannelsListElement()}/>
     );
   }
 }

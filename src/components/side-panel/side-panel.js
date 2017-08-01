@@ -7,6 +7,7 @@ export class SidePanel extends Component {
   static propTypes = {
     header: PropTypes.element,
     body: PropTypes.element,
+    provideScrollbarCtrl: PropTypes.func,
   };
 
   render() {
@@ -17,7 +18,7 @@ export class SidePanel extends Component {
         </div>
 
         <div className={styles.body}>
-          <Scrollbars autoHide >
+          <Scrollbars autoHide ref={this.props.provideScrollbarCtrl}>
             {this.props.body}
           </Scrollbars>
         </div>

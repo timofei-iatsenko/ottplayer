@@ -11,6 +11,7 @@ export class GroupedChannelsList extends Component {
     onChangeChannel: PropTypes.func,
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
     current: PropTypes.instanceOf(Channel),
+    scrollbarController: PropTypes.object,
   };
 
   groups = [];
@@ -75,9 +76,7 @@ export class GroupedChannelsList extends Component {
 
             </div>
             <div className={styles.body}>
-              <ChannelsList channels={group.channels}
-                            current={this.props.current}
-                            onChangeChannel={this.props.onChangeChannel}/>
+              <ChannelsList {...this.props} channels={group.channels} />
             </div>
           </div>
         )}

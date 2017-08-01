@@ -27,4 +27,10 @@ $x-large: 1440px; // 1440: >= xl desktop
       @content;
     }
   }
+    // by stops
+  @else if $name == 'first-stop' {
+    @media screen and (min-width: 1280px) {
+      @content;
+    }
+  }
 }

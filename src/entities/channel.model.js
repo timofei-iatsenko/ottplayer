@@ -1,7 +1,7 @@
 import { slugify  } from 'transliteration';
 export class Channel {
   constructor(data) {
-    this.id = data.id;
+    this.id = +data.id;
     this.name = data.name;
     this.logo = data.logo;
     this.archive = data.archive;

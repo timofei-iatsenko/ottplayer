@@ -9,6 +9,7 @@ import { ListSwitcher } from '../list-switcher/list-switcher';
 import { ChannelListMode } from '../list-switcher/channel-list-modes';
 import { NoFavourites } from '../no-favourites/no-favourites';
 import { LocalStorageFactory } from '../../libs/storage';
+import { EpgEntry } from '../../entities/epg-entry';
 
 export class ChannelsPanel extends Component {
   static propTypes = {
@@ -16,6 +17,7 @@ export class ChannelsPanel extends Component {
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
     onChangeChannel: PropTypes.func.isRequired,
     current: PropTypes.instanceOf(Channel),
+    currentEpg: PropTypes.objectOf(PropTypes.instanceOf(EpgEntry)),
   };
 
   modeStorage = LocalStorageFactory.create('channelsPanelMode');
@@ -38,6 +40,7 @@ export class ChannelsPanel extends Component {
     const props = {
       channels: this.props.channels,
       current: this.props.current,
+      currentEpg: this.props.currentEpg,
       onChangeChannel: this.props.onChangeChannel,
       scrollbarController: this.scrollbarController,
     };

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Channel } from '../../../entities/channel.model';
 import styles from './channels-list.scss';
 import barStyles from './progress-bar.scss';
+import { EpgEntry } from '../../../entities/epg-entry';
 
 export class ChannelsList extends Component {
   static propTypes = {
@@ -11,6 +12,7 @@ export class ChannelsList extends Component {
     current: PropTypes.instanceOf(Channel),
     control: PropTypes.func,
     scrollbarController: PropTypes.object,
+    currentEpg: PropTypes.objectOf(PropTypes.instanceOf(EpgEntry)),
   };
 
   isActive(chanel) {
@@ -36,6 +38,41 @@ export class ChannelsList extends Component {
     this.scrollToActiveChannel();
   }
 
+  /**
+   * @param chId
+   * @returns {EpgEntry}
+   */
+  getCurrentEpg(chId) {
+    return (this.props.currentEpg && this.props.currentEpg[chId]);
+  }
+
+  formatTime(ts) {
+    const date = new Date(ts * 1000);
+    return `${date.getHours()}:${date.getMinutes()},`
+  }
+
+  /**
+   *
+   * @param {Channel} channel
+   */
+  getDetailsComponent(channel) {
+    const epg = this.getCurrentEpg(channel.id);
+
+    return (<div className={styles.details}>
+      <h5 className={styles.name}>{channel.name}</h5>
+
+      {epg && <div className={styles.currentProgram}>{epg.name}</div>}
+
+      {epg && <div className={barStyles.host}>
+        <div className={barStyles.startTime}>{this.formatTime(epg.time)}</div>
+        <div className={barStyles.bar}>
+          <div className={barStyles.barInner} style={{ width: '25%' }}></div>
+        </div>
+        <div className={barStyles.endTime}>{this.formatTime(epg.timeTo)}</div>
+      </div>}
+    </div>);
+  }
+
   render() {
     return (
       <div className={styles.channelsList}>
@@ -51,18 +88,7 @@ export class ChannelsList extends Component {
                 {this.props.control && this.props.control(channel)}
                 <img src={channel.logo} alt=""/>
               </div>
-              <div className={styles.details}>
-                <h5 className={styles.name}>{channel.name}</h5>
-                <div className={styles.currentProgram}>Охотник за головами (16+)</div>
-
-                <div className={barStyles.host}>
-                  <div className={barStyles.startTime}>17.50</div>
-                  <div className={barStyles.bar}>
-                    <div className={barStyles.barInner} style={{ width: '25%' }}></div>
-                  </div>
-                  <div className={barStyles.endTime}>19.30</div>
-                </div>
-              </div>
+              {this.getDetailsComponent(channel)}
             </div>
         )}
       </div>

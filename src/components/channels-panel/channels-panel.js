@@ -35,14 +35,15 @@ export class ChannelsPanel extends Component {
   }
 
   getChannelsListElement() {
+    const props = {
+      channels: this.props.channels,
+      current: this.props.current,
+      onChangeChannel: this.props.onChangeChannel,
+      scrollbarController: this.scrollbarController,
+    };
+
     if (this.state.currentListMode === ChannelListMode.grouped) {
-      return (
-        <GroupedChannelsList
-          channels={this.props.channels}
-          current={this.props.current}
-          scrollbarController={this.scrollbarController}
-          onChangeChannel={this.props.onChangeChannel}/>
-      );
+      return <GroupedChannelsList {...props} />;
     }
 
     if (this.state.currentListMode === ChannelListMode.favourites) {
@@ -50,23 +51,10 @@ export class ChannelsPanel extends Component {
         return <NoFavourites/>
       }
 
-      return (
-        <ChannelsList
-          channels={this.getFavouritesChannels()}
-          current={this.props.current}
-          scrollbarController={this.scrollbarController}
-          onChangeChannel={this.props.onChangeChannel}/>
-      );
+      return <ChannelsList {...props} channels={this.getFavouritesChannels()}/>;
     }
 
-
-    return (
-      <ChannelsList
-        channels={this.props.channels}
-        current={this.props.current}
-        scrollbarController={this.scrollbarController}
-        onChangeChannel={this.props.onChangeChannel}/>
-    );
+    return <ChannelsList {...props} />;
   }
 
   render() {

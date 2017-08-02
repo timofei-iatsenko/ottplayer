@@ -1,4 +1,5 @@
 @import '../../../commons/colors';
+@import '../../../commons/mixins';
 
 $row-hovered: rgba($blue, .05);
 $row-selected: rgba($blue, .2);
@@ -61,9 +62,11 @@ $row-height: 85px;
   flex-grow: 1;
   flex-direction: column;
   padding: 10px 10px;
+  min-width: 0;
 }
 
 .name {
+  @include truncate-text;
   padding: 0;
   margin: 0 0 5px 0;
   font-weight: normal;
@@ -71,6 +74,7 @@ $row-height: 85px;
 }
 
 .currentProgram {
+  @include truncate-text;
   font-size: 14px;
   margin-bottom: 10px;
 }

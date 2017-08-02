@@ -59,9 +59,9 @@ export class ChannelsList extends Component {
     const epg = this.getCurrentEpg(channel.id);
 
     return (<div className={styles.details}>
-      <h5 className={styles.name}>{channel.name}</h5>
+      <h5 title={channel.name} className={styles.name}>{channel.name}</h5>
 
-      {epg && <div className={styles.currentProgram}>{epg.name}</div>}
+      {epg && <div title={epg.name} className={styles.currentProgram}>{epg.name}</div>}
 
       {epg && <div className={barStyles.host}>
         <div className={barStyles.startTime}>{this.formatTime(epg.time)}</div>

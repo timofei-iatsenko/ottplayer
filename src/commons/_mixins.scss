@@ -11,3 +11,8 @@
   border-bottom: 1px solid $borders-color;
 }
 
+@mixin truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

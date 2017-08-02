@@ -48,7 +48,7 @@ export class ChannelsList extends Component {
 
   formatTime(ts) {
     const date = new Date(ts * 1000);
-    return `${date.getHours()}:${date.getMinutes()},`
+    return date.toTimeString().split(':').slice(0, 2).join(':');
   }
 
   /**

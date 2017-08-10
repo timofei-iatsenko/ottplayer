@@ -4,26 +4,42 @@ import PropTypes from 'prop-types';
 import { Time } from '../formatters/time';
 
 export class ProgressBar extends Component {
-    static propTypes = {
-      startTime: PropTypes.number.isRequired,
-      endTime: PropTypes.number.isRequired,
-    };
+  static propTypes = {
+    startTime: PropTypes.number.isRequired,
+    endTime: PropTypes.number.isRequired,
+  };
 
-    componentWillMount() {
+  oldValue = null;
 
+  componentDidMount() {
+    this.watch();
+  }
+
+  watch() {
+    const THRESHOLD = 5;
+
+    if (this.value - this.oldValue > THRESHOLD) {
+      this.forceUpdate();
     }
 
-    update() {
-
+    if (this.value < 100 && !this.isUnmounted) {
+      setTimeout(() => requestAnimationFrame(this.watch.bind(this)), 500);
     }
+  }
 
-    get value() {
-      const duration = this.props.endTime - this.props.startTime;
-      const passed = Math.floor(Date.now() / 1000) - this.props.startTime;
-      return Math.round((passed / duration) * 100);
-    }
+  componentWillUnmount() {
+    this.isUnmounted = true;
+  }
+
+  get value() {
+    const duration = this.props.endTime - this.props.startTime;
+    const passed = Math.floor(Date.now() / 1000) - this.props.startTime;
+    return Math.round((passed / duration) * 100);
+  }
 
   render() {
+    this.oldValue = this.value;
+
     return (
       <div className={styles.host}>
         <div className={styles.startTime}><Time>{this.props.startTime}</Time></div>

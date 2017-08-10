@@ -13,7 +13,7 @@ import { EpgEntry } from '../../entities/epg-entry';
 
 export class ChannelsPanel extends Component {
   static propTypes = {
-    favourites: PropTypes.arrayOf(PropTypes.string).isRequired,
+    favourites: PropTypes.arrayOf(PropTypes.number).isRequired,
     channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
     onChangeChannel: PropTypes.func.isRequired,
     current: PropTypes.instanceOf(Channel),

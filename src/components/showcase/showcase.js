@@ -8,6 +8,7 @@ import { ChannelsPanel } from '../channels-panel/channels-panel';
 import { Route, Switch } from 'react-router-dom'
 import { LocalStorageFactory } from '../../libs/storage';
 import { CurrentEpg } from '../current-epg/current-epg';
+import { ChannelEpg } from '../channel-epg/channel-epg';
 
 export class Showcase extends Component {
   static propTypes = {
@@ -18,6 +19,9 @@ export class Showcase extends Component {
   favouritesStorage = LocalStorageFactory.create('favourites');
 
   state = {
+    /**
+     * @type Channel
+     */
     currentChannel: null,
     favourites: this.favouritesStorage.get([]),
     channels: [],
@@ -123,6 +127,7 @@ export class Showcase extends Component {
             <div className={styles.playerContainer}>
               <VideoPlayer src={this.streamUrl}></VideoPlayer>
             </div>
+            {this.state.currentChannel && <ChannelEpg epgUrl={`${this.state.playlist.urlEpg}channel/${this.state.currentChannel.id}`} />}
           </div>
         </div>
     );

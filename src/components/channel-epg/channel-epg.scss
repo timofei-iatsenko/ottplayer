@@ -1,0 +1,70 @@
+@import '../../commons/colors';
+@import '../../commons/mixins';
+
+.host {
+  flex: 1;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+
+$row-height: 65px;
+$margin-between-lines: 10px;
+
+.entries {}
+
+.entry {
+  display: flex;
+  width: 100%;
+  height: $row-height;
+  box-sizing: border-box;
+  padding: 10px;
+  border-bottom: 1px solid $borders-color;
+}
+
+.mainInfo {
+  flex-direction: column;
+  min-width: 0;
+  flex-grow: 1;
+  display: flex;
+  margin-right: 20px;
+}
+
+.name {
+  @include truncate-text;
+  width: 100%;
+  padding: 0;
+  margin: 0 0 $margin-between-lines 0;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.timing {
+  display: flex;
+}
+
+.startTime {
+
+}
+
+.endTime {
+  margin-left: auto;
+}
+
+.sideInfo {
+  width: 100px;
+  margin-left: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  margin-bottom: $margin-between-lines;
+}
+
+.startTime, .endTime, .duration {
+  font-size: 12px;
+  color: $black;
+}
+

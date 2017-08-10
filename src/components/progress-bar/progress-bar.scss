@@ -1,4 +1,4 @@
-@import '../../../commons/colors';
+@import '../../commons/colors';
 
 .host {
   display: flex;
@@ -18,17 +18,18 @@
   color: $black;
 }
 
-.bar, .barInner {
+
+.bar, .inner {
   height: 4px;
 }
 
 .bar {
   background-color: #cdced0;
-  flex: 1;
+  flex: 1 0;
   position: relative;
 }
 
-.barInner {
+.inner {
   display: block;
   position: absolute;
   background-color: $blue;
@@ -37,7 +38,7 @@
     $size: 8px;
     content: '';
     position: absolute;
-    right: 0;
+    right: -$size / 2;
     top: -2px;
     z-index: 1;
     display: block;
@@ -47,4 +48,3 @@
     background-color: $blue;
   }
 }
-

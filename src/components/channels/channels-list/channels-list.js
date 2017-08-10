@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Channel } from '../../../entities/channel.model';
 import styles from './channels-list.scss';
-import barStyles from './progress-bar.scss';
 import { EpgEntry } from '../../../entities/epg-entry';
+import { ProgressBar } from '../../progress-bar/progress-bar';
 
 export class ChannelsList extends Component {
   static propTypes = {
@@ -46,11 +46,6 @@ export class ChannelsList extends Component {
     return (this.props.currentEpg && this.props.currentEpg[chId]);
   }
 
-  formatTime(ts) {
-    const date = new Date(ts * 1000);
-    return date.toTimeString().split(':').slice(0, 2).join(':');
-  }
-
   /**
    *
    * @param {Channel} channel
@@ -60,16 +55,8 @@ export class ChannelsList extends Component {
 
     return (<div className={styles.details}>
       <h5 title={channel.name} className={styles.name}>{channel.name}</h5>
-
       {epg && <div title={epg.name} className={styles.currentProgram}>{epg.name}</div>}
-
-      {epg && <div className={barStyles.host}>
-        <div className={barStyles.startTime}>{this.formatTime(epg.time)}</div>
-        <div className={barStyles.bar}>
-          <div className={barStyles.barInner} style={{ width: '25%' }}></div>
-        </div>
-        <div className={barStyles.endTime}>{this.formatTime(epg.timeTo)}</div>
-      </div>}
+      {epg && <ProgressBar startTime={epg.startTime} endTime={epg.endTime}/>}
     </div>);
   }
 

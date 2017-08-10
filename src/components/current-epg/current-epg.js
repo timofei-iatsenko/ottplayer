@@ -45,7 +45,7 @@ export class CurrentEpg extends Component {
 
       const epg =  Object.keys(response).reduce((acc, key) => {
         acc[key] = new EpgEntry(response[key]);
-        invalidateDate = Math.max(invalidateDate, acc[key].timeTo);
+        invalidateDate = Math.max(invalidateDate, acc[key].startTime);
         return acc;
       }, {});
 

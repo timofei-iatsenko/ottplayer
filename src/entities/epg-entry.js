@@ -5,12 +5,13 @@ export class EpgEntry {
     /**@string*/
     this.name = data.name;
     /**@number*/
-    this.time = data.time;
+    this.startTime = data.time;
     /**@number*/
-    this.timeTo = data.time_to;
+    this.endTime = data.time_to;
     /**@number*/
     this.duration = +data.duration;
     /**@string*/
     this.descr = data.descr;
   }
+
 }

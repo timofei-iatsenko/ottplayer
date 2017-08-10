@@ -13,7 +13,7 @@ export class Duration extends Component {
       return `${minutes} min`;
     }
 
-    const hours = minutes / 60;
+    const hours = Math.floor(minutes / 60);
     return `${hours}h ${minutes - hours * 60} min`;
   }
 

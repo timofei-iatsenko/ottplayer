@@ -14,4 +14,13 @@ export class EpgEntry {
     this.descr = data.descr;
   }
 
+  /**
+   *
+   * @returns {boolean}
+   */
+  get inAir() {
+    const currentTime = new Date() / 1000;
+    return this.startTime <= currentTime && this.endTime >= currentTime;
+  }
+
 }

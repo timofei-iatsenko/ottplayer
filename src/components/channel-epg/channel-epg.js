@@ -17,7 +17,8 @@ export class ChannelEpg extends Component {
       /**
        * @type EpgEntry[]
        */
-      entries: []
+      entries: [],
+      currentProgramTime: null,
     };
 
     componentWillReceiveProps(props) {
@@ -25,6 +26,12 @@ export class ChannelEpg extends Component {
         this.setState({entries})
       })
     }
+
+  currentProgram = null;
+
+  componentDidMount() {
+    this.watchCurrentProgram();
+  }
 
   /**
    * @param {string} url
@@ -39,6 +46,27 @@ export class ChannelEpg extends Component {
     });
   }
 
+  watchCurrentProgram() {
+    const currentProgram = this.state.entries.find((entry) => entry.inAir);
+
+    if (this.currentProgram !== currentProgram) {
+      this.setState({entries: this.filterOutdatedEntries(currentProgram)});
+    }
+
+    if (!this.isUnmounted) {
+      setTimeout(() => requestAnimationFrame(this.watchCurrentProgram.bind(this)), 500);
+    }
+  }
+
+  filterOutdatedEntries(currentProgram) {
+    const index = this.state.entries.indexOf(currentProgram);
+    return this.state.entries.slice(index);
+  }
+
+  componentWillUnmount() {
+    this.isUnmounted = true;
+  }
+
   render() {
     return (
       <div className={styles.host}>
@@ -46,7 +74,7 @@ export class ChannelEpg extends Component {
           <div className={styles.entries}>
 
             {this.state.entries.map((entry) => (
-              <div className={styles.entry} key={entry.startTime}>
+              <div className={entry.inAir ? styles.entryActive : styles.entry} key={entry.startTime}>
 
                 <div className={styles.mainInfo}>
                   <h5 className={styles.name}>{entry.name}</h5>

@@ -1,6 +1,8 @@
 @import '../../commons/colors';
 @import '../../commons/mixins';
 
+$row-selected: rgba($blue, .2);
+
 .host {
   flex: 1;
   margin-top: 20px;
@@ -20,6 +22,11 @@ $margin-between-lines: 10px;
   box-sizing: border-box;
   padding: 10px;
   border-bottom: 1px solid $borders-color;
+}
+
+.entryActive {
+  @extend .entry;
+  background-color: $row-selected;
 }
 
 .mainInfo {

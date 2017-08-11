@@ -84,10 +84,15 @@ export class ChannelEpg extends Component {
                 <div className={styles.mainInfo}>
                   <h5 className={styles.name}>{entry.name}</h5>
 
-                  <div className={styles.timing}>
-                    <div className={styles.startTime}><Time>{entry.startTime}</Time></div>
-                    <div className={styles.endTime}><Time>{entry.endTime}</Time></div>
-                  </div>
+                  {entry.inAir && <ProgressBar startTime={entry.startTime} endTime={entry.endTime}/>}
+
+                  {!entry.inAir && (
+                    <div className={styles.timing}>
+                      <div className={styles.startTime}><Time>{entry.startTime}</Time></div>
+                      <div className={styles.endTime}><Time>{entry.endTime}</Time></div>
+                    </div>
+                  )}
+
                 </div>
 
                 <div className={styles.sideInfo}>

@@ -19,6 +19,7 @@ export class CurrentEpg extends Component {
   }
 
   componentWillUnmount() {
+    this.isUnmounted = true;
     if (this.scheduledTimeout) {
       clearTimeout(this.scheduledTimeout);
     }
@@ -28,7 +29,7 @@ export class CurrentEpg extends Component {
     this.loadEpg().then(({epg, invalidateDate}) =>{
       this.props.onDataReceived(epg);
 
-      if (this.isMounted) {
+      if (!this.isUnmounted) {
         this.scheduleNextUpdate(invalidateDate);
       }
 
@@ -45,7 +46,7 @@ export class CurrentEpg extends Component {
 
       const epg =  Object.keys(response).reduce((acc, key) => {
         acc[key] = new EpgEntry(response[key]);
-        invalidateDate = Math.max(invalidateDate, acc[key].startTime);
+        invalidateDate = Math.max(invalidateDate, acc[key].endTime);
         return acc;
       }, {});
 
@@ -65,7 +66,7 @@ export class CurrentEpg extends Component {
       timeout = 1000 * 10;
     }
 
-    this.scheduledTimeout = setTimeout(this.updateEpg,  timeout);
+    this.scheduledTimeout = setTimeout(this.updateEpg.bind(this),  timeout);
   }
 
   render() {

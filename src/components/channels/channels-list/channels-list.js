@@ -24,8 +24,17 @@ export class ChannelsList extends Component {
   scrollToActiveChannel() {
     if (!this.isInitiallyScrolled && this.props.scrollbarController && this.activeElementRef) {
       this.isInitiallyScrolled = true;
+
       setTimeout(() => {
-        this.props.scrollbarController.scrollTop(this.activeElementRef.offsetTop);
+        const values = this.props.scrollbarController.getValues();
+
+        const topPoint = values.scrollTop;
+        const bottomPoint = values.clientHeight + values.scrollTop;
+        const elementTop = this.activeElementRef.offsetTop;
+
+        if (topPoint < elementTop && bottomPoint < elementTop) {
+          this.props.scrollbarController.scrollTop(elementTop);
+        }
       });
     }
   }

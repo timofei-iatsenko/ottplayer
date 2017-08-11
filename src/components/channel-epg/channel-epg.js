@@ -23,7 +23,8 @@ export class ChannelEpg extends Component {
 
     componentWillReceiveProps(props) {
       this.loadEpg(props.epgUrl).then((entries) => {
-        this.setState({entries})
+        const currentProgram = this.getCurrentProgram(entries);
+        this.setState({entries: this.filterOutdatedEntries(entries, currentProgram)});
       })
     }
 
@@ -46,11 +47,15 @@ export class ChannelEpg extends Component {
     });
   }
 
+  getCurrentProgram(entries) {
+    return entries.find((entry) => entry.inAir);
+  }
+
   watchCurrentProgram() {
-    const currentProgram = this.state.entries.find((entry) => entry.inAir);
+    const currentProgram = this.getCurrentProgram(this.state.entries);
 
     if (this.currentProgram !== currentProgram) {
-      this.setState({entries: this.filterOutdatedEntries(currentProgram)});
+      this.setState({entries: this.filterOutdatedEntries(this.state.entries, currentProgram)});
     }
 
     if (!this.isUnmounted) {
@@ -58,9 +63,9 @@ export class ChannelEpg extends Component {
     }
   }
 
-  filterOutdatedEntries(currentProgram) {
-    const index = this.state.entries.indexOf(currentProgram);
-    return this.state.entries.slice(index);
+  filterOutdatedEntries(entries, currentProgram) {
+    const index = entries.indexOf(currentProgram);
+    return entries.slice(index);
   }
 
   componentWillUnmount() {

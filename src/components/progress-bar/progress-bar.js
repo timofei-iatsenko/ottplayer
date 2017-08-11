@@ -16,13 +16,17 @@ export class ProgressBar extends Component {
   }
 
   watch() {
+    if (this.isUnmounted) {
+      return;
+    }
+
     const THRESHOLD = 5;
 
     if (this.value - this.oldValue > THRESHOLD) {
       this.forceUpdate();
     }
 
-    if (this.value < 100 && !this.isUnmounted) {
+    if (this.value < 100) {
       setTimeout(() => requestAnimationFrame(this.watch.bind(this)), 500);
     }
   }

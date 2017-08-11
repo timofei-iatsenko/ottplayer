@@ -9,32 +9,30 @@ export class VideoPlayer extends Component {
   };
 
   componentDidMount() {
-    const self = this;
     this.player = videojs(this.refs.video, {
       autoplay: true,
       fluid: true,
       controls: true,
-    }).ready(function() {
-
-      if (self.props.src) {
-        this.src({
-          src: self.props.src,
-          type: "application/x-mpegURL"
-        })
-      }
     });
+
+    if (this.props.src) {
+      this.updateSrc(this.props.src);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.player && nextProps.src) {
-      this.player.ready(function() {
-        console.log(nextProps.src);
-        this.src({
-          src: nextProps.src,
-          type: 'application/x-mpegURL',
-        });
-      });
+    if (this.player && nextProps.src && (nextProps.src !== this.props.src)) {
+      this.updateSrc(nextProps.src);
     }
+  }
+
+  updateSrc(src) {
+    this.player.ready(function() {
+      this.src({
+        src: src,
+        type: 'application/x-mpegURL',
+      });
+    });
   }
 
   shouldComponentUpdate() {
@@ -43,7 +41,7 @@ export class VideoPlayer extends Component {
 
   render() {
     return (
-      <div data-vjs-player className="video-js">
+      <div data-vjs-player className="video-js vjs-big-play-centered">
         <video ref="video"></video>
       </div>
     );

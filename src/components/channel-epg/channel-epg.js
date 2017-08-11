@@ -9,26 +9,36 @@ import { Duration } from '../formatters/duration';
 import { DateFormatter } from '../formatters/date';
 
 export class ChannelEpg extends Component {
-    static propTypes = {
-      epgUrl: PropTypes.string.isRequired
-    };
+  static propTypes = {
+    epgUrl: PropTypes.string.isRequired
+  };
 
-    state = {
-      /**
-       * @type EpgEntry[]
-       */
-      entries: [],
-      currentProgramTime: null,
-    };
-
-    componentWillReceiveProps(props) {
-      this.loadEpg(props.epgUrl).then((entries) => {
-        const currentProgram = this.getCurrentProgram(entries);
-        this.setState({entries: this.filterOutdatedEntries(entries, currentProgram)});
-      })
-    }
+  state = {
+    /**
+     * @type EpgEntry[]
+     */
+    entries: [],
+    currentProgramTime: null,
+  };
 
   currentProgram = null;
+
+  componentWillMount() {
+    this.initEpg(this.props.epgUrl);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (this.props.epgUrl !== newProps.epgUrl) {
+      this.initEpg(newProps.epgUrl);
+    }
+  }
+
+  initEpg(epgUrl) {
+    this.loadEpg(epgUrl).then((entries) => {
+      const currentProgram = this.getCurrentProgram(entries);
+      this.setState({ entries: this.filterOutdatedEntries(entries, currentProgram) });
+    })
+  }
 
   componentDidMount() {
     this.watchCurrentProgram();
@@ -55,7 +65,7 @@ export class ChannelEpg extends Component {
     const currentProgram = this.getCurrentProgram(this.state.entries);
 
     if (this.currentProgram !== currentProgram) {
-      this.setState({entries: this.filterOutdatedEntries(this.state.entries, currentProgram)});
+      this.setState({ entries: this.filterOutdatedEntries(this.state.entries, currentProgram) });
     }
 
     if (!this.isUnmounted) {

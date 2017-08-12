@@ -1,4 +1,3 @@
-import { slugify  } from 'transliteration';
 export class Channel {
   constructor(data) {
     this.id = +data.id;
@@ -10,6 +9,6 @@ export class Channel {
   }
 
   get urlSlug() {
-    return slugify (this.id + '-' + this.name);
+    return this.id;
   }
 }

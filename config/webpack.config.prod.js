@@ -196,7 +196,7 @@ module.exports = {
       },
     }),
     new webpack.DefinePlugin(env.stringified),
-    new BabiliPlugin(),
+    //new BabiliPlugin(),
     new ExtractTextPlugin({
       filename: cssFilename,
     }),

@@ -9,7 +9,7 @@ import styles from './app.scss';
 class App extends Component {
 
   state = {
-    playlistUrl: 'http://localhost:3001/playlist?url=myott.tv',
+    playlistUrl: '/api/playlist?url=myott.tv',
     currentKey: '00XE8DMEI7',
   };
 

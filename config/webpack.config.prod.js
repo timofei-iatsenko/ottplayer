@@ -53,7 +53,10 @@ module.exports = {
       // It is guaranteed to exist because we tweak it in `env.js`
       process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
     ),
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['.js', '.json', '.web.jsx', '.jsx'],
+    alias: {
+      'videojs-contrib-hls': path.resolve(__dirname, '../node_modules/videojs-contrib-hls/dist/videojs-contrib-hls.js'),
+    },
     plugins: [
       new ModuleScopePlugin(paths.appSrc),
     ],
@@ -204,6 +207,10 @@ module.exports = {
       fileName: 'asset-manifest.json',
     }),
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new webpack.ProvidePlugin({
+      'videojs': 'video.js',
+      'window.videojs': 'video.js',
+    }),
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

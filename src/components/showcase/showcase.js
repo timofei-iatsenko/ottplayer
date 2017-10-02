@@ -19,10 +19,6 @@ export class Showcase extends Component {
   favouritesStorage = LocalStorageFactory.create('favourites');
 
   state = {
-    /**
-     * @type Channel
-     */
-    currentChannel: null,
     favourites: this.favouritesStorage.get([]),
     channels: [],
     currentEpg: {},
@@ -40,7 +36,6 @@ export class Showcase extends Component {
     this.loadPlaylist().then((playlist) => {
       this.setState({
         playlist: playlist,
-        currentChannel: this.getInitialChannel(playlist.channels)
       });
     })
   }
@@ -57,11 +52,17 @@ export class Showcase extends Component {
    * @returns {Channel}
    */
   get currentChannel() {
-    return this.state.currentChannel || {};
+    if (!this.state.playlist) {
+      return;
+    }
+
+    return (
+      this.getInitialChannel(this.state.playlist.channels) || {}
+    );
   }
 
   get streamUrl() {
-    return (this.currentChannel.stream || '').replace('{KEY}', this.props.currentKey)
+    return ((this.currentChannel && this.currentChannel.stream) || '').replace('{KEY}', this.props.currentKey)
   }
 
   /**
@@ -87,10 +88,6 @@ export class Showcase extends Component {
   * @param {Channel} channel
   * */
   changeChannel(history, channel) {
-    this.setState({
-      currentChannel: channel,
-    });
-
     history.push('/' + channel.urlSlug);
   }
 
@@ -105,7 +102,7 @@ export class Showcase extends Component {
       currentEpg: this.state.currentEpg,
       favourites: this.state.favourites,
       onChangeChannel: this.changeChannel.bind(this, this.props.history),
-      current: this.state.currentChannel,
+      current: this.currentChannel,
     };
 
     const favouritesEditor = ({history}) => (
@@ -127,7 +124,7 @@ export class Showcase extends Component {
             <div className={styles.playerContainer}>
               <VideoPlayer src={this.streamUrl}></VideoPlayer>
             </div>
-            {this.state.currentChannel && <ChannelEpg epgUrl={`${this.state.playlist.urlEpg}channel/${this.state.currentChannel.id}`} />}
+            {this.currentChannel && <ChannelEpg epgUrl={`${this.state.playlist.urlEpg}channel/${this.currentChannel.id}`} />}
           </div>
         </div>
     );

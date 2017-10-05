@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import styles from './progress-bar.scss';
-import PropTypes from 'prop-types';
 import { Time } from '../formatters/time';
 
-export class ProgressBar extends Component {
-  static propTypes = {
-    startTime: PropTypes.number.isRequired,
-    endTime: PropTypes.number.isRequired,
-  };
+interface ProgressBarProps {
+  startTime: number;
+  endTime: number;
+}
 
-  oldValue = null;
+export class ProgressBar extends Component<ProgressBarProps> {
+  private oldValue: number = null;
+  private isUnmounted: boolean;
 
-  componentDidMount() {
+  public componentDidMount() {
     this.watch();
   }
 
-  watch() {
+  private watch() {
     if (this.isUnmounted) {
       return;
     }
@@ -31,17 +31,17 @@ export class ProgressBar extends Component {
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     this.isUnmounted = true;
   }
 
-  get value() {
+  private get value() {
     const duration = this.props.endTime - this.props.startTime;
     const passed = Math.floor(Date.now() / 1000) - this.props.startTime;
     return Math.round((passed / duration) * 100);
   }
 
-  render() {
+  public render() {
     this.oldValue = this.value;
 
     return (

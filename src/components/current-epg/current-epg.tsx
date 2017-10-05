@@ -1,54 +1,46 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { EpgEntry } from '../../entities/epg-entry';
+import { EpgDictionary, EpgEntry } from '../../entities/epg-entry';
 
-export class CurrentEpg extends Component {
-  static propTypes = {
-    epgUrl: PropTypes.string.isRequired,
-    onDataReceived: PropTypes.func.isRequired,
-  };
+interface CurrentEpgProps {
+  epgUrl: string;
+  onDataReceived: (epg: EpgDictionary) => void;
+}
 
-  state = {
-    epg: {},
-  };
+export class CurrentEpg extends Component<CurrentEpgProps> {
+  private isUnmounted = false;
+  private scheduledTimeout: number = null;
 
-  scheduledTimeout = null;
-
-  componentWillMount() {
+  public componentWillMount() {
     this.updateEpg();
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     this.isUnmounted = true;
     if (this.scheduledTimeout) {
       clearTimeout(this.scheduledTimeout);
     }
   }
 
-  updateEpg() {
-    this.loadEpg().then(({epg, invalidateDate}) =>{
+  private updateEpg() {
+    this.loadEpg().then(({epg, invalidateDate}) => {
       this.props.onDataReceived(epg);
 
       if (!this.isUnmounted) {
         this.scheduleNextUpdate(invalidateDate);
       }
-
-    })
+    });
   }
 
-  /**
-   * @returns {Promise.<{epg, invalidateDate}>}
-   */
-  loadEpg() {
+  public loadEpg(): Promise<{epg: EpgDictionary, invalidateDate: number}> {
     const url = this.props.epgUrl;
-    return window.fetch(url).then(r => r.json()).then((response) => {
+    return window.fetch(url).then((r) => r.json()).then((response) => {
       let invalidateDate = 0;
 
       const epg =  Object.keys(response).reduce((acc, key) => {
         acc[key] = new EpgEntry(response[key]);
         invalidateDate = Math.max(invalidateDate, acc[key].endTime);
         return acc;
-      }, {});
+      }, {} as any);
 
       return { epg, invalidateDate };
     });
@@ -58,7 +50,7 @@ export class CurrentEpg extends Component {
    *
    * @param {number} when timestamp in *seconds*
    */
-  scheduleNextUpdate(when) {
+  private scheduleNextUpdate(when: number) {
     const currentTs = Math.floor(Date.now() / 1000);
     let timeout = when - currentTs;
 
@@ -66,10 +58,10 @@ export class CurrentEpg extends Component {
       timeout = 1000 * 10;
     }
 
-    this.scheduledTimeout = setTimeout(this.updateEpg.bind(this),  timeout);
+    this.scheduledTimeout = window.setTimeout(this.updateEpg.bind(this),  timeout);
   }
 
-  render() {
+  public render(): null {
     return null;
   }
 }

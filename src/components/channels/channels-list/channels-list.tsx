@@ -1,27 +1,27 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, ReactFragment } from 'react';
 import { Channel } from '../../../entities/channel.model';
 import styles from './channels-list.scss';
 import { EpgEntry } from '../../../entities/epg-entry';
 import { ProgressBar } from '../../progress-bar/progress-bar';
 
-export class ChannelsList extends Component {
-  static propTypes = {
-    onChangeChannel: PropTypes.func,
-    channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
-    current: PropTypes.instanceOf(Channel),
-    control: PropTypes.func,
-    scrollbarController: PropTypes.object,
-    currentEpg: PropTypes.objectOf(PropTypes.instanceOf(EpgEntry)),
-  };
+interface ChannelsListProps {
+  onChangeChannel?: (channel: Channel) => void;
+  channels: Channel[];
+  current?: Channel;
+  control?: (channel: Channel) => ReactFragment;
+  scrollbarController?: any;
+  currentEpg?: {[chid: number]: EpgEntry};
+}
 
-  isActive(chanel) {
+export class ChannelsList extends Component<ChannelsListProps> {
+  private activeElementRef: HTMLElement;
+  private isActive(chanel: Channel) {
     return chanel === this.props.current;
   }
 
-  isInitiallyScrolled = false;
+  private isInitiallyScrolled = false;
 
-  scrollToActiveChannel() {
+  private scrollToActiveChannel() {
     if (!this.isInitiallyScrolled && this.props.scrollbarController && this.activeElementRef) {
       this.isInitiallyScrolled = true;
 
@@ -39,27 +39,19 @@ export class ChannelsList extends Component {
     }
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.scrollToActiveChannel();
   }
 
-  componentDidUpdate() {
+  public componentDidUpdate() {
     this.scrollToActiveChannel();
   }
 
-  /**
-   * @param chId
-   * @returns {EpgEntry}
-   */
-  getCurrentEpg(chId) {
+  private getCurrentEpg(chId: number): EpgEntry {
     return (this.props.currentEpg && this.props.currentEpg[chId]);
   }
 
-  /**
-   *
-   * @param {Channel} channel
-   */
-  getDetailsComponent(channel) {
+  private getDetailsComponent(channel: Channel): ReactFragment {
     const epg = this.getCurrentEpg(channel.id);
 
     return (<div className={styles.details}>
@@ -69,7 +61,7 @@ export class ChannelsList extends Component {
     </div>);
   }
 
-  render() {
+  public render() {
     return (
       <div className={styles.channelsList}>
         {this.props.channels.map(

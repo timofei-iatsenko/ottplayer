@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import { SidePanel } from '../side-panel/side-panel';
 import { Channel } from '../../entities/channel.model';
@@ -10,33 +9,35 @@ import { ChannelListMode } from '../list-switcher/channel-list-modes';
 import { NoFavourites } from '../no-favourites/no-favourites';
 import { LocalStorageFactory } from '../../libs/storage';
 import { EpgEntry } from '../../entities/epg-entry';
+import autobind from 'autobind-decorator';
 
-export class ChannelsPanel extends Component {
-  static propTypes = {
-    favourites: PropTypes.arrayOf(PropTypes.number).isRequired,
-    channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
-    onChangeChannel: PropTypes.func.isRequired,
-    current: PropTypes.instanceOf(Channel),
-    currentEpg: PropTypes.objectOf(PropTypes.instanceOf(EpgEntry)),
-  };
+interface ChannelsPanelProps {
+  favourites: number[];
+  channels: Channel[];
+  onChangeChannel: (channel: Channel) => void;
+  current?: Channel;
+  currentEpg?: {[chid: number]: EpgEntry};
+}
 
-  modeStorage = LocalStorageFactory.create('channelsPanelMode');
+export class ChannelsPanel extends Component<ChannelsPanelProps> {
+  private modeStorage = LocalStorageFactory.create<ChannelListMode>('channelsPanelMode');
+  private scrollbarController: any;
 
-  state = {
+  public state = {
     currentListMode: this.modeStorage.get(ChannelListMode.grouped),
   };
 
-  switchListMode(type) {
+  @autobind
+  private switchListMode(type: ChannelListMode) {
     this.setState({ currentListMode: type });
     this.modeStorage.set(type);
   }
 
-
-  getFavouritesChannels() {
-    return this.props.channels.filter((channel) => this.props.favourites.includes(channel.id))
+  private getFavouritesChannels() {
+    return this.props.channels.filter((channel) => this.props.favourites.includes(channel.id));
   }
 
-  getChannelsListElement() {
+  private getChannelsListElement() {
     const props = {
       channels: this.props.channels,
       current: this.props.current,
@@ -51,7 +52,7 @@ export class ChannelsPanel extends Component {
 
     if (this.state.currentListMode === ChannelListMode.favourites) {
       if (this.props.favourites.length === 0) {
-        return <NoFavourites/>
+        return <NoFavourites/>;
       }
 
       return <ChannelsList {...props} channels={this.getFavouritesChannels()}/>;
@@ -60,9 +61,9 @@ export class ChannelsPanel extends Component {
     return <ChannelsList {...props} />;
   }
 
-  render() {
+  public render() {
     const header = <ListSwitcher
-      onSwitch={this.switchListMode.bind(this)}
+      onSwitch={this.switchListMode}
       current={this.state.currentListMode}/>;
 
     return (

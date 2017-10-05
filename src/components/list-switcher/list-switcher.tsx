@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent, ReactFragment } from 'react';
 import Star from 'react-icons/lib/fa/star';
 import List from 'react-icons/lib/fa/align-justify';
 import Folder from 'react-icons/lib/fa/folder';
@@ -7,42 +6,49 @@ import { ChannelListMode } from './channel-list-modes';
 
 import styles from './list-switcher.scss';
 
-export class ListSwitcher extends Component {
-  static propTypes = {
-    onSwitch: PropTypes.func,
-    current: PropTypes.number.isRequired,
-  };
+interface ListSwitcherProps {
+  onSwitch: (type: ChannelListMode) => void;
+  current: ChannelListMode;
+}
 
-  options = [
+interface Option {
+  btnTitle: string;
+  title: string;
+  icon: ReactFragment;
+  type: ChannelListMode;
+}
+
+export class ListSwitcher extends PureComponent<ListSwitcherProps> {
+  private options: Option[] = [
     {
-      btnTitle: "Show favourites",
-      title: "Favourites",
+      btnTitle: 'Show favourites',
+      title: 'Favourites',
       icon: <Star/>,
       type: ChannelListMode.favourites,
     },
     {
-      btnTitle: "Show all",
-      title: "All",
+      btnTitle: 'Show all',
+      title: 'All',
       icon: <List/>,
       type: ChannelListMode.all,
     },
     {
-      btnTitle: "Show by categories",
-      title: "Categories",
+      btnTitle: 'Show by categories',
+      title: 'Categories',
       icon: <Folder/>,
       type: ChannelListMode.grouped,
     },
   ];
 
-  isCurrent(option) {
+  private isCurrent(option: Option) {
     return option.type === this.props.current;
   }
 
-  get current() {
+  private get current() {
     return this.options.find(this.isCurrent.bind(this));
   }
 
-  render() {
+  public render() {
     return (
       <div className={styles.listSwitcher}>
 

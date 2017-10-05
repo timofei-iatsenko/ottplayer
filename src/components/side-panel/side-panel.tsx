@@ -1,16 +1,15 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { PureComponent, ReactFragment } from 'react';
 import styles from './side-panel.scss';
-import { Scrollbars } from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars';
 
-export class SidePanel extends Component {
-  static propTypes = {
-    header: PropTypes.element,
-    body: PropTypes.element,
-    provideScrollbarCtrl: PropTypes.func,
-  };
+interface SidePanelProps {
+  header: ReactFragment;
+  body: ReactFragment;
+  provideScrollbarCtrl?: (ctrl: any) => void;
+}
 
-  render() {
+export class SidePanel extends PureComponent<SidePanelProps> {
+  public render() {
     return (
       <div className={styles.host}>
         <div className={styles.header}>

@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { SidePanel } from '../side-panel/side-panel';
 import { SaveBar } from './save-bar/save-bar';
 import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';
 import { Channel } from '../../entities/channel.model';
 
-export class FavouritesEditor extends Component {
-  static propTypes = {
-    channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
-    favourites: PropTypes.arrayOf(PropTypes.number).isRequired,
-    onChangeChannel: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
-  };
+interface FavouritesEditorProps {
+  channels: Channel[];
+  favourites: number[];
+  onChangeChannel: (channel: Channel) => void;
+  onCancel: () => void;
+  onSave: (selection: number[]) => void;
+}
 
-  state = {
+export class FavouritesEditor extends Component<FavouritesEditorProps> {
+  public state = {
     selectedChannels: this.props.favourites,
   };
 
-  handleSelectionChange(selection) {
+  private handleSelectionChange(selection: number[]) {
     this.setState({ selectedChannels: selection });
   }
 
-  render() {
+  public render() {
     const header = <SaveBar
       saveDisabled={this.state.selectedChannels.length === 0}
       onSave={() => this.props.onSave(this.state.selectedChannels)}

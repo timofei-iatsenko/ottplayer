@@ -1,54 +1,51 @@
 import React, { Component } from 'react';
 import styles from './channel-epg.scss';
-import PropTypes from 'prop-types';
 import { ProgressBar } from '../progress-bar/progress-bar';
 import { EpgEntry } from '../../entities/epg-entry';
 import { Time } from '../formatters/time';
-import { Scrollbars } from 'react-custom-scrollbars';
+import Scrollbars from 'react-custom-scrollbars';
 import { Duration } from '../formatters/duration';
 import { DateFormatter } from '../formatters/date';
 
-export class ChannelEpg extends Component {
-  static propTypes = {
-    epgUrl: PropTypes.string.isRequired
+interface ChannelEpgState {
+  entries: EpgEntry[];
+}
+
+interface ChannelEpgProps {
+  epgUrl: string;
+}
+
+export class ChannelEpg extends Component<ChannelEpgProps, ChannelEpgState> {
+  private isUnmounted = false;
+
+  public state = {
+    entries: [] as EpgEntry[],
   };
 
-  state = {
-    /**
-     * @type EpgEntry[]
-     */
-    entries: [],
-    currentProgramTime: null,
-  };
+  private currentProgram: EpgEntry = null;
 
-  currentProgram = null;
-
-  componentWillMount() {
+  public componentWillMount() {
     this.initEpg(this.props.epgUrl);
   }
 
-  componentWillReceiveProps(newProps) {
+  public componentWillReceiveProps(newProps: ChannelEpgProps) {
     if (this.props.epgUrl !== newProps.epgUrl) {
       this.initEpg(newProps.epgUrl);
     }
   }
 
-  initEpg(epgUrl) {
+  private initEpg(epgUrl: string) {
     this.loadEpg(epgUrl).then((entries) => {
       const currentProgram = this.getCurrentProgram(entries);
       this.setState({ entries: this.filterOutdatedEntries(entries, currentProgram) });
     })
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.watchCurrentProgram();
   }
 
-  /**
-   * @param {string} url
-   * @returns {Promise.<EpgEntry[]>}
-   */
-  loadEpg(url) {
+  private loadEpg(url: string): Promise<EpgEntry[]> {
     return window.fetch(url).then(r => r.json()).then((response) => {
       return Object.keys(response).reduce((acc, key) => {
         acc.push(new EpgEntry(response[key]));
@@ -57,11 +54,11 @@ export class ChannelEpg extends Component {
     });
   }
 
-  getCurrentProgram(entries) {
+  private getCurrentProgram(entries: EpgEntry[]): EpgEntry {
     return entries.find((entry) => entry.inAir);
   }
 
-  watchCurrentProgram() {
+  private watchCurrentProgram() {
     const currentProgram = this.getCurrentProgram(this.state.entries);
 
     if (this.currentProgram !== currentProgram) {
@@ -73,16 +70,16 @@ export class ChannelEpg extends Component {
     }
   }
 
-  filterOutdatedEntries(entries, currentProgram) {
+  private filterOutdatedEntries(entries: EpgEntry[], currentProgram: EpgEntry) {
     const index = entries.indexOf(currentProgram);
     return entries.slice(index);
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     this.isUnmounted = true;
   }
 
-  render() {
+  public render() {
     return (
       <div className={styles.host}>
         <Scrollbars autoHide>

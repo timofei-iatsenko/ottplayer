@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
-export class Duration extends Component {
-  static propTypes = {
-    children: PropTypes.number.isRequired,
-  };
-
-  format(value) {
+interface DurationProps {
+  children: number;
+}
+export class Duration extends Component<DurationProps> {
+  private format(value: number) {
     const minutes = value / 60;
 
     if (minutes < 60) {
@@ -17,7 +15,7 @@ export class Duration extends Component {
     return `${hours}h ${minutes - hours * 60} min`;
   }
 
-  render() {
+  public render() {
     return <span>{this.format(this.props.children)}</span>;
   }
 }

@@ -1,23 +1,18 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Channel } from '../../../entities/channel.model';
 import without from 'lodash/without';
 import styles from './selectable-channels-list.scss';
 import { ChannelsList } from '../channels-list/channels-list';
 
+interface SelectableChannelsListProps {
+  onChangeChannel: (channel: Channel) => void;
+  onSelectionChange: (selected: number[]) => void;
+  selected: number[];
+  channels: Channel[];
+}
 
-export class SelectableChannelsList extends Component {
-  static propTypes = {
-    onChangeChannel: PropTypes.func.isRequired,
-    onSelectionChange: PropTypes.func.isRequired,
-    selected: PropTypes.arrayOf(PropTypes.number).isRequired,
-    channels: PropTypes.arrayOf(PropTypes.instanceOf(Channel)).isRequired,
-  };
-
-  /**
-   * @param {Channel} channel
-   */
-  handleCheckBoxChange(channel) {
+export class SelectableChannelsList extends Component<SelectableChannelsListProps> {
+  private handleCheckBoxChange(channel: Channel) {
     let selected;
 
     if (this.isSelected(channel)) {
@@ -31,21 +26,21 @@ export class SelectableChannelsList extends Component {
     this.props.onSelectionChange(selected);
   }
 
-  isSelected(channel) {
+  private isSelected(channel: Channel) {
     return this.props.selected.indexOf(channel.id) !== -1;
   }
 
-  getControl() {
-    return (channel) => (
+  private getControl() {
+    return (channel: Channel) => (
       <div onClick={(e) => e.stopPropagation()} className={styles.checkbox}>
-        <input defaultChecked={this.isSelected(channel)} type="checkbox" id={`channel${channel.id}`}
+        <input defaultChecked={this.isSelected(channel)} type='checkbox' id={`channel${channel.id}`}
                onChange={() => this.handleCheckBoxChange(channel)}/>
         <label htmlFor={`channel${channel.id}`}>Select</label>
       </div>
     );
   }
 
-  render() {
+  public render() {
     return (
       <ChannelsList {...this.props} control={this.getControl()} />
     );

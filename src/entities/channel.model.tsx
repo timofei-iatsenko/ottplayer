@@ -1,5 +1,12 @@
 export class Channel {
-  constructor(data) {
+  public id: number;
+  public name: string;
+  public logo: string;
+  public archive: string;
+  public stream: string;
+  public groupTitle: string;
+
+  constructor(data: any) {
     this.id = +data.id;
     this.name = data.name;
     this.logo = data.logo;

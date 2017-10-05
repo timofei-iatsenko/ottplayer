@@ -13,7 +13,7 @@ process.on('unhandledRejection', err => {
 });
 
 // Ensure environment variables are read.
-require('../config/env');
+require('../config/react-create-app/env');
 
 const jest = require('jest');
 const argv = process.argv.slice(2);

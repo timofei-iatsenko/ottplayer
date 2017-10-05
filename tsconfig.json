@@ -1,33 +1,40 @@
 {
   "compilerOptions": {
+    /* Basic Options */
     "target": "es5",
     "module": "es2015",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
-    "noEmit": true,
-    "noEmitHelpers": true,
-    "importHelpers": true,
-    "strictNullChecks": false,
     "lib": [
-      "es7",
-      "dom"
-    ]
+      "dom",
+      "es7"
+    ],
+    "jsx": "react",
+    "importHelpers": true,
+    "downlevelIteration": true,
+    "allowJs": true,
+
+    /* Strict Type-Checking Options */
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    /* Additional Checks */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+
+    /* Experimental Options */
+    "experimentalDecorators": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules",
-    "dist",
-    "src/main.browser.aot.ts"
-  ],
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true,
-    "useCache": true,
-    "cacheDirectory": ".cache"
-  }
+    "dist"
+  ]
 }

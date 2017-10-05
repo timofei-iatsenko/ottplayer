@@ -86,7 +86,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: ['.web.js', '.js', '.json', '.web.jsx', '.jsx'],
+    extensions: ['ts', '.tsx', '.js', '.json', '.jsx'],
     alias: {
       'videojs-contrib-hls': path.resolve(__dirname, '../node_modules/videojs-contrib-hls/dist/videojs-contrib-hls.js'),
     },
@@ -135,6 +135,7 @@ module.exports = {
         exclude: [
           /\.html$/,
           /\.(js|jsx)$/,
+          /\.(ts|tsx)$/,
           /\.css$/,
           /\.scss/,
           /\.json$/,
@@ -160,13 +161,22 @@ module.exports = {
         },
       },
       // Process JS with Babel.
+      //{
+      //  test: /\.(js|jsx)$/,
+      //  include: paths.appSrc,
+      //  loader: require.resolve('babel-loader'),
+      //  options: {
+      //    cacheDirectory: true,
+      //  },
+      //},
       {
-        test: /\.(js|jsx)$/,
-        include: paths.appSrc,
-        loader: require.resolve('babel-loader'),
-        options: {
-          cacheDirectory: true,
-        },
+        test: /\.[tj]sx?$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'awesome-typescript-loader',
+          },
+        ],
       },
       // "postcss" loader applies autoprefixer to our CSS.
       // "css" loader resolves paths in CSS and adds assets as dependencies.

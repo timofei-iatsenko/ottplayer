@@ -38,7 +38,7 @@ export class ChannelEpg extends Component<ChannelEpgProps, ChannelEpgState> {
     this.loadEpg(epgUrl).then((entries) => {
       const currentProgram = this.getCurrentProgram(entries);
       this.setState({ entries: this.filterOutdatedEntries(entries, currentProgram) });
-    })
+    });
   }
 
   public componentDidMount() {
@@ -46,7 +46,7 @@ export class ChannelEpg extends Component<ChannelEpgProps, ChannelEpgState> {
   }
 
   private loadEpg(url: string): Promise<EpgEntry[]> {
-    return window.fetch(url).then(r => r.json()).then((response) => {
+    return window.fetch(url).then((r) => r.json()).then((response) => {
       return Object.keys(response).reduce((acc, key) => {
         acc.push(new EpgEntry(response[key]));
         return acc;

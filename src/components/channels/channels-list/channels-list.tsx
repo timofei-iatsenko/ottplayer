@@ -10,11 +10,12 @@ interface ChannelsListProps {
   current?: Channel;
   control?: (channel: Channel) => ReactFragment;
   scrollbarController?: any;
-  currentEpg?: {[chid: number]: EpgEntry};
+  currentEpg?: { [chid: number]: EpgEntry };
 }
 
 export class ChannelsList extends Component<ChannelsListProps> {
   private activeElementRef: HTMLElement;
+
   private isActive(chanel: Channel) {
     return chanel === this.props.current;
   }
@@ -64,20 +65,16 @@ export class ChannelsList extends Component<ChannelsListProps> {
   public render() {
     return (
       <div className={styles.channelsList}>
-        {this.props.channels.map(
-          /**
-           * @param {Channel} channel
-           */
-          (channel) =>
-            <div className={this.isActive(channel) ? styles.itemActive : styles.item}
-                 ref={(ref) => this.isActive(channel) && (this.activeElementRef = ref)}
-                 onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
-              <div className={styles.icon}>
-                {this.props.control && this.props.control(channel)}
-                <img src={channel.logo} alt=""/>
-              </div>
-              {this.getDetailsComponent(channel)}
+        {this.props.channels.map((channel) =>
+          <div className={this.isActive(channel) ? styles.itemActive : styles.item}
+                ref={(ref) => this.isActive(channel) && (this.activeElementRef = ref)}
+                onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
+            <div className={styles.icon}>
+              {this.props.control && this.props.control(channel)}
+              <img src={channel.logo} alt=''/>
             </div>
+            {this.getDetailsComponent(channel)}
+          </div>,
         )}
       </div>
     );

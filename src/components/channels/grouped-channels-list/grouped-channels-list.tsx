@@ -76,7 +76,7 @@ export class GroupedChannelsList extends Component<GroupedChannelsListProps> {
             <div className={styles.body}>
               <ChannelsList {...this.props} channels={group.channels} />
             </div>
-          </div>
+          </div>,
         )}
       </div>
     );

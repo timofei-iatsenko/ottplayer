@@ -63,10 +63,6 @@ export class Showcase extends Component<ShowcaseProps> {
       .replace('{KEY}', this.props.currentKey);
   }
 
-  /**
-   * @param {Channel[]} channels
-   * @return Channel
-   */
   private getInitialChannel(channels: Channel[]): Channel {
     const { channelSlug } = this.props.match.params;
 

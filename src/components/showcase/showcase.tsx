@@ -59,7 +59,7 @@ export class Showcase extends PureComponent<ShowcaseProps> {
             <div className={styles.playerContainer}>
               <VideoPlayer src={this.streamUrl}></VideoPlayer>
             </div>
-            {this.currentChannel && <ChannelEpg epgUrl={`${this.props.playlist.urlEpg}channel/${this.currentChannel.id}`} />}
+            {this.currentChannel && this.props.playlist && <ChannelEpg epgUrl={`${this.props.playlist.urlEpg}channel/${this.currentChannel.id}`} />}
           </div>
         </div>
     );

@@ -1,40 +1,40 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import { SidePanel } from '../side-panel/side-panel';
-import { Channel } from '../../entities/channel.model';
+import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { GroupedChannelsList } from '../channels/grouped-channels-list/grouped-channels-list';
 import { ChannelsList } from '../channels/channels-list/channels-list';
 import { ListSwitcher } from '../list-switcher/list-switcher';
 import { ChannelListMode } from '../list-switcher/channel-list-modes';
 import { NoFavourites } from '../no-favourites/no-favourites';
-import { LocalStorageFactory } from '../../libs/storage';
-import { EpgEntry } from '../../entities/epg-entry';
-import autobind from 'autobind-decorator';
+import { EpgDictionary } from '../../entities/epg-entry';
+import { connect, MapDispatchToPropsParam, MapStateToPropsParam } from 'react-redux';
+import { AppState } from '../../store';
+import { setChannelsListMode } from '../../actions/ui-preferences.actions';
 
-interface ChannelsPanelProps {
-  favourites: number[];
-  channels: Channel[];
+interface OwnProps {
   onChangeChannel: (channel: Channel) => void;
-  current?: Channel;
-  currentEpg?: {[chid: number]: EpgEntry};
+  current: Channel;
 }
 
-export class ChannelsPanel extends Component<ChannelsPanelProps> {
-  private modeStorage = LocalStorageFactory.create<ChannelListMode>('channelsPanelMode');
+interface StateProps {
+  favourites: ReadonlyChannelsCollection;
+  channels: ReadonlyChannelsCollection;
+  currentEpg: EpgDictionary;
+  listMode: ChannelListMode;
+}
+
+interface DispatchProps {
+  onChangeListMode: (mode: ChannelListMode) => void;
+}
+
+type Props = OwnProps & StateProps & DispatchProps;
+
+export class ChannelsPanelComponent extends PureComponent<Props> {
   private scrollbarController: any;
 
-  public state = {
-    currentListMode: this.modeStorage.get(ChannelListMode.grouped),
-  };
-
-  @autobind
-  private switchListMode(type: ChannelListMode) {
-    this.setState({ currentListMode: type });
-    this.modeStorage.set(type);
-  }
-
-  private getFavouritesChannels() {
-    return this.props.channels.filter((channel) => this.props.favourites.includes(channel.id));
+  get listMode() {
+    return this.props.listMode;
   }
 
   private getChannelsListElement() {
@@ -46,16 +46,16 @@ export class ChannelsPanel extends Component<ChannelsPanelProps> {
       scrollbarController: this.scrollbarController,
     };
 
-    if (this.state.currentListMode === ChannelListMode.grouped) {
+    if (this.listMode === ChannelListMode.grouped) {
       return <GroupedChannelsList {...props} />;
     }
 
-    if (this.state.currentListMode === ChannelListMode.favourites) {
+    if (this.listMode === ChannelListMode.favourites) {
       if (this.props.favourites.length === 0) {
         return <NoFavourites/>;
       }
 
-      return <ChannelsList {...props} channels={this.getFavouritesChannels()}/>;
+      return <ChannelsList {...props} channels={this.props.favourites}/>;
     }
 
     return <ChannelsList {...props} />;
@@ -63,8 +63,8 @@ export class ChannelsPanel extends Component<ChannelsPanelProps> {
 
   public render() {
     const header = <ListSwitcher
-      onSwitch={this.switchListMode}
-      current={this.state.currentListMode}/>;
+      onSwitch={this.props.onChangeListMode}
+      current={this.props.listMode}/>;
 
     return (
       <SidePanel provideScrollbarCtrl={(ctrl) => this.scrollbarController = ctrl}
@@ -73,3 +73,29 @@ export class ChannelsPanel extends Component<ChannelsPanelProps> {
     );
   }
 }
+
+function getFavouritesChannels(channels: ReadonlyChannelsCollection, favourites: ReadonlyArray<number>): ReadonlyChannelsCollection {
+  return channels.filter((channel) => favourites.includes(channel.id));
+}
+
+const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps> = (state: AppState) => {
+  return {
+    favourites: getFavouritesChannels(state.channels, state.favourites),
+    channels: state.channels,
+    currentEpg: state.currentEpg,
+    listMode: state.uiPreferences.channelListMode,
+  };
+};
+
+const mapDispatchToProps: MapDispatchToPropsParam<DispatchProps, OwnProps> = (dispatch) => {
+  return {
+    onChangeListMode: (mode: ChannelListMode) => {
+      dispatch(setChannelsListMode(mode));
+    },
+  };
+};
+
+export const ChannelsPanel = connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ChannelsPanelComponent);

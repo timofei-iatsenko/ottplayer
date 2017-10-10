@@ -19,6 +19,29 @@ function receiveCurrentEpg(epg: EpgDictionary, invalidateDate: number) {
   };
 }
 
+/**
+ *
+ * @param {number} when timestamp in *seconds*
+ * @param {string} epgUrl
+ */
+export function scheduleEpgUpdate(when: number, epgUrl: string): ThunkAction<Promise<void>, AppState, void> {
+  return (dispatch) => {
+    return new Promise((resolve) => {
+      const currentTs = Math.floor(Date.now() / 1000);
+      let timeout = when - currentTs;
+
+      if (when <= currentTs) {
+        timeout = 1000 * 10;
+      }
+
+      window.setTimeout(() => {
+        resolve();
+        dispatch(fetchCurrentEpg(epgUrl));
+      }, timeout);
+    });
+  };
+}
+
 export function fetchCurrentEpg(epgUrl: string): ThunkAction<Promise<any>, AppState, void> {
   return (dispatch) => {
     dispatch(requestCurrentEpg());
@@ -34,6 +57,7 @@ export function fetchCurrentEpg(epgUrl: string): ThunkAction<Promise<any>, AppSt
           return acc;
         }, {} as any);
 
+        dispatch(scheduleEpgUpdate(invalidateDate, epgUrl));
         return dispatch(receiveCurrentEpg(epg, invalidateDate));
       });
   };

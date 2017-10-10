@@ -5,23 +5,29 @@ import { Playlist } from '../../entities/playlist.model';
 import { ChannelsPanel } from '../channels-panel/channels-panel';
 import { Route, Switch } from 'react-router-dom';
 import { ChannelEpg } from '../channel-epg/channel-epg';
-import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
-import { EpgDictionary } from '../../entities/epg-entry';
+import { Channel } from '../../entities/channel.model';
 
-export interface ShowcaseProps {
+export interface StoreProps {
   currentKey: string;
-  channels: ReadonlyChannelsCollection;
-  favourites: ReadonlyArray<number>;
-  currentEpg: Readonly<EpgDictionary>;
   playlist: Readonly<Playlist>;
   currentChannel: Readonly<Channel>;
+  playlistUrl: string;
+}
 
+export interface DispatchProps {
+  onFetchData: (playlistUrl: string) => void;
   onChangeChannel: (channel: Channel) => void;
 }
+
+type ShowcaseProps = StoreProps & DispatchProps;
 
 export class Showcase extends PureComponent<ShowcaseProps> {
   private get currentChannel(): Channel {
     return this.props.currentChannel;
+  }
+
+  public componentDidMount() {
+    this.props.onFetchData(this.props.playlistUrl);
   }
 
   get streamUrl() {
@@ -31,9 +37,6 @@ export class Showcase extends PureComponent<ShowcaseProps> {
 
   public render() {
     const commonProps = {
-      channels: this.props.channels  || [],
-      currentEpg: this.props.currentEpg,
-      favourites: this.props.favourites,
       onChangeChannel: this.props.onChangeChannel,
       current: this.currentChannel,
     };
@@ -47,7 +50,6 @@ export class Showcase extends PureComponent<ShowcaseProps> {
 
     return (
         <div className={styles.host}>
-          {/*{this.state.playlist && (<CurrentEpg onDataReceived={this.setCurrentEpg.bind(this)} epgUrl={this.state.playlist.urlEpg + '/channel_now'}/>)}*/}
           <Switch>
             {/*<Route exact path={'/edit-favourites'} render={favouritesEditor}/>*/}
             <Route path='/' render={channelsPanel}/>

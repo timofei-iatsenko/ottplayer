@@ -9,6 +9,7 @@ import { channelsReducer } from './reducers/channels.reducer';
 import { Settings } from './entities/settings.model';
 import { settingsReducer } from './reducers/settings.reducer';
 import { epgReducer } from './reducers/epg.reducer';
+import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferences.reducer';
 
 export interface AppState {
   readonly playlist: Readonly<Playlist>;
@@ -17,6 +18,7 @@ export interface AppState {
 
   readonly settings: Readonly<Settings>;
   readonly currentEpg: Readonly<EpgDictionary>;
+  readonly uiPreferences: Readonly<UiPreferencesState>;
 
 }
 
@@ -26,6 +28,7 @@ const ottApp = combineReducers<AppState>({
   channels: channelsReducer,
   settings: settingsReducer,
   currentEpg: epgReducer,
+  uiPreferences: uiPreferencesReducer,
 });
 
 export const store = createStore<AppState>(ottApp,

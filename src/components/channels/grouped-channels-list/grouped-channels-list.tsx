@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Channel } from '../../../entities/channel.model';
+import { Channel, ReadonlyChannelsCollection } from '../../../entities/channel.model';
 import { ChannelsList } from '../channels-list/channels-list';
 import styles from './grouped-channels-list.scss';
 import groupBy from 'lodash/groupBy';
@@ -7,14 +7,14 @@ import ArrowIcon from 'react-icons/lib/fa/angle-right';
 
 interface GroupedChannelsListProps {
   onChangeChannel?: (channel: Channel) => void;
-  channels: Channel[];
+  channels: ReadonlyChannelsCollection;
   current?: Channel;
   scrollbarController?: any;
 }
 
 interface Group {
   name: string;
-  channels: Channel[];
+  channels: ReadonlyChannelsCollection;
 }
 export class GroupedChannelsList extends Component<GroupedChannelsListProps> {
   private groups: Group[] = [];
@@ -43,7 +43,7 @@ export class GroupedChannelsList extends Component<GroupedChannelsListProps> {
     return this.state.expanded[group.name];
   }
 
-  private prepareData(channels: Channel[], current: Channel) {
+  private prepareData(channels: ReadonlyChannelsCollection, current: Channel) {
     const grouped = groupBy(channels, (channel: Channel) => channel.groupTitle);
     this.groups = Object.keys(grouped).map((name) => {
       const group = {

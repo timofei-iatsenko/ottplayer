@@ -30,13 +30,13 @@ export function fetchPlaylist(playlistUrl: string): ThunkAction<Promise<any>, Ap
       .then((r) => r.json())
       .then((d) => d.playlist)
       .then((playlist: Playlist) => {
-        dispatch(receivePlaylist(playlist));
-
         playlist.channels.forEach((c: Channel) => {
           c.logo = playlist.urlLogo + c.logo;
         });
 
         dispatch(receiveChannels(playlist.channels));
+
+        return dispatch(receivePlaylist(playlist));
       });
   };
 }

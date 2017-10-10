@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Channel } from '../../../entities/channel.model';
+import { Channel, ReadonlyChannelsCollection } from '../../../entities/channel.model';
 import without from 'lodash/without';
 import styles from './selectable-channels-list.scss';
 import { ChannelsList } from '../channels-list/channels-list';
@@ -8,7 +8,7 @@ interface SelectableChannelsListProps {
   onChangeChannel: (channel: Channel) => void;
   onSelectionChange: (selected: number[]) => void;
   selected: number[];
-  channels: Channel[];
+  channels: ReadonlyChannelsCollection;
 }
 
 export class SelectableChannelsList extends Component<SelectableChannelsListProps> {

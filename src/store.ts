@@ -1,5 +1,5 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { ChannelsCollection } from './entities/channel.model';
+import { ReadonlyChannelsCollection } from './entities/channel.model';
 import { EpgDictionary } from './entities/epg-entry';
 import { Playlist } from './entities/playlist.model';
 import { playlistReducer } from './reducers/playlist.reducer';
@@ -8,14 +8,15 @@ import { favouritesReducer } from './reducers/favourites.reducer';
 import { channelsReducer } from './reducers/channels.reducer';
 import { Settings } from './entities/settings.model';
 import { settingsReducer } from './reducers/settings.reducer';
+import { epgReducer } from './reducers/epg.reducer';
 
 export interface AppState {
   readonly playlist: Readonly<Playlist>;
   readonly favourites: ReadonlyArray<number>;
-  readonly channels: ChannelsCollection;
+  readonly channels: ReadonlyChannelsCollection;
 
   readonly settings: Readonly<Settings>;
-  // readonly currentEpg: Readonly<EpgDictionary>;
+  readonly currentEpg: Readonly<EpgDictionary>;
 
 }
 
@@ -24,6 +25,7 @@ const ottApp = combineReducers<AppState>({
   favourites: favouritesReducer,
   channels: channelsReducer,
   settings: settingsReducer,
+  currentEpg: epgReducer,
 });
 
 export const store = createStore<AppState>(ottApp,

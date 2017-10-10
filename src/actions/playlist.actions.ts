@@ -1,7 +1,8 @@
-import { AppState } from '../app';
+import { AppState } from '../store';
 import { Playlist } from '../entities/playlist.model';
 import { ThunkAction } from 'redux-thunk';
 import { receiveChannels } from './channels.actions';
+import { Channel } from '../entities/channel.model';
 
 export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';
 export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
@@ -27,9 +28,15 @@ export function fetchPlaylist(playlistUrl: string): ThunkAction<Promise<any>, Ap
 
     return window.fetch(playlistUrl)
       .then((r) => r.json())
-      .then((d) => {
-        dispatch(receivePlaylist(d.playlist));
-        dispatch(receiveChannels(d.playlist.channels));
+      .then((d) => d.playlist)
+      .then((playlist: Playlist) => {
+        dispatch(receivePlaylist(playlist));
+
+        playlist.channels.forEach((c: Channel) => {
+          c.logo = playlist.urlLogo + c.logo;
+        });
+
+        dispatch(receiveChannels(playlist.channels));
       });
   };
 }

@@ -7,4 +7,4 @@ export interface Channel {
   groupTitle: string;
 }
 
-export type ChannelsCollection = ReadonlyArray<Readonly<Channel>>;
+export type ReadonlyChannelsCollection = ReadonlyArray<Readonly<Channel>>;

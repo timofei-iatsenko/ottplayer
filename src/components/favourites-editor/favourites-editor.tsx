@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { SidePanel } from '../side-panel/side-panel';
 import { SaveBar } from './save-bar/save-bar';
 import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';
-import { Channel } from '../../entities/channel.model';
+import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
 
 interface FavouritesEditorProps {
-  channels: Channel[];
+  channels: ReadonlyChannelsCollection;
   favourites: number[];
   onChangeChannel: (channel: Channel) => void;
   onCancel: () => void;

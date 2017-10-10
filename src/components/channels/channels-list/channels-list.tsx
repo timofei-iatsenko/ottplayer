@@ -1,12 +1,12 @@
 import React, { Component, ReactFragment } from 'react';
-import { Channel } from '../../../entities/channel.model';
+import { Channel, ReadonlyChannelsCollection } from '../../../entities/channel.model';
 import styles from './channels-list.scss';
 import { EpgEntry } from '../../../entities/epg-entry';
 import { ProgressBar } from '../../progress-bar/progress-bar';
 
 interface ChannelsListProps {
   onChangeChannel?: (channel: Channel) => void;
-  channels: Channel[];
+  channels: ReadonlyChannelsCollection;
   current?: Channel;
   control?: (channel: Channel) => ReactFragment;
   scrollbarController?: any;
@@ -67,8 +67,9 @@ export class ChannelsList extends Component<ChannelsListProps> {
       <div className={styles.channelsList}>
         {this.props.channels.map((channel) =>
           <div className={this.isActive(channel) ? styles.itemActive : styles.item}
-                ref={(ref) => this.isActive(channel) && (this.activeElementRef = ref)}
-                onClick={() => this.props.onChangeChannel(channel)} key={channel.id}>
+               ref={(ref) => this.isActive(channel) && (this.activeElementRef = ref)}
+               onClick={() => this.props.onChangeChannel(channel)}
+               key={channel.id}>
             <div className={styles.icon}>
               {this.props.control && this.props.control(channel)}
               <img src={channel.logo} alt=''/>

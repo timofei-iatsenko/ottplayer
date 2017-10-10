@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { ShowCaseContainer } from './components/showcase/showcase.container';
 import styles from './app.scss';
 import { Provider } from 'react-redux';
-import { fetchPlaylist } from './actions/playlist.actions';
 import { store } from './store';
-import { fetchCurrentEpg } from './actions/epg.actions';
 
 export class App extends Component {
   public render() {
@@ -22,7 +20,3 @@ export class App extends Component {
     );
   }
 }
-
-store
-  .dispatch(fetchPlaylist(store.getState().settings.playlistUrl))
-  .then(() => store.dispatch(fetchCurrentEpg(store.getState().playlist.urlEpg + '/channel_now' )));

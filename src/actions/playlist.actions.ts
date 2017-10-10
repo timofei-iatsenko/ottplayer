@@ -32,6 +32,7 @@ export function fetchPlaylist(playlistUrl: string): ThunkAction<Promise<any>, Ap
       .then((playlist: Playlist) => {
         playlist.channels.forEach((c: Channel) => {
           c.logo = playlist.urlLogo + c.logo;
+          c.id = +c.id;
         });
 
         dispatch(receiveChannels(playlist.channels));

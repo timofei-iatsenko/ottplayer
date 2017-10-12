@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styles from './channel-epg.scss';
 import { ProgressBar } from '../progress-bar/progress-bar';
 import { EpgEntry } from '../../entities/epg-entry';
@@ -26,70 +26,17 @@ export interface OwnProps {
 
 type Props = StateProps & DispatchProps & OwnProps;
 
-export class ChannelEpgComponent extends Component<Props, ChannelEpgState> {
-  // private isUnmounted = false;
-  //
-  // public state = {
-  //   entries: [] as EpgEntry[],
-  // };
-  //
-  // private currentProgram: EpgEntry = null;
+export class ChannelEpgComponent extends PureComponent<Props, ChannelEpgState> {
 
   public componentDidMount() {
-    // this.props.onFetchData(this.props.epgUrl);
-    // this.initEpg(this.props.epgUrl);
+    this.props.onFetchData(this.props.epgUrl);
   }
 
-  // public componentWillReceiveProps(newProps: Props) {
-  //   if (this.props.epgUrl !== newProps.epgUrl) {
-  //     this.initEpg(newProps.epgUrl);
-  //   }
-  // }
-
-  // private initEpg(epgUrl: string) {
-  //   this.loadEpg(epgUrl).then((entries) => {
-  //     const currentProgram = this.getCurrentProgram(entries);
-  //     this.setState({ entries: this.filterOutdatedEntries(entries, currentProgram) });
-  //   });
-  // }
-
-  // public componentDidMount() {
-  //   this.watchCurrentProgram();
-  // }
-
-  // private loadEpg(url: string): Promise<EpgEntry[]> {
-  //   return window.fetch(url).then((r) => r.json()).then((response) => {
-  //     return Object.keys(response).reduce((acc, key) => {
-  //       acc.push(new EpgEntry(response[key]));
-  //       return acc;
-  //     }, []);
-  //   });
-  // }
-
-  // private getCurrentProgram(entries: EpgEntry[]): EpgEntry {
-  //   return entries.find((entry) => entry.inAir);
-  // }
-
-  // private watchCurrentProgram() {
-  //   const currentProgram = this.getCurrentProgram(this.state.entries);
-  //
-  //   if (this.currentProgram !== currentProgram) {
-  //     this.setState({ entries: this.filterOutdatedEntries(this.state.entries, currentProgram) });
-  //   }
-  //
-  //   if (!this.isUnmounted) {
-  //     setTimeout(() => requestAnimationFrame(this.watchCurrentProgram.bind(this)), 500);
-  //   }
-  // }
-
-  // private filterOutdatedEntries(entries: EpgEntry[], currentProgram: EpgEntry) {
-  //   const index = entries.indexOf(currentProgram);
-  //   return entries.slice(index);
-  // }
-
-  // public componentWillUnmount() {
-  //   this.isUnmounted = true;
-  // }
+  public componentWillReceiveProps(newProps: Props) {
+    if (this.props.epgUrl !== newProps.epgUrl) {
+      this.props.onFetchData(newProps.epgUrl);
+    }
+  }
 
   public render() {
     return (

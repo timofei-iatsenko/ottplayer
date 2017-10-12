@@ -8,23 +8,20 @@ import { ListSwitcher } from '../list-switcher/list-switcher';
 import { ChannelListMode } from '../list-switcher/channel-list-modes';
 import { NoFavourites } from '../no-favourites/no-favourites';
 import { EpgDictionary } from '../../entities/epg-entry';
-import { connect, MapDispatchToPropsParam, MapStateToPropsParam } from 'react-redux';
-import { AppState } from '../../store';
-import { setChannelsListMode } from '../../actions/ui-preferences.actions';
 
-interface OwnProps {
+export interface OwnProps {
   onChangeChannel: (channel: Channel) => void;
   current: Channel;
 }
 
-interface StateProps {
+export interface StateProps {
   favourites: ReadonlyChannelsCollection;
   channels: ReadonlyChannelsCollection;
   currentEpg: EpgDictionary;
   listMode: ChannelListMode;
 }
 
-interface DispatchProps {
+export interface DispatchProps {
   onChangeListMode: (mode: ChannelListMode) => void;
 }
 
@@ -73,29 +70,3 @@ export class ChannelsPanelComponent extends PureComponent<Props> {
     );
   }
 }
-
-function getFavouritesChannels(channels: ReadonlyChannelsCollection, favourites: ReadonlyArray<number>): ReadonlyChannelsCollection {
-  return channels.filter((channel) => favourites.includes(channel.id));
-}
-
-const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps> = (state: AppState) => {
-  return {
-    favourites: getFavouritesChannels(state.channels, state.favourites),
-    channels: state.channels,
-    currentEpg: state.currentEpg,
-    listMode: state.uiPreferences.channelListMode,
-  };
-};
-
-const mapDispatchToProps: MapDispatchToPropsParam<DispatchProps, OwnProps> = (dispatch) => {
-  return {
-    onChangeListMode: (mode: ChannelListMode) => {
-      dispatch(setChannelsListMode(mode));
-    },
-  };
-};
-
-export const ChannelsPanel = connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ChannelsPanelComponent);

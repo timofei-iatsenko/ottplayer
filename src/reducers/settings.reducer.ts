@@ -1,4 +1,3 @@
-import { RECEIVE_CHANNELS } from '../actions/channels.actions';
 import { Settings } from '../entities/settings.model';
 
 const initialState = {
@@ -8,8 +7,6 @@ const initialState = {
 
 export function settingsReducer(state: Settings = initialState, action: any) {
   switch (action.type) {
-    case RECEIVE_CHANNELS:
-     return action.channels;
     default:
       return state;
   }

@@ -31,7 +31,7 @@ function mapStateToProps(state: AppState, ownProps: OwnProps): StoreProps {
   const { channelSlug } = ownProps.match.params;
   return {
     currentKey: state.settings.currentKey,
-    currentChannel: getCurrentChannel(state.channels, channelSlug),
+    currentChannel: getCurrentChannel(state.playlist.channels, channelSlug),
     playlist: state.playlist,
     playlistUrl: state.settings.playlistUrl,
   };

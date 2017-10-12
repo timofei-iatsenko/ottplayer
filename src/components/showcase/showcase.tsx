@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styles from './showcase.scss';
 import { VideoPlayer } from '../video-player/video-player';
 import { Playlist } from '../../entities/playlist.model';
-import { ChannelsPanel } from '../channels-panel/channels-panel';
+import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { Route, Switch } from 'react-router-dom';
 import { ChannelEpg } from '../channel-epg/channel-epg';
 import { Channel } from '../../entities/channel.model';
@@ -59,7 +59,7 @@ export class Showcase extends PureComponent<ShowcaseProps> {
             <div className={styles.playerContainer}>
               <VideoPlayer src={this.streamUrl}></VideoPlayer>
             </div>
-            {this.currentChannel && this.props.playlist && <ChannelEpg epgUrl={`${this.props.playlist.urlEpg}channel/${this.currentChannel.id}`} />}
+            {this.currentChannel && <ChannelEpg epgUrl={`${this.props.playlist.urlEpg}channel/${this.currentChannel.id}`} />}
           </div>
         </div>
     );

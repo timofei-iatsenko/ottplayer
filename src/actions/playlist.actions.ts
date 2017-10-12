@@ -1,7 +1,6 @@
 import { AppState } from '../store';
 import { Playlist } from '../entities/playlist.model';
 import { ThunkAction } from 'redux-thunk';
-import { receiveChannels } from './channels.actions';
 import { Channel } from '../entities/channel.model';
 
 export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';
@@ -34,8 +33,6 @@ export function fetchPlaylist(playlistUrl: string): ThunkAction<Promise<any>, Ap
           c.logo = playlist.urlLogo + c.logo;
           c.id = +c.id;
         });
-
-        dispatch(receiveChannels(playlist.channels));
 
         return dispatch(receivePlaylist(playlist));
       });

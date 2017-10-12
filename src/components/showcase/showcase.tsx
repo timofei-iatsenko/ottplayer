@@ -4,7 +4,7 @@ import { VideoPlayer } from '../video-player/video-player';
 import { Playlist } from '../../entities/playlist.model';
 import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { Route, Switch } from 'react-router-dom';
-import { ChannelEpg } from '../channel-epg/channel-epg';
+import { ChannelEpg } from '../channel-epg/channel-epg.container';
 import { Channel } from '../../entities/channel.model';
 
 export interface StoreProps {
@@ -59,7 +59,7 @@ export class Showcase extends PureComponent<ShowcaseProps> {
             <div className={styles.playerContainer}>
               <VideoPlayer src={this.streamUrl}></VideoPlayer>
             </div>
-            {this.currentChannel && <ChannelEpg epgUrl={`${this.props.playlist.urlEpg}channel/${this.currentChannel.id}`} />}
+            {this.currentChannel && <ChannelEpg channelId={this.currentChannel.id} />}
           </div>
         </div>
     );

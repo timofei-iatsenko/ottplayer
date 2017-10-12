@@ -45,7 +45,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: OwnProps): D
   return {
     onFetchData: async (playlistUrl: string) => {
       const action = await dispatch(fetchPlaylist(playlistUrl));
-      await dispatch(fetchCurrentEpg(action.playlist.urlEpg + '/channel_now'));
+      await dispatch(fetchCurrentEpg(action.playlist.urlEpg + 'channel_now'));
     },
 
     onChangeChannel: (channel: Channel) => {

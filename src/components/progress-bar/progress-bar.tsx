@@ -38,7 +38,8 @@ export class ProgressBar extends Component<ProgressBarProps> {
   private get value() {
     const duration = this.props.endTime - this.props.startTime;
     const passed = Math.floor(Date.now() / 1000) - this.props.startTime;
-    return Math.round((passed / duration) * 100);
+    const value = Math.round((passed / duration) * 100);
+    return value > 100 ? 100 : value;
   }
 
   public render() {

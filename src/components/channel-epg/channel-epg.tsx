@@ -11,73 +11,85 @@ interface ChannelEpgState {
   entries: EpgEntry[];
 }
 
-interface ChannelEpgProps {
-  epgUrl: string;
+export interface DispatchProps {
+  onFetchData: (epgUrl: string) => void;
 }
 
-export class ChannelEpg extends Component<ChannelEpgProps, ChannelEpgState> {
-  private isUnmounted = false;
+export interface StateProps {
+  epgUrl: string;
+  entries: EpgEntry[];
+}
 
-  public state = {
-    entries: [] as EpgEntry[],
-  };
+export interface OwnProps {
+  channelId: number;
+}
 
-  private currentProgram: EpgEntry = null;
+type Props = StateProps & DispatchProps & OwnProps;
 
-  public componentWillMount() {
-    this.initEpg(this.props.epgUrl);
-  }
-
-  public componentWillReceiveProps(newProps: ChannelEpgProps) {
-    if (this.props.epgUrl !== newProps.epgUrl) {
-      this.initEpg(newProps.epgUrl);
-    }
-  }
-
-  private initEpg(epgUrl: string) {
-    this.loadEpg(epgUrl).then((entries) => {
-      const currentProgram = this.getCurrentProgram(entries);
-      this.setState({ entries: this.filterOutdatedEntries(entries, currentProgram) });
-    });
-  }
+export class ChannelEpgComponent extends Component<Props, ChannelEpgState> {
+  // private isUnmounted = false;
+  //
+  // public state = {
+  //   entries: [] as EpgEntry[],
+  // };
+  //
+  // private currentProgram: EpgEntry = null;
 
   public componentDidMount() {
-    this.watchCurrentProgram();
+    // this.props.onFetchData(this.props.epgUrl);
+    // this.initEpg(this.props.epgUrl);
   }
 
-  private loadEpg(url: string): Promise<EpgEntry[]> {
-    return window.fetch(url).then((r) => r.json()).then((response) => {
-      return Object.keys(response).reduce((acc, key) => {
-        acc.push(new EpgEntry(response[key]));
-        return acc;
-      }, []);
-    });
-  }
+  // public componentWillReceiveProps(newProps: Props) {
+  //   if (this.props.epgUrl !== newProps.epgUrl) {
+  //     this.initEpg(newProps.epgUrl);
+  //   }
+  // }
 
-  private getCurrentProgram(entries: EpgEntry[]): EpgEntry {
-    return entries.find((entry) => entry.inAir);
-  }
+  // private initEpg(epgUrl: string) {
+  //   this.loadEpg(epgUrl).then((entries) => {
+  //     const currentProgram = this.getCurrentProgram(entries);
+  //     this.setState({ entries: this.filterOutdatedEntries(entries, currentProgram) });
+  //   });
+  // }
 
-  private watchCurrentProgram() {
-    const currentProgram = this.getCurrentProgram(this.state.entries);
+  // public componentDidMount() {
+  //   this.watchCurrentProgram();
+  // }
 
-    if (this.currentProgram !== currentProgram) {
-      this.setState({ entries: this.filterOutdatedEntries(this.state.entries, currentProgram) });
-    }
+  // private loadEpg(url: string): Promise<EpgEntry[]> {
+  //   return window.fetch(url).then((r) => r.json()).then((response) => {
+  //     return Object.keys(response).reduce((acc, key) => {
+  //       acc.push(new EpgEntry(response[key]));
+  //       return acc;
+  //     }, []);
+  //   });
+  // }
 
-    if (!this.isUnmounted) {
-      setTimeout(() => requestAnimationFrame(this.watchCurrentProgram.bind(this)), 500);
-    }
-  }
+  // private getCurrentProgram(entries: EpgEntry[]): EpgEntry {
+  //   return entries.find((entry) => entry.inAir);
+  // }
 
-  private filterOutdatedEntries(entries: EpgEntry[], currentProgram: EpgEntry) {
-    const index = entries.indexOf(currentProgram);
-    return entries.slice(index);
-  }
+  // private watchCurrentProgram() {
+  //   const currentProgram = this.getCurrentProgram(this.state.entries);
+  //
+  //   if (this.currentProgram !== currentProgram) {
+  //     this.setState({ entries: this.filterOutdatedEntries(this.state.entries, currentProgram) });
+  //   }
+  //
+  //   if (!this.isUnmounted) {
+  //     setTimeout(() => requestAnimationFrame(this.watchCurrentProgram.bind(this)), 500);
+  //   }
+  // }
 
-  public componentWillUnmount() {
-    this.isUnmounted = true;
-  }
+  // private filterOutdatedEntries(entries: EpgEntry[], currentProgram: EpgEntry) {
+  //   const index = entries.indexOf(currentProgram);
+  //   return entries.slice(index);
+  // }
+
+  // public componentWillUnmount() {
+  //   this.isUnmounted = true;
+  // }
 
   public render() {
     return (
@@ -85,7 +97,7 @@ export class ChannelEpg extends Component<ChannelEpgProps, ChannelEpgState> {
         <Scrollbars autoHide>
           <div className={styles.entries}>
 
-            {this.state.entries.map((entry) => (
+            {this.props.entries.map((entry) => (
               <div className={entry.inAir ? styles.entryActive : styles.entry} key={entry.startTime}>
 
                 <div className={styles.mainInfo}>

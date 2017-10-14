@@ -13,7 +13,7 @@ function filterOutdatedEntries(entries: EpgEntry[]) {
 function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
   return {
     epgUrl: `${state.playlist.urlEpg}channel/${ownProps.channelId}`,
-    entries: filterOutdatedEntries(state.currentData.epg),
+    entries: filterOutdatedEntries(state.currentChannel.epg),
   };
 }
 

@@ -9,7 +9,6 @@ export function schedule(when: number): Promise<never> {
     const currentTs = Math.floor(Date.now() / 1000);
     let timeout = (when - currentTs) * 1000;
 
-    console.log(currentTs, when, timeout, (timeout / 1000) / 60);
     if (timeout < THRESHOLD) {
       timeout = THRESHOLD * 2;
     }

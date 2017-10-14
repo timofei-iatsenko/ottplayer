@@ -6,6 +6,8 @@ import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { Route, Switch } from 'react-router-dom';
 import { ChannelEpg } from '../channel-epg/channel-epg.container';
 import { Channel } from '../../entities/channel.model';
+import { FavouritesEditor } from '../favourites-editor/favourites-editor';
+import { RouteComponentProps } from 'react-router';
 
 export interface StoreProps {
   currentKey: string;
@@ -41,10 +43,10 @@ export class Showcase extends PureComponent<ShowcaseProps> {
       current: this.currentChannel,
     };
 
-    // const favouritesEditor = ({history}: RouteComponentProps<any>) => (
-    //   <FavouritesEditor {...commonProps}
-    //                     onSave={(f) => {this.saveFavourites(f); history.push('/'); }}
-    //                     onCancel={() => history.push('/')}/>);
+    const favouritesEditor = ({history}: RouteComponentProps<any>) => (
+      <FavouritesEditor {...commonProps}
+                        onSave={(f) => {this.saveFavourites(f); history.push('/'); }}
+                        onCancel={() => history.push('/')}/>);
 
     const channelsPanel = () => <ChannelsPanel {...commonProps}/>;
 

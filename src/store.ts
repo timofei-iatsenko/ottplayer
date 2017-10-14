@@ -8,17 +8,16 @@ import { Settings } from './entities/settings.model';
 import { settingsReducer } from './reducers/settings.reducer';
 import { epgReducer } from './reducers/epg.reducer';
 import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferences.reducer';
-import { currentDataReducer, CurrentDataStore } from './reducers/current-channel.reducer';
+import { currentDataReducer, CurrentChannelState } from './reducers/current-channel.reducer';
 
 export interface AppState {
   readonly playlist: Readonly<Playlist>;
   readonly favourites: ReadonlyArray<number>;
 
   readonly settings: Readonly<Settings>;
-  readonly currentData: Readonly<CurrentDataStore>;
   readonly currentEpg: Readonly<EpgDictionary>;
   readonly uiPreferences: Readonly<UiPreferencesState>;
-
+  readonly currentChannel: Readonly<CurrentChannelState>;
 }
 
 const ottApp = combineReducers<AppState>({
@@ -27,7 +26,7 @@ const ottApp = combineReducers<AppState>({
   settings: settingsReducer,
   currentEpg: epgReducer,
   uiPreferences: uiPreferencesReducer,
-  currentData: currentDataReducer,
+  currentChannel: currentDataReducer,
 });
 
 export const store = createStore<AppState>(ottApp,

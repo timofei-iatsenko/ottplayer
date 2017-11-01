@@ -4,6 +4,7 @@ import { connect, MapDispatchToPropsParam, MapStateToPropsParam } from 'react-re
 import { AppState } from '../../store';
 import { setChannelsListMode } from '../../actions/ui-preferences.actions';
 import { ChannelsPanelComponent, DispatchProps, OwnProps, StateProps } from './channels-panel';
+import { withChannelNavigation } from '../hoc/with-channel-navigation';
 
 function getFavouritesChannels(channels: ReadonlyChannelsCollection, favourites: ReadonlyArray<number>): ReadonlyChannelsCollection {
   return channels.filter((channel) => favourites.includes(channel.id));
@@ -26,7 +27,7 @@ const mapDispatchToProps: MapDispatchToPropsParam<DispatchProps, OwnProps> = (di
   };
 };
 
-export const ChannelsPanel = connect<StateProps, DispatchProps, OwnProps>(
+export const ChannelsPanel = withChannelNavigation(connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps,
-)(ChannelsPanelComponent);
+)(ChannelsPanelComponent));

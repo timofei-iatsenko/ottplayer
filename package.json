@@ -2,6 +2,11 @@
   "name": "ottplayer",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "webpack-dev-server --progress --watch --content-base src/",
+    "build": "webpack --env=prod",
+    "test": "jest"
+  },
   "dependencies": {
     "autobind-decorator": "^2.1.0",
     "lodash": "^4.17.4",
@@ -20,60 +25,8 @@
     "video.js": "^5.19.2",
     "videojs-contrib-hls": "^5.4.1"
   },
-  "scripts": {
-    "start": "webpack-dev-server --progress --watch --content-base src/",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
-  },
-  "proxy": {
-    "/api": {
-      "target": "http://localhost:3001",
-      "pathRewrite": {
-        "^/api": "/"
-      }
-    }
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "json",
-      "web.jsx",
-      "jsx"
-    ]
-  },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "devDependencies": {
+    "@types/enzyme": "^3.1.2",
     "@types/jest": "^21.1.2",
     "@types/lodash": "^4.14.77",
     "@types/react": "^15.0.38",
@@ -89,10 +42,16 @@
     "case-sensitive-paths-webpack-plugin": "2.1.1",
     "css-loader": "0.28.4",
     "dotenv": "4.0.0",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.2",
     "extract-text-webpack-plugin": "2.1.2",
     "file-loader": "0.11.2",
     "html-webpack-plugin": "2.29.0",
+    "husky": "^0.14.3",
     "jest": "20.0.4",
+    "jest-css-modules": "^1.1.0",
+    "jest-enzyme": "^4.0.1",
+    "lint-staged": "^4.3.0",
     "node-sass": "^4.5.3",
     "postcss-flexbugs-fixes": "3.0.0",
     "postcss-loader": "2.0.6",
@@ -101,6 +60,7 @@
     "redux-devtools": "^3.4.0",
     "sass-loader": "^6.0.6",
     "style-loader": "0.18.2",
+    "ts-jest": "^21.1.4",
     "tslib": "^1.7.1",
     "tslint": "^5.7.0",
     "tslint-loader": "^3.5.3",
@@ -111,5 +71,31 @@
     "webpack-manifest-plugin": "1.1.0",
     "webpack-merge": "^4.1.0",
     "whatwg-fetch": "2.0.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "setupTestFrameworkScriptFile": "./config/setup-jest.js",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleNameMapper": {
+      "\\.(scss)$": "<rootDir>/node_modules/jest-css-modules"
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "roots": [
+      "<rootDir>/src/"
+    ]
+  },
+  "lint-staged": {
+    "*.ts": [
+      "tslint --fix",
+      "git add"
+    ]
   }
 }

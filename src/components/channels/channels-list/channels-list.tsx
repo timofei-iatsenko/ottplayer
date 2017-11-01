@@ -1,4 +1,4 @@
-import React, { Component, ReactFragment } from 'react';
+import React, { PureComponent, ReactFragment } from 'react';
 import { Channel, ReadonlyChannelsCollection } from '../../../entities/channel.model';
 import styles from './channels-list.scss';
 import { EpgEntry } from '../../../entities/epg-entry';
@@ -13,7 +13,7 @@ interface ChannelsListProps {
   currentEpg?: { [chid: number]: EpgEntry };
 }
 
-export class ChannelsList extends Component<ChannelsListProps> {
+export class ChannelsList extends PureComponent<ChannelsListProps> {
   private activeElementRef: HTMLElement;
 
   private isActive(chanel: Channel) {

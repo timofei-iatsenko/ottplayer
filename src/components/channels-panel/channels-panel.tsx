@@ -11,7 +11,7 @@ import { EpgDictionary } from '../../entities/epg-entry';
 
 export interface OwnProps {
   onChangeChannel: (channel: Channel) => void;
-  current: Channel;
+  currentChannel: Channel;
 }
 
 export interface StateProps {
@@ -37,7 +37,7 @@ export class ChannelsPanelComponent extends PureComponent<Props> {
   private getChannelsListElement() {
     const props = {
       channels: this.props.channels,
-      current: this.props.current,
+      current: this.props.currentChannel,
       currentEpg: this.props.currentEpg,
       onChangeChannel: this.props.onChangeChannel,
       scrollbarController: this.scrollbarController,

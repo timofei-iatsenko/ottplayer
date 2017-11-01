@@ -81,7 +81,7 @@ export class ExtTagParser {
 }
 
 interface ParsedChannel {
-  id: string;
+  id: number;
   name: string;
   logo: string;
   archive: boolean;
@@ -102,9 +102,9 @@ class ParseResult {
 
   public addChannel(data: any) {
     this.channels.push({
-      id: data['tvg-id'],
+      id: +data['tvg-id'],
       name: data['channel-name'],
-      logo: data['tvg-logo'],
+      logo: this.urlLogo + data['tvg-logo'],
       archive: data['tvg-rec'] === '1',
       groupTitle: data['group-title'],
       stream: null,

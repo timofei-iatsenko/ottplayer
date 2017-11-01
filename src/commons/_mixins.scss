@@ -16,3 +16,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@mixin makeColorfulBtn($base-color) {
+  background-color: $base-color;
+
+  &:disabled {
+    background-color: mix($base-color, $porcelain, 30%);
+  }
+
+  &:hover:not(:disabled) {
+    background-color: mix(#000, $base-color, 10%);
+  }
+}

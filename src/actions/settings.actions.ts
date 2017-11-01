@@ -1,10 +1,11 @@
-import { Settings } from '../entities/settings.model';
+import { SettingsState } from '../reducers/settings.reducer';
+export enum SettingsActions {
+  save = '[Settings] Save',
+}
 
-export const CHANGE_SETTINGS = 'CHANGE_SETTINGS';
-
-export function changeSettings(settings: Settings) {
+export function changeSettings(settings: SettingsState) {
   return {
-    type: CHANGE_SETTINGS,
+    type: SettingsActions.save,
     settings,
   };
 }

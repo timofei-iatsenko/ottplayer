@@ -1,8 +1,9 @@
 import React, { ComponentType, PureComponent } from 'react';
 import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { match as Match } from 'react-router';
-import { store } from '../../store';
+import { AppState } from '../../store';
 import { History } from 'history';
+import { connect } from 'react-redux';
 
 interface InjectedProps extends Partial<NeedsProps> {
   onChangeChannel?: (channel: Channel) => void;
@@ -14,10 +15,13 @@ interface NeedsProps {
   match: Match<{
     channelSlug: string;
   }>;
+  channels: ReadonlyChannelsCollection;
 }
 
 export const withChannelNavigation = (WrappedComponent: ComponentType<InjectedProps>) => {
-  return class extends PureComponent<NeedsProps> {
+  class WithChannelNavigation extends PureComponent<NeedsProps> {
+    public static displayName = `WithChannelNavigation(${getDisplayName(WrappedComponent)})`;
+
     private getCurrentChannel(channels: ReadonlyChannelsCollection, channelSlug: string): Channel {
       if (!channels.length || !channelSlug) {
         return null;
@@ -38,12 +42,23 @@ export const withChannelNavigation = (WrappedComponent: ComponentType<InjectedPr
 
     public render() {
       const props = {
-        currentChannel: this.getCurrentChannel(store.getState().playlist.channels, this.props.match.params.channelSlug),
+        currentChannel: this.getCurrentChannel(this.props.channels, this.props.match.params.channelSlug),
         onChangeChannel: (channel: Channel) => this.props.history.push('/' + this.getChannelSlug(channel)),
         ...this.props,
       };
 
       return <WrappedComponent {...props} />;
     }
-  };
+  }
+
+  function mapStateToProps(state: AppState): Partial<NeedsProps> {
+    return {
+      channels: state.playlist.channels,
+    };
+  }
+  return connect(mapStateToProps)(WithChannelNavigation);
 };
+
+function getDisplayName(WrappedComponent: ComponentType) {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
+}

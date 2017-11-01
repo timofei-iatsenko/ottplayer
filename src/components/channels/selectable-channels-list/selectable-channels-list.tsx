@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Channel, ReadonlyChannelsCollection } from '../../../entities/channel.model';
-import without from 'lodash/without';
 import styles from './selectable-channels-list.scss';
 import { ChannelsList } from '../channels-list/channels-list';
 
@@ -11,23 +10,21 @@ interface SelectableChannelsListProps {
   channels: ReadonlyChannelsCollection;
 }
 
-export class SelectableChannelsList extends Component<SelectableChannelsListProps> {
+export class SelectableChannelsList extends PureComponent<SelectableChannelsListProps> {
   private handleCheckBoxChange(channel: Channel) {
     let selected;
 
     if (this.isSelected(channel)) {
-      selected = without(this.props.selected, channel.id);
+      selected = this.props.selected.filter((id) => id !== channel.id);
     } else {
-      selected = this.props.selected.slice(0);
-      selected.push(channel.id);
+      selected = [...this.props.selected, channel.id];
     }
 
-    this.setState({ selected });
     this.props.onSelectionChange(selected);
   }
 
   private isSelected(channel: Channel) {
-    return this.props.selected.indexOf(channel.id) !== -1;
+    return this.props.selected.includes(channel.id);
   }
 
   private getControl() {
@@ -42,7 +39,7 @@ export class SelectableChannelsList extends Component<SelectableChannelsListProp
 
   public render() {
     return (
-      <ChannelsList {...this.props} control={this.getControl()} />
+      <ChannelsList {...this.props} control={this.getControl()}/>
     );
   }
 }

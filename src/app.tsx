@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ShowCaseContainer } from './components/showcase/showcase.container';
 import styles from './app.scss';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { Settings } from './components/settings/settings';
 
 export class App extends Component {
   public render() {
@@ -12,7 +13,10 @@ export class App extends Component {
         <Router>
           <div className={styles.appWrap}>
             <div className={styles.container}>
-              <Route path='/:channelSlug*' component={ShowCaseContainer}/>
+              <Switch>
+                <Route path='/settings' component={Settings}/>
+                <Route path='/:channelSlug*' component={ShowCaseContainer}/>
+              </Switch>
             </div>
           </div>
         </Router>

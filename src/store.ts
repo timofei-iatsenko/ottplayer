@@ -5,18 +5,17 @@ import { playlistReducer } from './reducers/playlist.reducer';
 import thunkMiddleware from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import { favouritesReducer, FavouritesState } from './reducers/favourites.reducer';
-import { Settings } from './entities/settings.model';
-import { settingsReducer } from './reducers/settings.reducer';
+import { settingsReducer, SettingsState } from './reducers/settings.reducer';
 import { epgReducer } from './reducers/epg.reducer';
 import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferences.reducer';
-import { currentDataReducer, CurrentChannelState } from './reducers/current-channel.reducer';
+import { CurrentChannelState, currentDataReducer } from './reducers/current-channel.reducer';
 import { rootSaga } from './sagas';
 
 export interface AppState {
   readonly playlist: Readonly<Playlist>;
   readonly favourites: FavouritesState;
 
-  readonly settings: Readonly<Settings>;
+  readonly settings: Readonly<SettingsState>;
   readonly currentEpg: Readonly<EpgDictionary>;
   readonly uiPreferences: Readonly<UiPreferencesState>;
   readonly currentChannel: Readonly<CurrentChannelState>;

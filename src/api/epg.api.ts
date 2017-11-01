@@ -25,7 +25,7 @@ export async function fetchCurrentEpg(url: string): Promise<CurrentEpgResponse> 
         return acc;
       }, {} as any);
 
-      return {epg, invalidateDate};
+      return { epg, invalidateDate };
     });
 }
 
@@ -42,9 +42,10 @@ export async function fetchChannelEpg(epgUrl: string): Promise<ChannelEpgRespons
         return acc;
       }, [] as EpgEntry[]);
 
-      const invalidateDate = epg.find(programInAir).endTime;
-      // const invalidateDate = getTimeFromNow(3);
+      const invalidateDate = epg.length
+        ? epg.find(programInAir).endTime
+        : getTimeFromNow(30);
 
-      return {epg, invalidateDate};
+      return { epg, invalidateDate };
     });
 }

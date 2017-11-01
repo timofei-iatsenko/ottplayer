@@ -1,7 +1,7 @@
 import { ReadonlyChannelsCollection } from './channel.model';
 
 export interface Playlist {
-  urlEpg: string;
-  urlLogo: string;
-  channels: ReadonlyChannelsCollection;
+  readonly urlEpg: string;
+  readonly urlLogo: string;
+  readonly channels: ReadonlyChannelsCollection;
 }

@@ -10,15 +10,16 @@ import { epgReducer } from './reducers/epg.reducer';
 import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferences.reducer';
 import { CurrentChannelState, currentDataReducer } from './reducers/current-channel.reducer';
 import { rootSaga } from './sagas';
+import { LocalStorageFactory } from './libs/storage';
 
 export interface AppState {
-  readonly playlist: Readonly<Playlist>;
+  readonly playlist: Playlist;
   readonly favourites: FavouritesState;
 
-  readonly settings: Readonly<SettingsState>;
-  readonly currentEpg: Readonly<EpgDictionary>;
-  readonly uiPreferences: Readonly<UiPreferencesState>;
-  readonly currentChannel: Readonly<CurrentChannelState>;
+  readonly settings: SettingsState;
+  readonly currentEpg: EpgDictionary;
+  readonly uiPreferences: UiPreferencesState;
+  readonly currentChannel: CurrentChannelState;
 }
 
 const ottApp = combineReducers<AppState>({
@@ -33,7 +34,20 @@ const ottApp = combineReducers<AppState>({
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const favouritesStorage = LocalStorageFactory.create<ReadonlyArray<number>>('favourites');
+const settingsStorage = LocalStorageFactory.create<SettingsState>('settings');
+const uiPreferencesStorage = LocalStorageFactory.create<UiPreferencesState>('ui-preferences');
+
+const preloadState = {
+  favourites: {
+    savedChannels: favouritesStorage.get(),
+  },
+  uiPreferences: uiPreferencesStorage.get(),
+  settings: settingsStorage.get(),
+};
+
 export const store = createStore<AppState>(ottApp,
+  preloadState as AppState,
   composeEnhancers(applyMiddleware(
     thunkMiddleware,
     sagaMiddleware,
@@ -41,3 +55,10 @@ export const store = createStore<AppState>(ottApp,
 );
 
 sagaMiddleware.run(rootSaga);
+
+store.subscribe(() => {
+  const state = store.getState();
+  favouritesStorage.set(state.favourites.savedChannels);
+  settingsStorage.set(state.settings);
+  uiPreferencesStorage.set(state.uiPreferences);
+});

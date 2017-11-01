@@ -2,8 +2,8 @@ import { EpgActions } from '../actions/epg.actions';
 import { EpgEntry } from '../entities/epg-entry';
 
 export interface CurrentChannelState {
-  channelId: number;
-  epg: EpgEntry[];
+  readonly channelId: number;
+  readonly epg: EpgEntry[];
 }
 
 const initialState: CurrentChannelState = {

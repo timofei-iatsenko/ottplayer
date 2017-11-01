@@ -1,12 +1,12 @@
 import { SettingsActions } from '../actions/settings.actions';
 export interface SettingsState {
-  playlistUrl: string;
-  currentKey: string;
+  readonly playlistUrl: string;
+  readonly currentKey: string;
 }
 
 const initialState: SettingsState = {
-  playlistUrl: 'myott.tv',
-  currentKey: '00XE8DMEI7',
+  playlistUrl: '',
+  currentKey: '',
 };
 
 export function settingsReducer(state = initialState, action: any) {

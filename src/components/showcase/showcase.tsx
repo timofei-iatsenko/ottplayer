@@ -4,6 +4,7 @@ import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { Route, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { PlayerArea } from '../player-area/player-area.component';
+import { FavouritesEditor } from '../favourites-editor/favourites-editor';
 
 export type OwnProps = RouteComponentProps<{}>;
 
@@ -30,20 +31,10 @@ export class Showcase extends PureComponent<ShowcaseProps> {
   }
 
   public render() {
-    // const commonProps = {
-    //   onChangeChannel: this.props.onChangeChannel,
-    //   current: this.currentChannel,
-    // };
-
-    // const favouritesEditor = ({history}: RouteComponentProps<any>) => (
-    //   <FavouritesEditor {...commonProps}
-    //                     onSave={(f) => {this.saveFavourites(f); history.push('/'); }}
-    //                     onCancel={() => history.push('/')}/>);
-
     return (
         <div className={styles.host}>
           <Switch>
-            {/*<Route exact path={'/edit-favourites'} render={favouritesEditor}/>*/}
+            <Route exact path={'/edit-favourites'} component={FavouritesEditor}/>
             <Route path={this.props.match.path} component={ChannelsPanel}/>
           </Switch>
 

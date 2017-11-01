@@ -4,7 +4,7 @@ import { match as Match } from 'react-router';
 import { store } from '../../store';
 import { History } from 'history';
 
-interface InjectedProps {
+interface InjectedProps extends Partial<NeedsProps> {
   onChangeChannel?: (channel: Channel) => void;
   currentChannel?: Readonly<Channel>;
 }
@@ -40,6 +40,7 @@ export const withChannelNavigation = (WrappedComponent: ComponentType<InjectedPr
       const props = {
         currentChannel: this.getCurrentChannel(store.getState().playlist.channels, this.props.match.params.channelSlug),
         onChangeChannel: (channel: Channel) => this.props.history.push('/' + this.getChannelSlug(channel)),
+        ...this.props,
       };
 
       return <WrappedComponent {...props} />;

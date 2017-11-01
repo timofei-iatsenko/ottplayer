@@ -1,13 +1,25 @@
-import { SET_FAVOURITES } from '../actions/favourites.actions';
+import { FavouritesActions } from '../actions/favourites.actions';
 import { LocalStorageFactory } from '../libs/storage';
 
-const favouritesStorage = LocalStorageFactory.create<number[]>('favourites');
+export interface FavouritesState {
+  readonly savedChannels: ReadonlyArray<number>;
+  readonly selectedChannels: ReadonlyArray<number>;
+}
 
-export function favouritesReducer(state: number[] = favouritesStorage.get([]), action: any) {
+const favouritesStorage = LocalStorageFactory.create<ReadonlyArray<number>>('favourites');
+
+const initialState: FavouritesState = {
+  savedChannels: favouritesStorage.get([]),
+  selectedChannels: favouritesStorage.get([]),
+};
+
+export function favouritesReducer(state = initialState, action: any): FavouritesState {
   switch (action.type) {
-    case SET_FAVOURITES:
-      favouritesStorage.set(action.favourites);
-      return action.favourites;
+    case FavouritesActions.save:
+      favouritesStorage.set(action.favourites); // todo: shitty, unpure
+      return {...state, savedChannels: action.favourites, selectedChannels: action.favourites};
+    case FavouritesActions.select:
+      return {...state, selectedChannels: action.favourites};
     default:
       return state;
   }

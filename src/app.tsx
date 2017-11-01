@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { ShowCaseContainer } from './components/showcase/showcase.container';
 import styles from './app.scss';
 import { Provider } from 'react-redux';
@@ -15,7 +15,13 @@ export class App extends Component {
             <div className={styles.container}>
               <Switch>
                 <Route path='/settings' component={Settings}/>
-                <Route path='/:channelSlug*' component={ShowCaseContainer}/>
+                {!store.getState().settings.playlistUrl ? (
+                  <Redirect to={{
+                    pathname: '/settings',
+                  }}/>
+                ) : (
+                   <Route path='/:channelSlug*' component={ShowCaseContainer}/>
+                 )}
               </Switch>
             </div>
           </div>

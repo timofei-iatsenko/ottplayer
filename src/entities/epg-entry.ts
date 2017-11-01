@@ -21,4 +21,4 @@ export class EpgEntry {
   }
 }
 
-export type EpgDictionary = { [chid: number]: EpgEntry };
+export type EpgDictionary = { readonly [chid: number]: Readonly<EpgEntry> };

@@ -5,15 +5,22 @@ export class LocalStorageFactory {
 }
 
 export class StorageProxy<T> {
+  private lastValue: T;
+
   constructor(private key: string, private storage: Storage) {
   }
 
-  public get(defaultValue: T): T {
+  public get(defaultValue?: T): T {
     const value = JSON.parse(this.storage.getItem(this.key));
     return value === null ? defaultValue : value;
   }
 
   public set(value: T) {
+    if (this.lastValue === value) {
+      return;
+    }
+
+    this.lastValue = value;
     this.storage.setItem(this.key, JSON.stringify(value));
   }
 

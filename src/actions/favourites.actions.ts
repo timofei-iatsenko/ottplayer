@@ -1,9 +1,18 @@
-export const SET_FAVOURITES = 'SET_FAVOURITES';
-export const DELETE_FAVOURITES = 'DELETE_FAVOURITES';
+export enum FavouritesActions {
+  save = '[Favourites] Save',
+  select = '[Favourites] Change selection',
+}
 
-export function setFavourites(favourites: number[]) {
+export function saveFavourites(favourites: ReadonlyArray<number>) {
   return {
-    type: SET_FAVOURITES,
+    type: FavouritesActions.save,
+    favourites,
+  };
+}
+
+export function selectFavourites(favourites: ReadonlyArray<number>) {
+  return {
+    type: FavouritesActions.select,
     favourites,
   };
 }

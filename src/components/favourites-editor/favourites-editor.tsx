@@ -1,40 +1,64 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { SidePanel } from '../side-panel/side-panel';
 import { SaveBar } from './save-bar/save-bar';
 import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';
 import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
+import { AppState } from '../../store';
+import { connect } from 'react-redux';
+import { withChannelNavigation } from '../hoc/with-channel-navigation';
+import { Dispatch } from 'redux';
+import { RouteComponentProps } from 'react-router';
+import { saveFavourites, selectFavourites } from '../../actions/favourites.actions';
 
 interface FavouritesEditorProps {
   channels: ReadonlyChannelsCollection;
-  favourites: number[];
+  favourites: ReadonlyArray<number>;
+  selected: ReadonlyArray<number>;
   onChangeChannel: (channel: Channel) => void;
   onCancel: () => void;
-  onSave: (selection: number[]) => void;
+  onSelect: (selection: ReadonlyArray<number>) => void;
+  onSave: (selection: ReadonlyArray<number>) => void;
 }
 
-export class FavouritesEditor extends Component<FavouritesEditorProps> {
-  public state = {
-    selectedChannels: this.props.favourites,
-  };
-
-  private handleSelectionChange(selection: number[]) {
-    this.setState({ selectedChannels: selection });
-  }
-
+export class FavouritesEditorComponent extends PureComponent<FavouritesEditorProps> {
   public render() {
     const header = <SaveBar
-      saveDisabled={this.state.selectedChannels.length === 0}
-      onSave={() => this.props.onSave(this.state.selectedChannels)}
+      saveDisabled={this.props.favourites.length === 0}
+      onSave={() => this.props.onSave(this.props.favourites)}
       onCancel={this.props.onCancel}/>;
 
     const body = <SelectableChannelsList
       channels={this.props.channels}
-      selected={this.state.selectedChannels}
+      selected={this.props.favourites}
       onChangeChannel={this.props.onChangeChannel}
-      onSelectionChange={this.handleSelectionChange.bind(this)} />;
+      onSelectionChange={this.props.onSelect} />;
 
     return (
       <SidePanel header={header} body={body}/>
     );
   }
 }
+
+function mapStateToProps(state: AppState): Partial<FavouritesEditorProps> {
+  return {
+    channels: state.playlist.channels,
+    favourites: state.favourites.savedChannels,
+    selected: state.favourites.selectedChannels,
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: RouteComponentProps<{}>): Partial<FavouritesEditorProps> {
+  return {
+    onSave: (favourites) => {
+      dispatch(saveFavourites(favourites));
+      ownProps.history.push('/');
+    },
+    onSelect: (favourites) => {
+      dispatch(selectFavourites(favourites));
+    },
+
+    onCancel: () => ownProps.history.push('/'),
+  };
+}
+
+export const FavouritesEditor = withChannelNavigation(connect(mapStateToProps, mapDispatchToProps)(FavouritesEditorComponent));

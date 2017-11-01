@@ -6,8 +6,8 @@ import { ChannelsList } from '../channels-list/channels-list';
 
 interface SelectableChannelsListProps {
   onChangeChannel: (channel: Channel) => void;
-  onSelectionChange: (selected: number[]) => void;
-  selected: number[];
+  onSelectionChange: (selected: ReadonlyArray<number>) => void;
+  selected: ReadonlyArray<number>;
   channels: ReadonlyChannelsCollection;
 }
 

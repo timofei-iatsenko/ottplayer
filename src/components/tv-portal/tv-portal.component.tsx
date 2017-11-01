@@ -1,27 +1,25 @@
 import React, { PureComponent } from 'react';
-import styles from './showcase.scss';
+import styles from './tv-portal.scss';
 import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { Route, Switch } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { PlayerArea } from '../player-area/player-area.component';
 import { FavouritesEditor } from '../favourites-editor/favourites-editor';
+import { connect } from 'react-redux';
+import { AppState } from '../../store';
+import { fetchPlaylist } from '../../actions/playlist.actions';
+import { startCurrentEpgSync, stopCurrentEpgSync } from '../../actions/epg.actions';
+import { Dispatch } from 'redux';
 
-export type OwnProps = RouteComponentProps<{}>;
-
-export interface StoreProps {
+interface Props extends RouteComponentProps<{}> {
   currentKey: string;
   playlistUrl: string;
-}
 
-export interface DispatchProps {
   onFetchData: (playlistUrl: string) => void;
   onUnmount: () => void;
 }
 
-type ShowcaseProps = StoreProps & DispatchProps & OwnProps;
-
-export class Showcase extends PureComponent<ShowcaseProps> {
-
+export class TvPortalComponent extends PureComponent<Props> {
   public componentDidMount() {
     this.props.onFetchData(this.props.playlistUrl);
   }
@@ -43,3 +41,27 @@ export class Showcase extends PureComponent<ShowcaseProps> {
     );
   }
 }
+
+function mapStateToProps(state: AppState): Partial<Props> {
+  return {
+    currentKey: state.settings.currentKey,
+    playlistUrl: state.settings.playlistUrl,
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<AppState>): Partial<Props> {
+  return {
+    onFetchData: async (playlistUrl: string) => {
+      await dispatch(fetchPlaylist(playlistUrl));
+      dispatch(startCurrentEpgSync());
+    },
+    onUnmount: () => {
+      dispatch(stopCurrentEpgSync());
+    },
+  };
+}
+
+export const TvPortal = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TvPortalComponent);

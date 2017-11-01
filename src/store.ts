@@ -1,14 +1,16 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { EpgDictionary } from './entities/epg-entry';
 import { Playlist } from './entities/playlist.model';
 import { playlistReducer } from './reducers/playlist.reducer';
 import thunkMiddleware from 'redux-thunk';
+import createSagaMiddleware from 'redux-saga';
 import { favouritesReducer } from './reducers/favourites.reducer';
 import { Settings } from './entities/settings.model';
 import { settingsReducer } from './reducers/settings.reducer';
 import { epgReducer } from './reducers/epg.reducer';
 import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferences.reducer';
 import { currentDataReducer, CurrentChannelState } from './reducers/current-channel.reducer';
+import { rootSaga } from './sagas';
 
 export interface AppState {
   readonly playlist: Readonly<Playlist>;
@@ -29,8 +31,14 @@ const ottApp = combineReducers<AppState>({
   currentChannel: currentDataReducer,
 });
 
+const sagaMiddleware = createSagaMiddleware();
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const store = createStore<AppState>(ottApp,
-  applyMiddleware(
+  composeEnhancers(applyMiddleware(
     thunkMiddleware,
-  ),
+    sagaMiddleware,
+  )),
 );
+
+sagaMiddleware.run(rootSaga);

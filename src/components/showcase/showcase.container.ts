@@ -4,7 +4,7 @@ import { AppState } from '../../store';
 import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { DispatchProps, Showcase, StoreProps } from './showcase';
 import { fetchPlaylist } from '../../actions/playlist.actions';
-import { fetchCurrentEpg } from '../../actions/epg.actions';
+import { startCurrentEpgSync, stopCurrentEpgSync } from '../../actions/epg.actions';
 import { Dispatch } from 'redux';
 
 interface RouterParams {
@@ -44,10 +44,12 @@ function getChannelSlug(channel: Channel) {
 function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: OwnProps): DispatchProps {
   return {
     onFetchData: async (playlistUrl: string) => {
-      const action = await dispatch(fetchPlaylist(playlistUrl));
-      await dispatch(fetchCurrentEpg(action.playlist.urlEpg + 'channel_now'));
+      await dispatch(fetchPlaylist(playlistUrl));
+      dispatch(startCurrentEpgSync());
     },
-
+    onUnmount: () => {
+      dispatch(stopCurrentEpgSync());
+    },
     onChangeChannel: (channel: Channel) => {
       ownProps.history.push('/' + getChannelSlug(channel));
     },

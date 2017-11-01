@@ -44,6 +44,7 @@ module.exports = webpackMerge(commonConfig, {
     publicPath: '/',
     clientLogLevel: 'none',
     hot: true,
+    port: 3000,
     proxy: {
       '/api': {
         target: 'http://localhost:3001',

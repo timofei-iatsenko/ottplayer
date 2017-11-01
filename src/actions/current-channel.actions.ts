@@ -1,5 +1,3 @@
-import { Action } from 'redux';
-
-enum InAirActions {
+export enum CurrentChannelActions {
   CHANNEL_SWITCHED = 'CHANNEL_SWITCHED',
 }

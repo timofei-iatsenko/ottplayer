@@ -2,7 +2,7 @@ export interface Channel {
   id: number;
   name: string;
   logo: string;
-  archive: string;
+  archive: boolean;
   stream: string;
   groupTitle: string;
 }

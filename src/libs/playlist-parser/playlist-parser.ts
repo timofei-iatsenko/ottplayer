@@ -3,11 +3,13 @@ interface KeyValuePair {
   value: string;
 }
 
+type ParsingResult = { errors: string[], playlist: ParsedPlaylist };
+
 export class PlaylistParser {
   private errors: string[] = [];
-  public playlist = new ParseResult();
+  private result = new ResultBuilder();
 
-  public parse(data: string) {
+  public parse(data: string): ParsingResult {
     if (!data) {
       return this.throwError('no data specified');
     }
@@ -22,27 +24,27 @@ export class PlaylistParser {
 
     return {
       errors: this.errors,
-      playlist: this.playlist,
+      playlist: this.result.getResult(),
     };
   }
 
-  private throwError(error: string) {
+  private throwError(error: string): ParsingResult {
     this.errors.push(error);
     return {
       errors: this.errors,
-      playlist: this.playlist,
+      playlist: null,
     };
   }
 
   private parseLine(string: string, index: number) {
     if (index === 0 && M3uTagParser.check(string)) {
       const global = this.mapKeyValue(M3uTagParser.parse(string));
-      this.playlist.setGlobalData(global);
+      this.result.setGlobalData(global);
     } else if (ExtTagParser.check(string)) {
       const ext = this.mapKeyValue(ExtTagParser.parse(string));
-      this.playlist.addChannel(ext);
+      this.result.addChannel(ext);
     } else {
-      this.playlist.setChannelStream(string);
+      this.result.setChannelStream(string);
     }
   }
 
@@ -89,22 +91,35 @@ interface ParsedChannel {
   stream: string;
 }
 
-class ParseResult {
-  public urlEpg: string = null;
-  public urlLogo: string = null;
-  public keyRequired = false;
-  public channels: ParsedChannel[] = [];
+interface ParsedPlaylist {
+  urlEpg: string;
+  urlLogo: string;
+  keyRequired: boolean;
+  channels: ParsedChannel[];
+}
+
+class ResultBuilder {
+  private data: ParsedPlaylist = {
+    urlEpg: null,
+    urlLogo: null,
+    keyRequired: null,
+    channels: [],
+  };
+
+  public getResult(): ParsedPlaylist {
+    return this.data;
+  }
 
   public setGlobalData(data: any) {
-    this.urlEpg = data['url-epg'];
-    this.urlLogo = data['url-logo'];
+    this.data.urlEpg = data['url-epg'];
+    this.data.urlLogo = data['url-logo'];
   }
 
   public addChannel(data: any) {
-    this.channels.push({
+    this.data.channels.push({
       id: +data['tvg-id'],
       name: data['channel-name'],
-      logo: this.urlLogo + data['tvg-logo'],
+      logo: this.data.urlLogo + data['tvg-logo'],
       archive: data['tvg-rec'] === '1',
       groupTitle: data['group-title'],
       stream: null,
@@ -112,10 +127,10 @@ class ParseResult {
   }
 
   public setChannelStream(streamUrl: string) {
-    if (!this.keyRequired) {
-      this.keyRequired = streamUrl.indexOf('{KEY}') !== -1;
+    if (!this.data.keyRequired) {
+      this.data.keyRequired = streamUrl.indexOf('{KEY}') !== -1;
     }
 
-    this.channels[this.channels.length - 1].stream = streamUrl;
+    this.data.channels[this.data.channels.length - 1].stream = streamUrl;
   }
 }

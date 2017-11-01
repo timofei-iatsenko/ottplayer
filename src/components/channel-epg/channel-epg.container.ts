@@ -1,5 +1,5 @@
 import { ChannelEpgComponent, DispatchProps, OwnProps, StateProps } from './channel-epg';
-import { fetchChannelEpg } from '../../actions/epg.actions';
+import { startChannelEpgSync, stopChannelEpgSync } from '../../actions/epg.actions';
 import { Dispatch } from 'redux';
 import { AppState } from '../../store';
 import { connect } from 'react-redux';
@@ -10,17 +10,19 @@ function filterOutdatedEntries(entries: EpgEntry[]) {
   return entries.slice(index);
 }
 
-function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
+function mapStateToProps(state: AppState): StateProps {
   return {
-    epgUrl: `${state.playlist.urlEpg}channel/${ownProps.channelId}`,
     entries: filterOutdatedEntries(state.currentChannel.epg),
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<AppState>): DispatchProps {
   return {
-    onFetchData: (epgUrl: string) => {
-      dispatch(fetchChannelEpg(epgUrl));
+    onStartDataSync: (channelId) => {
+      dispatch(startChannelEpgSync(channelId));
+    },
+    onStopDataSync: () => {
+      dispatch(stopChannelEpgSync());
     },
   };
 }

@@ -6,8 +6,6 @@ import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { Route, Switch } from 'react-router-dom';
 import { ChannelEpg } from '../channel-epg/channel-epg.container';
 import { Channel } from '../../entities/channel.model';
-import { FavouritesEditor } from '../favourites-editor/favourites-editor';
-import { RouteComponentProps } from 'react-router';
 
 export interface StoreProps {
   currentKey: string;
@@ -18,6 +16,7 @@ export interface StoreProps {
 
 export interface DispatchProps {
   onFetchData: (playlistUrl: string) => void;
+  onUnmount: () => void;
   onChangeChannel: (channel: Channel) => void;
 }
 
@@ -32,6 +31,10 @@ export class Showcase extends PureComponent<ShowcaseProps> {
     this.props.onFetchData(this.props.playlistUrl);
   }
 
+  public componentWillUnmount() {
+    this.props.onUnmount();
+  }
+
   get streamUrl() {
     return ((this.currentChannel && this.currentChannel.stream) || '')
       .replace('{KEY}', this.props.currentKey);
@@ -43,10 +46,10 @@ export class Showcase extends PureComponent<ShowcaseProps> {
       current: this.currentChannel,
     };
 
-    const favouritesEditor = ({history}: RouteComponentProps<any>) => (
-      <FavouritesEditor {...commonProps}
-                        onSave={(f) => {this.saveFavourites(f); history.push('/'); }}
-                        onCancel={() => history.push('/')}/>);
+    // const favouritesEditor = ({history}: RouteComponentProps<any>) => (
+    //   <FavouritesEditor {...commonProps}
+    //                     onSave={(f) => {this.saveFavourites(f); history.push('/'); }}
+    //                     onCancel={() => history.push('/')}/>);
 
     const channelsPanel = () => <ChannelsPanel {...commonProps}/>;
 

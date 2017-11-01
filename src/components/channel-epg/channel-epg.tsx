@@ -7,16 +7,12 @@ import Scrollbars from 'react-custom-scrollbars';
 import { Duration } from '../formatters/duration';
 import { DateFormatter } from '../formatters/date';
 
-interface ChannelEpgState {
-  entries: EpgEntry[];
-}
-
 export interface DispatchProps {
-  onFetchData: (epgUrl: string) => void;
+  onStartDataSync: (channelId: number) => void;
+  onStopDataSync: () => void;
 }
 
 export interface StateProps {
-  epgUrl: string;
   entries: EpgEntry[];
 }
 
@@ -26,16 +22,20 @@ export interface OwnProps {
 
 type Props = StateProps & DispatchProps & OwnProps;
 
-export class ChannelEpgComponent extends PureComponent<Props, ChannelEpgState> {
-
+export class ChannelEpgComponent extends PureComponent<Props> {
   public componentDidMount() {
-    this.props.onFetchData(this.props.epgUrl);
+    this.props.onStartDataSync(this.props.channelId);
   }
 
   public componentWillReceiveProps(newProps: Props) {
-    if (this.props.epgUrl !== newProps.epgUrl) {
-      this.props.onFetchData(newProps.epgUrl);
+    if (this.props.channelId !== newProps.channelId) {
+      this.props.onStopDataSync();
+      this.props.onStartDataSync(newProps.channelId);
     }
+  }
+
+  public componentWillUnmount() {
+    this.props.onStopDataSync();
   }
 
   public render() {

@@ -39,9 +39,7 @@ const settingsStorage = LocalStorageFactory.create<SettingsState>('settings');
 const uiPreferencesStorage = LocalStorageFactory.create<UiPreferencesState>('ui-preferences');
 
 const preloadState = {
-  favourites: {
-    savedChannels: favouritesStorage.get(),
-  },
+  favourites: favouritesStorage.get(),
   uiPreferences: uiPreferencesStorage.get(),
   settings: settingsStorage.get(),
 };
@@ -58,7 +56,7 @@ sagaMiddleware.run(rootSaga);
 
 store.subscribe(() => {
   const state = store.getState();
-  favouritesStorage.set(state.favourites.savedChannels);
+  favouritesStorage.set(state.favourites);
   settingsStorage.set(state.settings);
   uiPreferencesStorage.set(state.uiPreferences);
 });

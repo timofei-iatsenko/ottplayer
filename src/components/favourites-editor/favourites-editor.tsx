@@ -51,7 +51,7 @@ export class FavouritesEditorComponent extends Component<FavouritesEditorProps> 
 function mapStateToProps(state: AppState): Partial<FavouritesEditorProps> {
   return {
     channels: state.playlist.channels,
-    favourites: state.favourites.savedChannels,
+    favourites: state.favourites,
   };
 }
 

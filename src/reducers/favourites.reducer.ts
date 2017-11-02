@@ -1,17 +1,13 @@
 import { FavouritesActions } from '../actions/favourites.actions';
 
-export interface FavouritesState {
-  readonly savedChannels: ReadonlyArray<number>;
-}
+export type FavouritesState = ReadonlyArray<number>;
 
-const initialState: FavouritesState = {
-  savedChannels: [],
-};
+const initialState: FavouritesState = [];
 
 export function favouritesReducer(state = initialState, action: any): FavouritesState {
   switch (action.type) {
     case FavouritesActions.save:
-      return {...state, savedChannels: action.favourites};
+      return action.favourites;
     default:
       return state;
   }

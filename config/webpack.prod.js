@@ -11,6 +11,7 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
 module.exports = webpackMerge(commonConfig, {
+  devtool: 'cheap-module-source-map',
   output: {
     /**
      * Specifies the name of each output file on disk.
@@ -29,6 +30,8 @@ module.exports = webpackMerge(commonConfig, {
     chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
   plugins: [
-    new UglifyJsPlugin(),
+    //new UglifyJsPlugin({
+    //  sourceMap: true
+    //}),
   ],
 });

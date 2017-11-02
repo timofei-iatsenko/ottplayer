@@ -11,7 +11,7 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
 module.exports = webpackMerge(commonConfig, {
-  devtool: 'cheap-module-source-map',
+  devtool: 'source-map',
   output: {
     /**
      * Specifies the name of each output file on disk.
@@ -30,8 +30,22 @@ module.exports = webpackMerge(commonConfig, {
     chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
   plugins: [
-    //new UglifyJsPlugin({
-    //  sourceMap: true
-    //}),
+    new UglifyJsPlugin({
+      compress: {
+        warnings: false,
+        // Disabled because of an issue with Uglify breaking seemingly valid code:
+        // https://github.com/facebookincubator/create-react-app/issues/2376
+        // Pending further investigation:
+        // https://github.com/mishoo/UglifyJS2/issues/2011
+        comparisons: false,
+      },
+      output: {
+        comments: false,
+        // Turned on because emoji and regex is not minified properly using default
+        // https://github.com/facebookincubator/create-react-app/issues/2488
+        ascii_only: true,
+      },
+      sourceMap: true,
+    }),
   ],
 });

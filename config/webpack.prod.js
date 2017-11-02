@@ -11,25 +11,24 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
  * See: http://webpack.github.io/docs/configuration.html#cli
  */
 module.exports = webpackMerge(commonConfig, {
-    output: {
-        /**
-         * Specifies the name of each output file on disk.
-         * IMPORTANT: You must not specify an absolute path here!
-         *
-         * See: http://webpack.github.io/docs/configuration.html#output-filename
-         */
-        filename: '[name].[chunkhash].bundle.js',
+  output: {
+    /**
+     * Specifies the name of each output file on disk.
+     * IMPORTANT: You must not specify an absolute path here!
+     *
+     * See: http://webpack.github.io/docs/configuration.html#output-filename
+     */
+    filename: '[name].[chunkhash:8].js',
 
-        /**
-         * The filename of non-entry chunks as relative path
-         * inside the output.path directory.
-         *
-         * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
-         */
-        chunkFilename: '[name].[chunkhash].chunk.js',
-
-    },
-    plugins: [
-        new UglifyJsPlugin(),
-    ],
+    /**
+     * The filename of non-entry chunks as relative path
+     * inside the output.path directory.
+     *
+     * See: http://webpack.github.io/docs/configuration.html#output-chunkfilename
+     */
+    chunkFilename: '[name].[chunkhash:8].chunk.js',
+  },
+  plugins: [
+    new UglifyJsPlugin(),
+  ],
 });

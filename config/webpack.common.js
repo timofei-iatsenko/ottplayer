@@ -1,11 +1,9 @@
 'use strict';
 
-//process.noDeprecation = true;
 
 const path = require('path');
 const paths = require('./path-helpers');
 const env = require('./env-config');
-
 /**
  * Webpack Plugins
  */
@@ -143,8 +141,10 @@ module.exports = {
    * See: http://webpack.github.io/docs/configuration.html#plugins
    */
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': process.env.NODE_ENV,
+    }),
     new CheckerPlugin(),
-    //new ProgressBarPlugin(),
 
     /**
      * Put Vendors in separate bundle
@@ -166,6 +166,18 @@ module.exports = {
      */
     new HtmlWebpackPlugin({
       template: 'public/index.html',
+      minify: env.IS_DEV ? false : {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     }),
 
     new webpack.ProvidePlugin({

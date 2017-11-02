@@ -18,13 +18,15 @@
 const args = require('yargs').argv;
 const path = require('path');
 
-const env = args.env || 'dev';
+const env = args.env || 'development';
 
 let config = {
     base: '/',
-    destination: `./dist`,
-    IS_DEV: env.toLowerCase() === 'dev',
+    destination: `./build`,
+    IS_DEV: env.toLowerCase() === 'development',
 };
+
+process.env.NODE_ENV = env;
 
 try {
     const localConfig = require(path.resolve('./local-env-config.js'));

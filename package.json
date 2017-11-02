@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack-dev-server --progress --watch --content-base src/",
-    "build": "webpack --env=prod",
+    "build": "webpack --env=production",
     "test": "jest"
   },
   "dependencies": {

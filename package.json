@@ -22,8 +22,8 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",
     "redux-thunk": "^2.2.0",
-    "video.js": "^5.19.2",
-    "videojs-contrib-hls": "^5.4.1",
+    "video.js": "^6.4.0",
+    "videojs-contrib-hls": "^5.12.2",
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "@types/react-redux": "^5.0.10",
     "@types/react-router": "^4.0.15",
     "@types/react-router-dom": "^4.0.8",
-    "@types/video.js": "^6.2.0",
+    "@types/video.js": "^6.2.2",
     "autoprefixer": "7.1.1",
     "awesome-typescript-loader": "^3.2.3",
     "css-loader": "0.28.4",

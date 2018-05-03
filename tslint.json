@@ -26,7 +26,8 @@
         "members",
         "statements"
       ],
-      "ordered-imports": false
+      "ordered-imports": false,
+      "no-empty-interface": false
     },
     "rulesDirectory": []
 }

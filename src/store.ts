@@ -11,6 +11,8 @@ import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferen
 import { CurrentChannelState, currentDataReducer } from './reducers/current-channel.reducer';
 import { rootSaga } from './sagas';
 import { LocalStorageFactory } from './libs/storage';
+import { castingReducer, CastingState } from './reducers/casting.reducer';
+import { initializeCastApi } from './casting/initialize-casting-api';
 
 export interface AppState {
   readonly playlist: Playlist;
@@ -20,6 +22,7 @@ export interface AppState {
   readonly currentEpg: EpgDictionary;
   readonly uiPreferences: UiPreferencesState;
   readonly currentChannel: CurrentChannelState;
+  readonly casting: CastingState;
 }
 
 const ottApp = combineReducers<AppState>({
@@ -29,6 +32,7 @@ const ottApp = combineReducers<AppState>({
   currentEpg: epgReducer,
   uiPreferences: uiPreferencesReducer,
   currentChannel: currentDataReducer,
+  casting: castingReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -38,7 +42,7 @@ const favouritesStorage = LocalStorageFactory.create<ReadonlyArray<number>>('fav
 const settingsStorage = LocalStorageFactory.create<SettingsState>('settings');
 const uiPreferencesStorage = LocalStorageFactory.create<UiPreferencesState>('ui-preferences');
 
-const preloadState = {
+const preloadState: Partial<AppState> = {
   favourites: favouritesStorage.get(),
   uiPreferences: uiPreferencesStorage.get(),
   settings: settingsStorage.get(),
@@ -60,3 +64,5 @@ store.subscribe(() => {
   settingsStorage.set(state.settings);
   uiPreferencesStorage.set(state.uiPreferences);
 });
+
+initializeCastApi(store);

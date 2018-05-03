@@ -28,3 +28,19 @@
     background-color: mix(#000, $base-color, 10%);
   }
 }
+
+@mixin header-btn {
+    color: $gray;
+    border: 0;
+    background: none;
+    display: block;
+    width: 40px;
+    height: 30px;
+    cursor: pointer;
+    margin-left: 5px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+}

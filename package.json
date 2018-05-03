@@ -22,11 +22,13 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",
     "redux-thunk": "^2.2.0",
+    "ts-action": "^6.0.2",
     "video.js": "^6.4.0",
     "videojs-contrib-hls": "^5.12.2",
     "whatwg-fetch": "2.0.3"
   },
   "devDependencies": {
+    "@types/chrome": "0.0.64",
     "@types/enzyme": "^3.1.2",
     "@types/jest": "^21.1.2",
     "@types/lodash": "^4.14.77",

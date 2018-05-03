@@ -1,0 +1,11 @@
+@import "../../commons/colors";
+@import "../../commons/mixins";
+
+.default {
+  @include header-btn();
+}
+
+.active {
+  @include header-btn();
+  color: $blue;
+}

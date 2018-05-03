@@ -1,4 +1,5 @@
 @import "../../commons/colors";
+@import "../../commons/mixins";
 
 .host {
   display: flex;
@@ -11,18 +12,7 @@
 }
 
 .btn {
-  color: $gray;
-  border: 0;
-  background: none;
-  width: 40px;
-  height: 30px;
-  cursor: pointer;
-  margin-left: 5px;
-
-  svg {
-    width: 20px;
-    height: 20px;
-  }
+  @include header-btn();
 }
 
 .channelsBtns {
@@ -31,4 +21,5 @@
 
 .settingsBtns {
   margin-left: auto;
+  display: flex;
 }

@@ -6,8 +6,9 @@ import { Player } from 'video.js';
 interface VideoPlayerProps {
   src: string;
 }
+
 export class VideoPlayer extends Component<VideoPlayerProps> {
-  private player: any;
+  private player: videojs.Player;
 
   public componentDidMount() {
     this.player = videojs(this.refs.video, {
@@ -18,6 +19,12 @@ export class VideoPlayer extends Component<VideoPlayerProps> {
 
     if (this.props.src) {
       this.updateSrc(this.props.src);
+    }
+  }
+
+  public componentWillUnmount() {
+    if (this.player) {
+      this.player.dispose();
     }
   }
 

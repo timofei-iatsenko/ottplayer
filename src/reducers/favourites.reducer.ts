@@ -1,14 +1,10 @@
-import { FavouritesActions, SaveFavourites } from '../actions/favourites.actions';
+import { on, reducer } from 'ts-action';
+import { SaveFavourites } from '../actions/favourites.actions';
 
 export type FavouritesState = ReadonlyArray<number>;
 
 const initialState: FavouritesState = [];
 
-export function favouritesReducer(state = initialState, action: typeof FavouritesActions): FavouritesState {
-  switch (action.type) {
-    case SaveFavourites.type:
-      return action.payload.favourites;
-    default:
-      return state;
-  }
-}
+export const favouritesReducer = reducer<FavouritesState>([
+  on(SaveFavourites, (_state, { payload }) => payload.favourites),
+], initialState);

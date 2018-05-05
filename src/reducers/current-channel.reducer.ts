@@ -1,4 +1,5 @@
-import { EpgActions, ReceiveChannelEpg } from '../actions/epg.actions';
+import { on, reducer } from 'ts-action';
+import { ReceiveChannelEpg } from '../actions/epg.actions';
 import { EpgEntry } from '../entities/epg-entry';
 
 export interface CurrentChannelState {
@@ -11,11 +12,6 @@ const initialState: CurrentChannelState = {
   epg: [],
 };
 
-export function currentDataReducer(state: CurrentChannelState = initialState, action: typeof EpgActions) {
-  switch (action.type) {
-    case ReceiveChannelEpg.type:
-     return {...state, epg: action.payload.epg};
-    default:
-      return state;
-  }
-}
+export const currentDataReducer = reducer<CurrentChannelState>([
+  on(ReceiveChannelEpg, (state, { payload }) => ({...state, epg: payload.epg})),
+], initialState);

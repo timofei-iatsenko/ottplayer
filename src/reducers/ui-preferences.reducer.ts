@@ -1,4 +1,5 @@
-import { SetChannelsListMode, UiActions } from '../actions/ui-preferences.actions';
+import { on, reducer } from 'ts-action';
+import { SetChannelsListMode } from '../actions/ui-preferences.actions';
 import { ChannelListMode } from '../components/list-switcher/channel-list-modes';
 
 export interface UiPreferencesState {
@@ -9,11 +10,6 @@ const initialState: UiPreferencesState = {
   channelListMode: ChannelListMode.grouped,
 };
 
-export function uiPreferencesReducer(state = initialState, action: typeof UiActions): UiPreferencesState {
-  switch (action.type) {
-    case SetChannelsListMode.type:
-      return { ...state, channelListMode: action.payload.mode };
-    default:
-      return state;
-  }
-}
+export const uiPreferencesReducer = reducer<UiPreferencesState>([
+  on(SetChannelsListMode, (state, { payload }) => ({ ...state, channelListMode: payload.mode })),
+], initialState);

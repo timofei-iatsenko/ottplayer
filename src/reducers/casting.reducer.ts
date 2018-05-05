@@ -1,12 +1,9 @@
-import {action, payload, union} from 'ts-action';
+import { action, on, payload, reducer } from 'ts-action';
+import CastState = cast.framework.CastState;
+import SessionState = cast.framework.SessionState;
 
 export const CastStateChanged = action('[Casting] Cast state changed', payload<{state: string}>());
 export const SessionStateChanged = action('[Casting] Session state changed',  payload<{state: string}>());
-
-const CastingActions = union({
-  CastStateChanged,
-  SessionStateChanged,
-});
 
 export interface CastingState {
   readonly castState: cast.framework.CastState;
@@ -18,22 +15,15 @@ const initialState: CastingState = {
   sessionState: null,
 };
 
-// tslint:disable-next-line no-shadowed-variable
-export function castingReducer(state: CastingState = initialState, action: typeof CastingActions) {
-  switch (action.type) {
-    case SessionStateChanged.type: {
-      return {
-        ...state,
-        sessionState: action.payload.state,
-      };
-    }
-    case CastStateChanged.type: {
-      return {
-        ...state,
-        castState: action.payload.state,
-      };
-    }
-    default:
-      return state;
-  }
-}
+// tslint:disable no-shadowed-variable
+export const castingReducer = reducer<CastingState>([
+  on(SessionStateChanged, (state, { payload }) => ({
+    ...state,
+    sessionState: payload.state as SessionState,
+  })),
+
+  on(CastStateChanged, (state, { payload }) => ({
+    ...state,
+    castState: payload.state as CastState,
+  })),
+], initialState);

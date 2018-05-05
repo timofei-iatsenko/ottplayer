@@ -28,10 +28,10 @@ function* bgSync(url: string) {
 
 export default function* main() {
   while (true) {
-    const action = yield take(StartChannelEpgSync.type);
+    const action = (yield take(StartChannelEpgSync.type)) as typeof StartChannelEpgSync.action;
     // starts the task in the background
     const state: AppState = yield select();
-    const url = `${state.playlist.urlEpg}channel/${action.channelId}`;
+    const url = `${state.playlist.urlEpg}channel/${action.payload.channelId}`;
     const bgSyncTask = yield fork(bgSync, url);
 
     // wait for the user stop action

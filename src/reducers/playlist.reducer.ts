@@ -1,4 +1,5 @@
-import { PlaylistActions, ReceivePlaylist } from '../actions/playlist.actions';
+import { on, reducer } from 'ts-action';
+import { ReceivePlaylist } from '../actions/playlist.actions';
 import { Playlist } from '../entities/playlist.model';
 
 const initialPlaylist: Playlist = {
@@ -7,11 +8,6 @@ const initialPlaylist: Playlist = {
   channels: [],
 };
 
-export function playlistReducer(state: Playlist = initialPlaylist, action: typeof PlaylistActions) {
-  switch (action.type) {
-    case ReceivePlaylist.type:
-     return action.payload.playlist;
-    default:
-      return state;
-  }
-}
+export const playlistReducer = reducer<Playlist>([
+  on(ReceivePlaylist, (_state, { payload }) => payload.playlist),
+], initialPlaylist);

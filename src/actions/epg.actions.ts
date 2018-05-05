@@ -1,12 +1,12 @@
 import { action, payload, union } from 'ts-action';
-import { EpgDictionary } from '../entities/epg-entry';
+import { EpgDictionary, EpgEntry } from '../entities/epg-entry';
 
 export const RequestCurrentEpg = action('[EPG] Request current');
 export const ReceiveCurrentEpg = action('[EPG] Receive Current', payload<{epg: EpgDictionary}>());
 export const FailedLoadCurrentEpg = action('[EPG] Failed load current', payload<{error: string}>());
 
 export const RequestChannelEpg = action('[EPG] Request channel');
-export const ReceiveChannelEpg = action('[EPG] Receive channel', payload<{epg: EpgDictionary}>());
+export const ReceiveChannelEpg = action('[EPG] Receive channel', payload<{epg: EpgEntry[]}>());
 export const FailedLoadChannelEpg = action('[EPG] Failed load channel', payload<{error: string}>());
 
 export const StartCurrentEpgSync = action('[EPG] Start sync current');

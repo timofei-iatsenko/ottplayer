@@ -1,76 +1,28 @@
-import { EpgDictionary, EpgEntry } from '../entities/epg-entry';
+import { action, payload, union } from 'ts-action';
+import { EpgDictionary } from '../entities/epg-entry';
 
-export enum EpgActions {
-  REQUEST_CURRENT_EPG = 'REQUEST_CURRENT_EPG',
-  RECEIVE_CURRENT_EPG = 'RECEIVE_CURRENT_EPG',
-  FAILED_LOAD_CURRENT_EPG = 'FAILED_LOAD_CURRENT_EPG',
-  START_CURRENT_EPG_SYNC = 'START_CURRENT_EPG_SYNC',
-  STOP_CURRENT_EPG_SYNC = 'STOP_CURRENT_EPG_SYNC',
+export const RequestCurrentEpg = action('[EPG] Request current');
+export const ReceiveCurrentEpg = action('[EPG] Receive Current', payload<{epg: EpgDictionary}>());
+export const FailedLoadCurrentEpg = action('[EPG] Failed load current', payload<{error: string}>());
 
-  REQUEST_CHANNEL_EPG = 'REQUEST_CHANNEL_EPG',
-  RECEIVE_CHANNEL_EPG = 'RECEIVE_CHANNEL_EPG',
-  FAILED_LOAD_CHANNEL_EPG = 'FAILED_LOAD_CHANNEL_EPG',
-  START_CHANNEL_EPG_SYNC = 'START_CHANNEL_EPG_SYNC',
-  STOP_CHANNEL_EPG_SYNC = 'STOP_CHANNEL_EPG_SYNC',
-}
+export const RequestChannelEpg = action('[EPG] Request channel');
+export const ReceiveChannelEpg = action('[EPG] Receive channel', payload<{epg: EpgDictionary}>());
+export const FailedLoadChannelEpg = action('[EPG] Failed load channel', payload<{error: string}>());
 
-export function requestCurrentEpg() {
-  return {
-    type: EpgActions.REQUEST_CURRENT_EPG,
-  };
-}
+export const StartCurrentEpgSync = action('[EPG] Start sync current');
+export const StopCurrentEpgSync = action('[EPG] Stop sync current');
 
-export function failedLoadCurrentEpg(error: string) {
-  return {
-    type: EpgActions.FAILED_LOAD_CURRENT_EPG,
-    error,
-  };
-}
-export function failedLoadChannelEpg(error: string) {
-  return {
-    type: EpgActions.FAILED_LOAD_CHANNEL_EPG,
-    error,
-  };
-}
-export function receiveCurrentEpg(epg: EpgDictionary) {
-  return {
-    type: EpgActions.RECEIVE_CURRENT_EPG,
-    epg,
-  };
-}
+export const StartChannelEpgSync = action('[EPG] Start sync channel', payload<{channelId: number}>());
+export const StopChannelEpgSync = action('[EPG] Stop sync channel');
 
-export function requestChannelEpg() {
-  return {
-    type: EpgActions.REQUEST_CHANNEL_EPG,
-  };
-}
-
-export function receiveChannelEpg(epg: EpgEntry[]) {
-  return {
-    type: EpgActions.RECEIVE_CHANNEL_EPG,
-    epg,
-  };
-}
-
-export function startCurrentEpgSync() {
-  return {
-    type: EpgActions.START_CURRENT_EPG_SYNC,
-  };
-}
-export function startChannelEpgSync(channelId: number) {
-  return {
-    type: EpgActions.START_CHANNEL_EPG_SYNC,
-    channelId,
-  };
-}
-export function stopCurrentEpgSync() {
-  return {
-    type: EpgActions.STOP_CURRENT_EPG_SYNC,
-  };
-}
-
-export function stopChannelEpgSync() {
-  return {
-    type: EpgActions.STOP_CHANNEL_EPG_SYNC,
-  };
-}
+export const EpgActions = union({
+  RequestCurrentEpg,
+  FailedLoadCurrentEpg,
+  ReceiveCurrentEpg,
+  RequestChannelEpg,
+  ReceiveChannelEpg,
+  StartCurrentEpgSync,
+  StartChannelEpgSync,
+  StopCurrentEpgSync,
+  StopChannelEpgSync,
+});

@@ -1,9 +1,9 @@
-import { ChannelEpgComponent, DispatchProps, OwnProps, StateProps } from './channel-epg';
-import { startChannelEpgSync, stopChannelEpgSync } from '../../actions/epg.actions';
-import { Dispatch } from 'redux';
-import { AppState } from '../../store';
 import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { StartChannelEpgSync, StopChannelEpgSync } from '../../actions/epg.actions';
 import { EpgEntry } from '../../entities/epg-entry';
+import { AppState } from '../../store';
+import { ChannelEpgComponent, DispatchProps, OwnProps, StateProps } from './channel-epg';
 
 function filterOutdatedEntries(entries: EpgEntry[]) {
   const index = entries.findIndex((entry) => entry.inAir);
@@ -19,10 +19,10 @@ function mapStateToProps(state: AppState): StateProps {
 function mapDispatchToProps(dispatch: Dispatch<AppState>): DispatchProps {
   return {
     onStartDataSync: (channelId) => {
-      dispatch(startChannelEpgSync(channelId));
+      dispatch(new StartChannelEpgSync({channelId}));
     },
     onStopDataSync: () => {
-      dispatch(stopChannelEpgSync());
+      dispatch(new StopChannelEpgSync());
     },
   };
 }

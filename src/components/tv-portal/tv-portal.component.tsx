@@ -1,15 +1,15 @@
 import React, { PureComponent } from 'react';
-import styles from './tv-portal.scss';
-import { ChannelsPanel } from '../channels-panel/channels-panel.container';
-import { Route, Switch } from 'react-router-dom';
-import { RouteComponentProps } from 'react-router';
-import { PlayerArea } from '../player-area/player-area.component';
-import { FavouritesEditor } from '../favourites-editor/favourites-editor';
 import { connect } from 'react-redux';
-import { AppState } from '../../store';
-import { fetchPlaylist } from '../../actions/playlist.actions';
-import { startCurrentEpgSync, stopCurrentEpgSync } from '../../actions/epg.actions';
+import { RouteComponentProps } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
+import { StartCurrentEpgSync, StopCurrentEpgSync } from '../../actions/epg.actions';
+import { fetchPlaylist } from '../../actions/playlist.actions';
+import { AppState } from '../../store';
+import { ChannelsPanel } from '../channels-panel/channels-panel.container';
+import { FavouritesEditor } from '../favourites-editor/favourites-editor';
+import { PlayerArea } from '../player-area/player-area.component';
+import styles from './tv-portal.scss';
 
 interface Props extends RouteComponentProps<{}> {
   currentKey: string;
@@ -53,10 +53,10 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): Partial<Props> {
   return {
     onFetchData: async (playlistUrl: string) => {
       await dispatch(fetchPlaylist(playlistUrl));
-      dispatch(startCurrentEpgSync());
+      dispatch(new StartCurrentEpgSync());
     },
     onUnmount: () => {
-      dispatch(stopCurrentEpgSync());
+      dispatch(new StopCurrentEpgSync());
     },
   };
 }

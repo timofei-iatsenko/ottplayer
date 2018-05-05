@@ -1,10 +1,10 @@
-import { EpgActions } from '../actions/epg.actions';
+import { EpgActions, ReceiveCurrentEpg } from '../actions/epg.actions';
 import { EpgDictionary } from '../entities/epg-entry';
 
-export function epgReducer(state: EpgDictionary = {}, action: any) {
+export function epgReducer(state: EpgDictionary = {}, action: typeof EpgActions) {
   switch (action.type) {
-    case EpgActions.RECEIVE_CURRENT_EPG:
-     return action.epg;
+    case ReceiveCurrentEpg.type:
+     return action.payload.epg;
     default:
       return state;
   }

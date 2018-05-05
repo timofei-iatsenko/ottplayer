@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { StartCurrentEpgSync, StopCurrentEpgSync } from '../../actions/epg.actions';
-import { fetchPlaylist } from '../../actions/playlist.actions';
+import { StopCurrentEpgSync } from '../../actions/epg.actions';
+import { RequestPlaylist } from '../../actions/playlist.actions';
 import { AppState } from '../../store';
 import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { FavouritesEditor } from '../favourites-editor/favourites-editor';
@@ -52,8 +52,7 @@ function mapStateToProps(state: AppState): Partial<Props> {
 function mapDispatchToProps(dispatch: Dispatch<AppState>): Partial<Props> {
   return {
     onFetchData: async (playlistUrl: string) => {
-      await dispatch(fetchPlaylist(playlistUrl));
-      dispatch(new StartCurrentEpgSync());
+      dispatch(new RequestPlaylist({playlistUrl}));
     },
     onUnmount: () => {
       dispatch(new StopCurrentEpgSync());

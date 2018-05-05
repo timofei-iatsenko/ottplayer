@@ -1,4 +1,4 @@
-import { SettingsActions } from '../actions/settings.actions';
+import { ChangeSettings, SettingsActions } from '../actions/settings.actions';
 export interface SettingsState {
   readonly playlistUrl: string;
   readonly currentKey: string;
@@ -9,10 +9,10 @@ const initialState: SettingsState = {
   currentKey: '',
 };
 
-export function settingsReducer(state = initialState, action: any) {
+export function settingsReducer(state = initialState, action: typeof SettingsActions) {
   switch (action.type) {
-    case SettingsActions.save:
-      return { ...action.settings };
+    case ChangeSettings.type:
+      return { ...action.payload.settings };
     default:
       return state;
   }

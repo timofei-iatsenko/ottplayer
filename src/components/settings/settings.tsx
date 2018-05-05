@@ -1,12 +1,12 @@
-import React, { PureComponent, SyntheticEvent } from 'react';
-import styles from './settings.scss';
 import autobind from 'autobind-decorator';
+import React, { PureComponent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
-import { AppState } from '../../store';
+import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
-import { changeSettings } from '../../actions/settings.actions';
+import { ChangeSettings } from '../../actions/settings.actions';
 import { SettingsState } from '../../reducers/settings.reducer';
-import {RouteComponentProps} from 'react-router';
+import { AppState } from '../../store';
+import styles from './settings.scss';
 
 interface Props {
   playlistUrl: string;
@@ -74,8 +74,8 @@ function mapStateToProps(state: AppState): Partial<Props> {
 
 function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: RouteComponentProps<{}>): Partial<Props>  {
   return {
-    onSubmit: (data) => {
-      dispatch(changeSettings(data));
+    onSubmit: (settings) => {
+      dispatch(new ChangeSettings({settings}));
       ownProps.history.push('/');
     },
     onCancel: () => ownProps.history.push('/'),

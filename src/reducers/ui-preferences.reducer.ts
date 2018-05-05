@@ -1,5 +1,5 @@
+import { SetChannelsListMode, UiActions } from '../actions/ui-preferences.actions';
 import { ChannelListMode } from '../components/list-switcher/channel-list-modes';
-import { SET_CHANNELS_LIST_MODE } from '../actions/ui-preferences.actions';
 
 export interface UiPreferencesState {
   readonly channelListMode: ChannelListMode;
@@ -9,10 +9,10 @@ const initialState: UiPreferencesState = {
   channelListMode: ChannelListMode.grouped,
 };
 
-export function uiPreferencesReducer(state = initialState, action: any): UiPreferencesState {
+export function uiPreferencesReducer(state = initialState, action: typeof UiActions): UiPreferencesState {
   switch (action.type) {
-    case SET_CHANNELS_LIST_MODE:
-      return { ...state, channelListMode: action.mode };
+    case SetChannelsListMode.type:
+      return { ...state, channelListMode: action.payload.mode };
     default:
       return state;
   }

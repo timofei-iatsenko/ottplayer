@@ -1,10 +1,8 @@
 import { ChannelListMode } from '../components/list-switcher/channel-list-modes';
+import { action, payload, union } from 'ts-action';
 
-export const SET_CHANNELS_LIST_MODE = 'SET_CHANNELS_LIST_MODE';
+export const SetChannelsListMode = action('[UI] Set channel list mode', payload<{mode: ChannelListMode}>());
 
-export function setChannelsListMode(mode: ChannelListMode) {
-  return {
-    type: SET_CHANNELS_LIST_MODE,
-    mode,
-  };
-}
+export const UiActions = union({
+  SetChannelsListMode,
+});

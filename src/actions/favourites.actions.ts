@@ -1,10 +1,7 @@
-export enum FavouritesActions {
-  save = '[Favourites] Save',
-}
+import { action, payload, union } from 'ts-action';
 
-export function saveFavourites(favourites: ReadonlyArray<number>) {
-  return {
-    type: FavouritesActions.save,
-    favourites,
-  };
-}
+export const SaveFavourites = action('[Favourites] Save', payload<{favourites: ReadonlyArray<number>}>());
+
+export const FavouritesActions = union({
+  SaveFavourites,
+});

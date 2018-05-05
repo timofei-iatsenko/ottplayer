@@ -1,4 +1,4 @@
-import { RECEIVE_PLAYLIST } from '../actions/playlist.actions';
+import { PlaylistActions, ReceivePlaylist } from '../actions/playlist.actions';
 import { Playlist } from '../entities/playlist.model';
 
 const initialPlaylist: Playlist = {
@@ -7,10 +7,10 @@ const initialPlaylist: Playlist = {
   channels: [],
 };
 
-export function playlistReducer(state: Playlist = initialPlaylist, action: any) {
+export function playlistReducer(state: Playlist = initialPlaylist, action: typeof PlaylistActions) {
   switch (action.type) {
-    case RECEIVE_PLAYLIST:
-     return action.playlist;
+    case ReceivePlaylist.type:
+     return action.payload.playlist;
     default:
       return state;
   }

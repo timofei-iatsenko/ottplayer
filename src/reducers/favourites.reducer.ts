@@ -1,13 +1,13 @@
-import { FavouritesActions } from '../actions/favourites.actions';
+import { FavouritesActions, SaveFavourites } from '../actions/favourites.actions';
 
 export type FavouritesState = ReadonlyArray<number>;
 
 const initialState: FavouritesState = [];
 
-export function favouritesReducer(state = initialState, action: any): FavouritesState {
+export function favouritesReducer(state = initialState, action: typeof FavouritesActions): FavouritesState {
   switch (action.type) {
-    case FavouritesActions.save:
-      return action.favourites;
+    case SaveFavourites.type:
+      return action.payload.favourites;
     default:
       return state;
   }

@@ -1,11 +1,9 @@
+import { action, payload, union } from 'ts-action';
 import { SettingsState } from '../reducers/settings.reducer';
-export enum SettingsActions {
-  save = '[Settings] Save',
-}
 
-export function changeSettings(settings: SettingsState) {
-  return {
-    type: SettingsActions.save,
-    settings,
-  };
-}
+export const ChangeSettings = action('[Settings] Change', payload<{settings: SettingsState}>());
+
+export const SettingsActions = union({
+  ChangeSettings,
+});
+

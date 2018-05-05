@@ -1,15 +1,15 @@
+import autobind from 'autobind-decorator';
 import React, { Component } from 'react';
-import { SidePanel } from '../side-panel/side-panel';
-import { SaveBar } from './save-bar/save-bar';
-import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
+import { Dispatch } from 'redux';
+import { SaveFavourites } from '../../actions/favourites.actions';
 import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { AppState } from '../../store';
-import { connect } from 'react-redux';
+import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';
 import { withChannelNavigation } from '../hoc/with-channel-navigation';
-import { Dispatch } from 'redux';
-import { RouteComponentProps } from 'react-router';
-import { saveFavourites } from '../../actions/favourites.actions';
-import autobind from 'autobind-decorator';
+import { SidePanel } from '../side-panel/side-panel';
+import { SaveBar } from './save-bar/save-bar';
 
 interface FavouritesEditorProps {
   channels: ReadonlyChannelsCollection;
@@ -58,7 +58,7 @@ function mapStateToProps(state: AppState): Partial<FavouritesEditorProps> {
 function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: RouteComponentProps<{}>): Partial<FavouritesEditorProps> {
   return {
     onSave: (favourites) => {
-      dispatch(saveFavourites(favourites));
+      dispatch(new SaveFavourites({favourites}));
       ownProps.history.push('/');
     },
     onCancel: () => ownProps.history.push('/'),

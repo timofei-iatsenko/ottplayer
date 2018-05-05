@@ -1,32 +1,10 @@
-import { AppState } from '../store';
+import { action, payload, union } from 'ts-action';
 import { Playlist } from '../entities/playlist.model';
-import { ThunkAction } from 'redux-thunk';
-import * as Api from '../api/playlist.api';
 
-export const REQUEST_PLAYLIST = 'REQUEST_PLAYLIST';
-export const RECEIVE_PLAYLIST = 'RECEIVE_PLAYLIST';
-export const ERROR_FETCH_PLAYLIST = 'ERROR_FETCH_PLAYLIST';
+export const RequestPlaylist = action('[Playlist] Request', payload<{playlistUrl: string}>());
+export const ReceivePlaylist = action('[Playlist] Receive', payload<{playlist: Playlist}>());
 
-function requestPlaylist(playlistUrl: string) {
-  return {
-    type: REQUEST_PLAYLIST,
-    playlistUrl,
-  };
-}
-
-function receivePlaylist(playlist: Playlist) {
-  return {
-    type: RECEIVE_PLAYLIST,
-    playlist,
-  };
-}
-
-export function fetchPlaylist(playlistUrl: string): ThunkAction<Promise<any>, AppState, void> {
-  return (dispatch) => {
-    dispatch(requestPlaylist(playlistUrl));
-
-    return Api.fetchPlaylist(playlistUrl).then((playlist: Playlist) => {
-      return dispatch(receivePlaylist(playlist));
-    });
-  };
-}
+export const PlaylistActions = union({
+  RequestPlaylist,
+  ReceivePlaylist,
+});

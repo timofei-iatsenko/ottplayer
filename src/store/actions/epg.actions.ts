@@ -1,5 +1,5 @@
 import { action, payload, union } from 'ts-action';
-import { EpgDictionary, EpgEntry } from '../entities/epg-entry';
+import { EpgDictionary, EpgEntry } from '../../entities/epg-entry';
 
 export const RequestCurrentEpg = action('[EPG] Request current');
 export const ReceiveCurrentEpg = action('[EPG] Receive Current', payload<{epg: EpgDictionary}>());

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { StartChannelEpgSync, StopChannelEpgSync } from '../../actions/epg.actions';
+import { StartChannelEpgSync, StopChannelEpgSync } from '../../store/actions/epg.actions';
 import { EpgEntry } from '../../entities/epg-entry';
 import { AppState } from '../../store';
 import { ChannelEpgComponent, DispatchProps, OwnProps, StateProps } from './channel-epg';

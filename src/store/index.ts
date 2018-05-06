@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import { EpgDictionary } from './entities/epg-entry';
-import { Playlist } from './entities/playlist.model';
+import { EpgDictionary } from '../entities/epg-entry';
+import { Playlist } from '../entities/playlist.model';
 import { playlistReducer } from './reducers/playlist.reducer';
 import thunkMiddleware from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
@@ -9,10 +9,10 @@ import { settingsReducer, SettingsState } from './reducers/settings.reducer';
 import { epgReducer } from './reducers/epg.reducer';
 import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferences.reducer';
 import { CurrentChannelState, currentDataReducer } from './reducers/current-channel.reducer';
-import { rootSaga } from './sagas';
-import { LocalStorageFactory } from './libs/storage';
+import { rootSaga } from './sagas/index';
+import { LocalStorageFactory } from '../libs/storage';
 import { castingReducer, CastingState } from './reducers/casting.reducer';
-import { initializeCastApi } from './casting/initialize-casting-api';
+import { initializeCastApi } from '../casting/initialize-casting-api';
 
 export interface AppState {
   readonly playlist: Playlist;

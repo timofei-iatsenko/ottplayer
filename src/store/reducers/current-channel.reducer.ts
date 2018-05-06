@@ -1,6 +1,6 @@
 import { on, reducer } from 'ts-action';
 import { ReceiveChannelEpg } from '../actions/epg.actions';
-import { EpgEntry } from '../entities/epg-entry';
+import { EpgEntry } from '../../entities/epg-entry';
 
 export interface CurrentChannelState {
   readonly channelId: number;

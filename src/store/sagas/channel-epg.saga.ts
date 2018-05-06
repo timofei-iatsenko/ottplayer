@@ -6,10 +6,10 @@ import {
   StartChannelEpgSync,
   StopChannelEpgSync,
 } from '../actions/epg.actions';
-import * as Api from '../api/epg.api';
-import { ChannelEpgResponse } from '../api/epg.api';
-import { schedule } from '../libs/scheduler';
-import { AppState } from '../store';
+import * as Api from '../../api/epg.api';
+import { ChannelEpgResponse } from '../../api/epg.api';
+import { schedule } from '../../libs/scheduler';
+import { AppState } from '../index';
 
 function* bgSync(url: string) {
   try {

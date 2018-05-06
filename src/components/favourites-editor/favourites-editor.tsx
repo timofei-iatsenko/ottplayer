@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
-import { SaveFavourites } from '../../actions/favourites.actions';
+import { SaveFavourites } from '../../store/actions/favourites.actions';
 import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { AppState } from '../../store';
 import { SelectableChannelsList } from '../channels/selectable-channels-list/selectable-channels-list';

@@ -1,5 +1,5 @@
 import { connect, MapDispatchToPropsParam, MapStateToPropsParam } from 'react-redux';
-import { SetChannelsListMode } from '../../actions/ui-preferences.actions';
+import { SetChannelsListMode } from '../../store/actions/ui-preferences.actions';
 import { ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { AppState } from '../../store';
 import { withChannelNavigation } from '../hoc/with-channel-navigation';

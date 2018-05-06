@@ -3,8 +3,8 @@ import React, { PureComponent, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Dispatch } from 'redux';
-import { ChangeSettings } from '../../actions/settings.actions';
-import { SettingsState } from '../../reducers/settings.reducer';
+import { ChangeSettings } from '../../store/actions/settings.actions';
+import { SettingsState } from '../../store/reducers/settings.reducer';
 import { AppState } from '../../store';
 import styles from './settings.scss';
 

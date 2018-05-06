@@ -1,5 +1,5 @@
 import {Store} from 'redux';
-import {CastStateChanged, SessionStateChanged} from '../reducers/casting.reducer';
+import {CastStateChanged, SessionStateChanged} from '../store/reducers/casting.reducer';
 import {AppState} from '../store';
 
 export function initializeCastApi(store: Store<AppState>) {

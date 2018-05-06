@@ -1,6 +1,6 @@
 import { on, reducer } from 'ts-action';
 import { SetChannelsListMode } from '../actions/ui-preferences.actions';
-import { ChannelListMode } from '../components/list-switcher/channel-list-modes';
+import { ChannelListMode } from '../../components/list-switcher/channel-list-modes';
 
 export interface UiPreferencesState {
   readonly channelListMode: ChannelListMode;

@@ -1,6 +1,6 @@
 import { on, reducer } from 'ts-action';
 import { ReceivePlaylist } from '../actions/playlist.actions';
-import { Playlist } from '../entities/playlist.model';
+import { Playlist } from '../../entities/playlist.model';
 
 const initialPlaylist: Playlist = {
   urlEpg: null,

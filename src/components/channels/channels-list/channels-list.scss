@@ -3,7 +3,7 @@
 
 $row-hovered: rgba($blue, .05);
 $row-selected: rgba($blue, .2);
-$row-height: 85px;
+$row-height: 95px;
 
 .channelsList {
 }
@@ -55,27 +55,4 @@ $row-height: 85px;
   .itemActive & {
     background-color: mix($canvas-bg, $row-selected);
   }
-}
-
-.details {
-  display: flex;
-  flex-grow: 1;
-  flex-direction: column;
-  padding: 10px 10px;
-  min-width: 0;
-}
-
-.name {
-  @include truncate-text;
-  padding: 0;
-  margin: 0 0 5px 0;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 20px;
-}
-
-.currentProgram {
-  @include truncate-text;
-  font-size: 14px;
-  margin-bottom: 10px;
 }

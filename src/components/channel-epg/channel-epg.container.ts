@@ -1,33 +1,20 @@
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { StartChannelEpgSync, StopChannelEpgSync } from '../../store/actions/epg.actions';
 import { EpgEntry } from '../../entities/epg-entry';
 import { AppState } from '../../store';
-import { ChannelEpgComponent, DispatchProps, OwnProps, StateProps } from './channel-epg';
+import { epgInAir } from '../../store/reducers/epg.reducer';
+import { ChannelEpgComponent, OwnProps, StateProps } from './channel-epg';
 
 function filterOutdatedEntries(entries: EpgEntry[]) {
-  const index = entries.findIndex((entry) => entry.inAir);
+  const index = entries.findIndex(epgInAir);
   return entries.slice(index);
 }
 
-function mapStateToProps(state: AppState): StateProps {
+function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {
   return {
-    entries: filterOutdatedEntries(state.currentChannel.epg),
+    entries: filterOutdatedEntries(state.epg.entries[ownProps.channelId]),
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>): DispatchProps {
-  return {
-    onStartDataSync: (channelId) => {
-      dispatch(new StartChannelEpgSync({channelId}));
-    },
-    onStopDataSync: () => {
-      dispatch(new StopChannelEpgSync());
-    },
-  };
-}
-
-export const ChannelEpg = connect<StateProps, DispatchProps, OwnProps>(
+export const ChannelEpg = connect<StateProps, {}, OwnProps>(
   mapStateToProps,
-  mapDispatchToProps,
 )(ChannelEpgComponent);

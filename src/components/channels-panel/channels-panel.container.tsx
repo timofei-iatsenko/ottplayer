@@ -14,7 +14,7 @@ const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps> = (state: AppS
   return {
     favourites: getFavouritesChannels(state.playlist.channels, state.favourites),
     channels: state.playlist.channels,
-    currentEpg: state.currentEpg,
+    currentEpg: state.epg,
     listMode: state.uiPreferences.channelListMode,
   };
 };

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styles from './progress-bar.scss';
-import { Time } from '../formatters/time';
 
 interface ProgressBarProps {
   startTime: number;
@@ -47,11 +46,9 @@ export class ProgressBar extends Component<ProgressBarProps> {
 
     return (
       <div className={styles.host}>
-        <div className={styles.startTime}><Time>{this.props.startTime}</Time></div>
         <div className={styles.bar}>
           <div className={styles.inner} style={{ width: this.value + '%' }}></div>
         </div>
-        <div className={styles.endTime}><Time>{this.props.endTime}</Time></div>
       </div>
     );
   }

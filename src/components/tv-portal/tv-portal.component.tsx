@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
-import { StopCurrentEpgSync } from '../../store/actions/epg.actions';
+import { StopEpgSync } from '../../store/actions/epg.actions';
 import { RequestPlaylist } from '../../store/actions/playlist.actions';
 import { AppState } from '../../store';
 import { ChannelsPanel } from '../channels-panel/channels-panel.container';
@@ -55,7 +55,7 @@ function mapDispatchToProps(dispatch: Dispatch<AppState>): Partial<Props> {
       dispatch(new RequestPlaylist({playlistUrl}));
     },
     onUnmount: () => {
-      dispatch(new StopCurrentEpgSync());
+      dispatch(new StopEpgSync());
     },
   };
 }

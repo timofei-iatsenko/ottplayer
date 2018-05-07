@@ -14,11 +14,6 @@ export class EpgEntry {
     this.duration = +data.duration;
     this.descr = data.descr;
   }
-
-  get inAir(): boolean {
-    const currentTime = Date.now() / 1000;
-    return this.startTime <= currentTime && this.endTime >= currentTime;
-  }
 }
 
-export type EpgDictionary = { readonly [chid: number]: Readonly<EpgEntry> };
+export type EpgDictionary = { [chid: number]: EpgEntry[] };

@@ -1,8 +1,7 @@
 import React, { PureComponent, ReactFragment } from 'react';
 import { Channel, ReadonlyChannelsCollection } from '../../../entities/channel.model';
+import { ChannelDetail } from '../channel-detail/channel-detail';
 import styles from './channels-list.scss';
-import { EpgEntry } from '../../../entities/epg-entry';
-import { ProgressBar } from '../../progress-bar/progress-bar';
 
 interface ChannelsListProps {
   onChangeChannel?: (channel: Channel) => void;
@@ -10,7 +9,6 @@ interface ChannelsListProps {
   current?: Channel;
   control?: (channel: Channel) => ReactFragment;
   scrollbarController?: any;
-  currentEpg?: { [chid: number]: EpgEntry };
 }
 
 export class ChannelsList extends PureComponent<ChannelsListProps> {
@@ -48,20 +46,6 @@ export class ChannelsList extends PureComponent<ChannelsListProps> {
     this.scrollToActiveChannel();
   }
 
-  private getCurrentEpg(chId: number): EpgEntry {
-    return (this.props.currentEpg && this.props.currentEpg[chId]);
-  }
-
-  private getDetailsComponent(channel: Channel): ReactFragment {
-    const epg = this.getCurrentEpg(channel.id);
-
-    return (<div className={styles.details}>
-      <h5 title={channel.name} className={styles.name}>{channel.name}</h5>
-      {epg && <div title={epg.name} className={styles.currentProgram}>{epg.name}</div>}
-      {epg && <ProgressBar startTime={epg.startTime} endTime={epg.endTime}/>}
-    </div>);
-  }
-
   public render() {
     return (
       <div className={styles.channelsList}>
@@ -74,7 +58,7 @@ export class ChannelsList extends PureComponent<ChannelsListProps> {
               {this.props.control && this.props.control(channel)}
               <img src={channel.logo} alt=''/>
             </div>
-            {this.getDetailsComponent(channel)}
+            <ChannelDetail channel={channel} />
           </div>,
         )}
       </div>

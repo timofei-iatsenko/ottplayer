@@ -7,7 +7,6 @@ import { ChannelsList } from '../channels/channels-list/channels-list';
 import { ListSwitcher } from '../list-switcher/list-switcher';
 import { ChannelListMode } from '../list-switcher/channel-list-modes';
 import { NoFavourites } from '../no-favourites/no-favourites';
-import { EpgDictionary } from '../../entities/epg-entry';
 
 export interface OwnProps {
   onChangeChannel: (channel: Channel) => void;
@@ -17,7 +16,6 @@ export interface OwnProps {
 export interface StateProps {
   favourites: ReadonlyChannelsCollection;
   channels: ReadonlyChannelsCollection;
-  currentEpg: EpgDictionary;
   listMode: ChannelListMode;
 }
 
@@ -38,7 +36,6 @@ export class ChannelsPanelComponent extends PureComponent<Props> {
     const props = {
       channels: this.props.channels,
       current: this.props.currentChannel,
-      currentEpg: this.props.currentEpg,
       onChangeChannel: this.props.onChangeChannel,
       scrollbarController: this.scrollbarController,
     };

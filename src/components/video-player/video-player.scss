@@ -9,6 +9,10 @@ $icon-font-family: VideoJS;
 }
 
 :global {
+  video::-internal-media-controls-overlay-cast-button {
+    display: none;
+  }
+
   @import './vjs-icons';
   @import '~video.js/src/css/private-variables';
   @import '~video.js/src/css/utilities';

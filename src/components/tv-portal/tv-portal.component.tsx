@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { StopEpgSync } from '../../store/actions/epg.actions';
@@ -21,7 +21,9 @@ interface Props extends RouteComponentProps<{}> {
 
 export class TvPortalComponent extends PureComponent<Props> {
   public componentDidMount() {
-    this.props.onFetchData(this.props.playlistUrl);
+    if (this.props.playlistUrl) {
+      this.props.onFetchData(this.props.playlistUrl);
+    }
   }
 
   public componentWillUnmount() {
@@ -30,14 +32,16 @@ export class TvPortalComponent extends PureComponent<Props> {
 
   public render() {
     return (
-        <div className={styles.host}>
-          <Switch>
-            <Route exact path={'/edit-favourites'} component={FavouritesEditor}/>
-            <Route path={this.props.match.path} component={ChannelsPanel}/>
-          </Switch>
+      <div className={styles.host}>
+        {!this.props.playlistUrl ? <Redirect to='/settings'/> : null}
 
-          <Route path={this.props.match.path} component={PlayerArea}/>
-        </div>
+        <Switch>
+          <Route exact path={'/edit-favourites'} component={FavouritesEditor}/>
+          <Route path={this.props.match.path} component={ChannelsPanel}/>
+        </Switch>
+
+        <Route path={this.props.match.path} component={PlayerArea}/>
+      </div>
     );
   }
 }
@@ -52,7 +56,7 @@ function mapStateToProps(state: AppState): Partial<Props> {
 function mapDispatchToProps(dispatch: Dispatch<AppState>): Partial<Props> {
   return {
     onFetchData: async (playlistUrl: string) => {
-      dispatch(new RequestPlaylist({playlistUrl}));
+      dispatch(new RequestPlaylist({ playlistUrl }));
     },
     onUnmount: () => {
       dispatch(new StopEpgSync());

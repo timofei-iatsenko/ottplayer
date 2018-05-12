@@ -69,7 +69,7 @@ class ChannelDetailComponent extends PureComponent<Props> {
 
 const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps> = (state: AppState, ownProps) => {
   return {
-    epg: state.epg.entries[ownProps.channel.id],
+    epg: state.epg.entries[ownProps.channel.id] || [],
   };
 };
 

@@ -1,8 +1,6 @@
-import { Compressor } from './compressor';
-
 export class LocalStorageFactory {
-  public static create<T>(componentName: string, compress = false): StorageProxy<T> {
-    return new StorageProxy<T>(componentName, window.localStorage, compress ? new Compressor() : null);
+  public static create<T>(componentName: string): StorageProxy<T> {
+    return new StorageProxy<T>(componentName, window.localStorage);
   }
 }
 
@@ -12,17 +10,11 @@ export class StorageProxy<T> {
   constructor(
     private key: string,
     private storage: Storage,
-    private compressor: Compressor<T>,
-  ) {
-  }
+  ) {}
 
   public get(defaultValue?: T): T {
-    let value = JSON.parse(this.storage.getItem(this.key));
-
-    if (this.compressor && value) {
-      value = this.compressor.unpack(value);
-    }
-
+    const value = JSON.parse(this.storage.getItem(this.key));
+    this.lastValue = value;
     return value === null ? defaultValue : value;
   }
 
@@ -33,13 +25,11 @@ export class StorageProxy<T> {
 
     this.lastValue = value;
 
-    if (this.compressor) {
-      const compressed = this.compressor.pack(value);
-      this.storage.setItem(this.key, JSON.stringify(compressed));
+    if (value === undefined) {
+      this.remove();
     } else {
       this.storage.setItem(this.key, JSON.stringify(value));
     }
-
   }
 
   public remove() {

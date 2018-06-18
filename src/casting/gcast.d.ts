@@ -48,7 +48,7 @@ declare namespace cast.framework {
   }
 
   interface CastOptions {
-    autoJoinPolicy: string;
+    autoJoinPolicy?: string;
     language?: string;
     receiverApplicationId?: string;
     resumeSavedSession?: boolean;

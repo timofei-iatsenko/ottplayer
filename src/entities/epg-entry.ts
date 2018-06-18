@@ -1,19 +1,10 @@
-export class EpgEntry {
-  public chId: number;
-  public name: string;
-  public startTime: number;
-  public endTime: number;
-  public duration: number;
-  public descr: string;
-
-  constructor(data: any) {
-    this.chId = +data.ch_id;
-    this.name = data.name;
-    this.startTime = data.time;
-    this.endTime = data.time_to;
-    this.duration = +data.duration;
-    this.descr = data.descr;
-  }
+export interface EpgEntry {
+  chId: number;
+  name: string;
+  startTime: number;
+  endTime: number;
+  duration: number;
+  descr: string;
 }
 
 export type EpgDictionary = { [chid: number]: EpgEntry[] };

@@ -1,8 +1,6 @@
 import { on, reducer } from 'ts-action';
-import { EpgEntry } from '../../entities/epg-entry';
+import { EpgEntry, EpgDictionary } from '../../entities/epg-entry';
 import { ReceiveEpg } from '../actions/epg.actions';
-
-export type EpgDictionary = { readonly [chid: number]: EpgEntry[] };
 
 export interface EpgState {
   lastUpdate: number;
@@ -19,11 +17,23 @@ export function epgInAir(entry: EpgEntry) {
   return entry.startTime <= currentTime && entry.endTime >= currentTime;
 }
 
+function toDictionary(entries: EpgEntry[]): EpgDictionary {
+  return entries.reduce((acc, entry) => {
+    if (!acc[entry.chId]) {
+      acc[entry.chId] = [entry];
+    } else {
+      acc[entry.chId].push(entry);
+    }
+
+    return acc;
+  }, {} as EpgDictionary);
+}
+
 export const epgReducer = reducer<EpgState>([
   on(ReceiveEpg, (state, { payload }) => (
     {
       ...state,
-      entries: payload.epg,
+      entries: toDictionary(payload.epg),
       lastUpdate: payload.finishTime,
     }
   )),

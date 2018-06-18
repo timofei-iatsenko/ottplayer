@@ -37,13 +37,16 @@ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 const favouritesStorage = LocalStorageFactory.create<ReadonlyArray<number>>('favourites');
 const settingsStorage = LocalStorageFactory.create<SettingsState>('settings');
 const uiPreferencesStorage = LocalStorageFactory.create<UiPreferencesState>('ui-preferences');
-const epgStorage = LocalStorageFactory.create<EpgState>('epg', true);
+const epgLastUpdateStorage = LocalStorageFactory.create<EpgState['lastUpdate']>('epgLastUpdate');
 
 const preloadState: Partial<AppState> = {
   favourites: favouritesStorage.get(),
   uiPreferences: uiPreferencesStorage.get(),
   settings: settingsStorage.get(),
-  epg: epgStorage.get(),
+  epg: {
+    entries: {},
+    lastUpdate: epgLastUpdateStorage.get(),
+  },
 };
 
 export const store = createStore<AppState>(ottApp,
@@ -61,7 +64,7 @@ store.subscribe(() => {
   favouritesStorage.set(state.favourites);
   settingsStorage.set(state.settings);
   uiPreferencesStorage.set(state.uiPreferences);
-  epgStorage.set(state.epg);
+  epgLastUpdateStorage.set(state.epg.lastUpdate);
 });
 
 initializeCastApi(store);

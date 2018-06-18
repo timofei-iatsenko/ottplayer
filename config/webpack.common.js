@@ -34,7 +34,7 @@ module.exports = {
     filename: '[name].bundle.js',
     sourceMapFilename: '[file].map',
     chunkFilename: '[name].chunk.js',
-    publicPath: '/',
+    publicPath: '',
   },
 
   resolve: {

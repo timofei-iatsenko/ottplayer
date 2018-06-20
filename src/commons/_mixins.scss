@@ -3,9 +3,8 @@
 
 @mixin sidebar-header() {
   display: flex;
-  box-sizing: border-box;
   align-items: center;
-  height: 50px;
+  height: 40px;
   padding: 0 10px;
   color: $gray;
   border-bottom: 1px solid $borders-color;

@@ -118,21 +118,7 @@ module.exports = {
           },
         },
       },
-
-      /* File loader for supporting fonts in CSS files.
-       */
-      {
-        test: /woff2?$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            outputPath: './assets/fonts/',
-            publicPath: env.base,
-          },
-        },
-      },
     ],
-
   },
 
   /**

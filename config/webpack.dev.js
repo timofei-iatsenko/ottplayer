@@ -16,21 +16,7 @@ module.exports = webpackMerge(commonConfig, {
   devtool: 'cheap-module-source-map',
   entry: [
     require.resolve('react-dev-utils/webpackHotDevClient'),
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
   ],
-  module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        enforce: 'pre',
-        loader: 'tslint-loader',
-        options: {
-          formatter: 'stylish',
-        },
-      },
-    ],
-  },
   output: {
     devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },

@@ -1,46 +1,51 @@
 import React, { Component } from 'react';
-import videojs from '../../libs/video';
 import './video-player.scss';
-import { Player } from 'video.js';
+import * as Hls from 'hls.js/dist/hls.light';
 
 interface VideoPlayerProps {
   src: string;
 }
-
 export class VideoPlayer extends Component<VideoPlayerProps> {
-  private player: videojs.Player;
+  private hls: Hls;
 
   public componentDidMount() {
-    this.player = videojs(this.refs.video, {
-      autoplay: true,
-      fluid: true,
-      controls: true,
-    });
+    if (Hls.isSupported()) {
+      const video = this.refs.video as HTMLVideoElement;
+      this.hls = new Hls();
+      this.hls.attachMedia(video);
+    }
 
     if (this.props.src) {
       this.updateSrc(this.props.src);
     }
-  }
 
-  public componentWillUnmount() {
-    if (this.player) {
-      this.player.dispose();
-    }
+    this.hls.on(Hls.Events.ERROR, (_, data) => {
+      if (data.fatal) {
+        switch (data.type) {
+          case Hls.ErrorTypes.NETWORK_ERROR:
+            // try to recover network error
+            this.hls.startLoad();
+            break;
+          case Hls.ErrorTypes.MEDIA_ERROR:
+            this.hls.recoverMediaError();
+            break;
+          default:
+            // cannot recover
+            this.hls.destroy();
+            break;
+        }
+      }
+    });
   }
 
   public componentWillReceiveProps(nextProps: VideoPlayerProps) {
-    if (this.player && nextProps.src && (nextProps.src !== this.props.src)) {
+    if (this.hls && nextProps.src && (nextProps.src !== this.props.src)) {
       this.updateSrc(nextProps.src);
     }
   }
 
   private updateSrc(src: string) {
-    this.player.ready(function(this: Player) {
-      this.src({
-        src,
-        type: 'application/x-mpegURL',
-      });
-    });
+    this.hls.loadSource(src);
   }
 
   public shouldComponentUpdate() {
@@ -49,9 +54,7 @@ export class VideoPlayer extends Component<VideoPlayerProps> {
 
   public render() {
     return (
-      <div data-vjs-player className='video-js vjs-big-play-centered'>
-        <video ref='video'></video>
-      </div>
+      <video ref='video' controls autoPlay></video>
     );
   }
 }

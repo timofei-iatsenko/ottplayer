@@ -1,7 +1,5 @@
 'use strict';
 
-
-const path = require('path');
 const paths = require('./path-helpers');
 const env = require('./env-config');
 /**
@@ -43,9 +41,6 @@ module.exports = {
      * An array of directory names to be resolved to the current directory
      */
     modules: [paths.root('src'), paths.root('node_modules')],
-    alias: {
-      'videojs-contrib-hls': path.resolve(__dirname, '../node_modules/videojs-contrib-hls/dist/videojs-contrib-hls.js'),
-    },
   },
 
   /**
@@ -164,11 +159,6 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
-    }),
-
-    new webpack.ProvidePlugin({
-      'videojs': 'video.js',
-      'window.videojs': 'video.js',
     }),
   ],
 };

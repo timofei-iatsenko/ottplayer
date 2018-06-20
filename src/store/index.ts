@@ -1,6 +1,5 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import thunkMiddleware from 'redux-thunk';
 import { initializeCastApi } from '../casting/initialize-casting-api';
 import { Playlist } from '../entities/playlist.model';
 import { LocalStorageFactory } from '../libs/storage';
@@ -49,10 +48,9 @@ const preloadState: Partial<AppState> = {
   },
 };
 
-export const store = createStore<AppState>(ottApp,
+export const store = createStore(ottApp,
   preloadState as AppState,
   composeEnhancers(applyMiddleware(
-    thunkMiddleware,
     sagaMiddleware,
   )),
 );

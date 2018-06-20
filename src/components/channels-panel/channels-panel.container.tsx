@@ -10,7 +10,7 @@ function getFavouritesChannels(channels: ReadonlyChannelsCollection, favourites:
   return channels.filter((channel) => favourites.includes(channel.id));
 }
 
-const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps> = (state: AppState) => {
+const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps, AppState> = (state: AppState) => {
   return {
     favourites: getFavouritesChannels(state.playlist.channels, state.favourites),
     channels: state.playlist.channels,

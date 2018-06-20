@@ -53,7 +53,7 @@ function mapStateToProps(state: AppState): Partial<Props> {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>): Partial<Props> {
+function mapDispatchToProps(dispatch: Dispatch): Partial<Props> {
   return {
     onFetchData: async (playlistUrl: string) => {
       dispatch(new RequestPlaylist({ playlistUrl }));

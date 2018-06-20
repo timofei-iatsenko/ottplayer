@@ -5,9 +5,9 @@ import autobind from 'autobind-decorator';
 import {RouteComponentProps, withRouter} from 'react-router';
 import {CastButton} from '../cast-button/cast-button';
 
-interface HeaderProps {}
+interface HeaderProps extends RouteComponentProps<{}> {}
 
-class Header extends PureComponent<RouteComponentProps<HeaderProps>> {
+class Header extends PureComponent<HeaderProps> {
   @autobind
   private goToSettings() {
     this.props.history.push('/settings');

@@ -72,10 +72,10 @@ function mapStateToProps(state: AppState): Partial<Props> {
   return state.settings;
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: RouteComponentProps<{}>): Partial<Props>  {
+function mapDispatchToProps(dispatch: Dispatch, ownProps: RouteComponentProps<{}>): Partial<Props>  {
   return {
-    onSubmit: (settings) => {
-      dispatch(new ChangeSettings({settings}));
+    onSubmit: (settings: SettingsState) => {
+      dispatch(new ChangeSettings({ settings }));
       ownProps.history.push('/');
     },
     onCancel: () => ownProps.history.push('/'),

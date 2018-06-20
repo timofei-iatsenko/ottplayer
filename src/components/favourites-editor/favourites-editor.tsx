@@ -55,7 +55,7 @@ function mapStateToProps(state: AppState): Partial<FavouritesEditorProps> {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<AppState>, ownProps: RouteComponentProps<{}>): Partial<FavouritesEditorProps> {
+function mapDispatchToProps(dispatch: Dispatch, ownProps: RouteComponentProps<{}>): Partial<FavouritesEditorProps> {
   return {
     onSave: (favourites) => {
       dispatch(new SaveFavourites({favourites}));

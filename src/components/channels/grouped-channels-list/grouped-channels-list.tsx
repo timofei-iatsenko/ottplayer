@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Channel, ReadonlyChannelsCollection } from '../../../entities/channel.model';
 import { ChannelsList } from '../channels-list/channels-list';
 import styles from './grouped-channels-list.scss';
-import groupBy from 'lodash/groupBy';
 import ArrowIcon from 'react-icons/lib/fa/angle-right';
 
 interface GroupedChannelsListProps {
@@ -44,11 +43,19 @@ export class GroupedChannelsList extends Component<GroupedChannelsListProps> {
   }
 
   private prepareData(channels: ReadonlyChannelsCollection, current: Channel) {
-    const grouped = groupBy(channels, (channel: Channel) => channel.groupTitle);
-    this.groups = Object.keys(grouped).map((name) => {
+    const grouped = channels.reduce((acc, channel) => {
+      if (!acc.has(channel.groupTitle)) {
+        return acc.set(channel.groupTitle, [channel]);
+      }
+
+      acc.get(channel.groupTitle).push(channel);
+      return acc;
+    }, new Map<string, Channel[]>());
+
+    this.groups = Array.from(grouped.keys()).map((name) => {
       const group = {
         name,
-        channels: grouped[name],
+        channels: grouped.get(name),
       };
 
       if (current && group.channels.includes(current)) {

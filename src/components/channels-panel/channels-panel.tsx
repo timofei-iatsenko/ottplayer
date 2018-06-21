@@ -41,13 +41,11 @@ export class ChannelsPanelComponent extends PureComponent<Props> {
         <div className={styles.header}>
           <h3 className={styles.headerTitle}>Channels</h3>
         </div>
-
-        <TabsComponent items={this.props.groups}
-                       onSelect={this.props.onSelectGroup}
-                       selected={this.props.selectedGroup.name}/>
-
         <div className={styles.body}>
-          {this.getList()}
+          <TabsComponent items={this.props.groups}
+                         onSelect={this.props.onSelectGroup}
+                         selected={this.props.selectedGroup.name}/>
+          <div className={styles.list}>{this.getList()}</div>
         </div>
       </div>
     );

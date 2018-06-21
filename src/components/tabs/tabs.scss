@@ -1,13 +1,13 @@
 @import 'commons/variables';
 @import 'commons/mixins';
-$tabHeight: 40px;
 $tabBg: #f8f9f9;
 
 %btn {
+  @include headerHeight();
+
   border: 0;
   align-items: center;
   justify-content: center;
-  height: $tabHeight;
   font-weight: bold;
   text-transform: uppercase;
   font-size: 13px;
@@ -16,8 +16,9 @@ $tabBg: #f8f9f9;
 }
 
 .host {
+  @include headerHeight();
+
   width: 100%;
-  height: $tabHeight;
   display: flex;
   user-select: none;
   overflow: hidden;
@@ -26,7 +27,8 @@ $tabBg: #f8f9f9;
 }
 
 .tabsWrap {
-  height: $tabHeight;
+  @include headerHeight();
+
   display: flex;
 
   overflow-x: auto;
@@ -61,12 +63,14 @@ $tabBg: #f8f9f9;
 }
 
 .navBtn {
+  $width: 25px;
+
   @extend %btn;
   position: relative;
   z-index: 1;
-  width: 25px;
-  display: none;
+  width: $width;
   flex-shrink: 0;
+  display: flex;
   color: rgba(0,0,0,.38);
   background-color: $tabBg;
 
@@ -76,8 +80,19 @@ $tabBg: #f8f9f9;
     height: $size;
   }
 
+  &:first-of-type {
+    margin-left: -$width;
+  }
+
+  &:last-of-type {
+    margin-right: -$width;
+  }
+
+
   @include break(medium) {
-    display: flex;
+    &:first-of-type, &:last-of-type {
+     margin: 0;
+    }
   }
 }
 

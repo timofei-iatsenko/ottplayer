@@ -12,8 +12,8 @@ function getFavouritesChannels(channels: ReadonlyChannelsCollection, favourites:
 
 const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps, AppState> = (state: AppState) => {
   return {
-    favourites: getFavouritesChannels(state.playlist.channels, state.favourites),
-    channels: state.playlist.channels,
+    favourites: getFavouritesChannels(state.channels.channels, state.channels.favourites),
+    channels: state.channels.channels,
     currentEpg: state.epg,
     listMode: state.uiPreferences.channelListMode,
   };

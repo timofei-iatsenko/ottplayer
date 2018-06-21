@@ -13,10 +13,10 @@ import { SaveBar } from './save-bar/save-bar';
 
 interface FavouritesEditorProps {
   channels: ReadonlyChannelsCollection;
-  favourites: ReadonlyArray<number>;
+  favourites: number[];
   onChangeChannel: (channel: Channel) => void;
   onCancel: () => void;
-  onSave: (selection: ReadonlyArray<number>) => void;
+  onSave: (selection: number[]) => void;
 }
 
 export class FavouritesEditorComponent extends Component<FavouritesEditorProps> {
@@ -50,8 +50,8 @@ export class FavouritesEditorComponent extends Component<FavouritesEditorProps> 
 
 function mapStateToProps(state: AppState): Partial<FavouritesEditorProps> {
   return {
-    channels: state.playlist.channels,
-    favourites: state.favourites,
+    channels: state.channels.channels,
+    favourites: state.channels.favourites,
   };
 }
 

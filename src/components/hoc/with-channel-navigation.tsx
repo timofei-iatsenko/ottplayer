@@ -53,7 +53,7 @@ export const withChannelNavigation = (WrappedComponent: ComponentType<InjectedPr
 
   function mapStateToProps(state: AppState): Partial<NeedsProps> {
     return {
-      channels: state.playlist.channels,
+      channels: state.channels.channels,
     };
   }
   return connect(mapStateToProps)(WithChannelNavigation);

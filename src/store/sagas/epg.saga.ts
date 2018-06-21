@@ -20,8 +20,8 @@ function *startSync() {
   while (true) {
     // starts the task in the background
     const state: AppState = yield select();
-    const channelsIds = state.playlist.channels.map((ch) => ch.id);
-    const bgSyncTask = yield fork(bgSync, state.playlist.urlEpg, channelsIds);
+    const channelsIds = state.channels.channels.map((ch) => ch.id);
+    const bgSyncTask = yield fork(bgSync, state.channels.urlEpg, channelsIds);
 
     // wait for the user stop action
     yield take(StopEpgSync.type);

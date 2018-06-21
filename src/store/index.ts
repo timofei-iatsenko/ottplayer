@@ -29,6 +29,7 @@ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 const favouritesStorage = LocalStorageFactory.create<number[]>('favourites');
 const settingsStorage = LocalStorageFactory.create<SettingsState>('settings');
 const epgLastUpdateStorage = LocalStorageFactory.create<EpgState['lastUpdate']>('epgLastUpdate');
+const selectedGroup = LocalStorageFactory.create<ChannelsState['selectedGroup']>('selectedGroup');
 
 const preloadState: Partial<AppState> = {
   settings: settingsStorage.get(),
@@ -38,7 +39,8 @@ const preloadState: Partial<AppState> = {
   },
   channels: {
     ...initialChannelsState,
-    favourites: favouritesStorage.get([]),
+    selectedGroup: selectedGroup.get(initialChannelsState.selectedGroup),
+    favourites: favouritesStorage.get(initialChannelsState.favourites),
   },
 };
 
@@ -56,6 +58,7 @@ store.subscribe(() => {
   favouritesStorage.set(state.channels.favourites);
   settingsStorage.set(state.settings);
   epgLastUpdateStorage.set(state.epg.lastUpdate);
+  selectedGroup.set(state.channels.selectedGroup);
 });
 
 initializeCastApi(store);

@@ -29,7 +29,7 @@ export class ChannelsPanelComponent extends PureComponent<Props> {
       channels: this.props.channels,
       current: this.props.currentChannel,
       onChangeChannel: this.props.onChangeChannel,
-      visibleIds: this.props.selectedGroup.channels,
+      visibleIds: this.props.selectedGroup ? this.props.selectedGroup.channels : [],
     };
 
     return <ChannelsList {...props} />;
@@ -42,9 +42,11 @@ export class ChannelsPanelComponent extends PureComponent<Props> {
           <h3 className={styles.headerTitle}>Channels</h3>
         </div>
         <div className={styles.body}>
-          <TabsComponent items={this.props.groups}
-                         onSelect={this.props.onSelectGroup}
-                         selected={this.props.selectedGroup.name}/>
+          {this.props.channels.length ? (
+            <TabsComponent items={this.props.groups}
+                           onSelect={this.props.onSelectGroup}
+                           selected={this.props.selectedGroup.name}/>
+          ) : null}
           <div className={styles.list}>{this.getList()}</div>
         </div>
       </div>

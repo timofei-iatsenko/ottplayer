@@ -86,6 +86,7 @@ module.exports = {
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
+                includePaths: [paths.root('src')]
               },
             },
           ],

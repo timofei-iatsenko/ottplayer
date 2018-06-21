@@ -1,5 +1,5 @@
-@import '../../../commons/colors';
-@import '../../../commons/mixins';
+@import 'commons/variables';
+@import 'commons/mixins';
 
 $row-hovered: rgba($blue, .05);
 $row-selected: rgba($blue, .2);

@@ -18,3 +18,6 @@ deploy:
   provider: script
   script: ~/.local/bin/aws s3 sync build s3://ottplayer-static --region=us-east-1 --delete
   skip_cleanup: true
+  on:
+    branch: stable
+

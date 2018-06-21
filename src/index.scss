@@ -1,5 +1,9 @@
 @import './commons/mixins';
 
+:global {
+  @import "~normalize.css";
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -8,10 +12,10 @@ body {
   background-color: #f1f1f1;
 }
 
-a {
-  color: $blue;
+button, input, optgroup, select, textarea {
+  font-family: 'Open Sans', sans-serif;
 }
 
-:global {
-  @import "~normalize.css";
-}
+a {
+   color: $blue;
+ }

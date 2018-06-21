@@ -1,12 +1,9 @@
 import React, { PureComponent } from 'react';
-
-import { SidePanel } from '../side-panel/side-panel';
-import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
-import { GroupedChannelsList } from '../channels/grouped-channels-list/grouped-channels-list';
+import { Channel } from '../../entities/channel.model';
 import { ChannelsList } from '../channels/channels-list/channels-list';
-import { ListSwitcher } from '../list-switcher/list-switcher';
-import { ChannelListMode } from '../list-switcher/channel-list-modes';
-import { NoFavourites } from '../no-favourites/no-favourites';
+import { TabsComponent } from '../tabs/tabs';
+import { ChannelsState, Group } from '../../store/reducers/channels.reducer';
+import styles from './channels-panel.scss';
 
 export interface OwnProps {
   onChangeChannel: (channel: Channel) => void;
@@ -14,56 +11,45 @@ export interface OwnProps {
 }
 
 export interface StateProps {
-  favourites: ReadonlyChannelsCollection;
-  channels: ReadonlyChannelsCollection;
-  listMode: ChannelListMode;
+  favourites: ChannelsState['favourites'];
+  channels: ChannelsState['channels'];
+  groups: ChannelsState['groups'];
+  selectedGroup: Group;
 }
 
 export interface DispatchProps {
-  onChangeListMode: (mode: ChannelListMode) => void;
+  onSelectGroup: (group: { name: string }) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
 
 export class ChannelsPanelComponent extends PureComponent<Props> {
-  private scrollbarController: any;
-
-  get listMode() {
-    return this.props.listMode;
-  }
-
-  private getChannelsListElement() {
+  private getList() {
     const props = {
       channels: this.props.channels,
       current: this.props.currentChannel,
       onChangeChannel: this.props.onChangeChannel,
-      scrollbarController: this.scrollbarController,
+      visibleIds: this.props.selectedGroup.channels,
     };
-
-    if (this.listMode === ChannelListMode.grouped) {
-      return <GroupedChannelsList {...props} />;
-    }
-
-    if (this.listMode === ChannelListMode.favourites) {
-      if (this.props.favourites.length === 0) {
-        return <NoFavourites/>;
-      }
-
-      return <ChannelsList {...props} channels={this.props.favourites}/>;
-    }
 
     return <ChannelsList {...props} />;
   }
 
   public render() {
-    const header = <ListSwitcher
-      onSwitch={this.props.onChangeListMode}
-      current={this.props.listMode}/>;
-
     return (
-      <SidePanel provideScrollbarCtrl={(ctrl) => this.scrollbarController = ctrl}
-                 header={header}
-                 body={this.getChannelsListElement()}/>
+      <div className={styles.host}>
+        <div className={styles.header}>
+          <h3 className={styles.headerTitle}>Channels</h3>
+        </div>
+
+        <TabsComponent items={this.props.groups}
+                       onSelect={this.props.onSelectGroup}
+                       selected={this.props.selectedGroup.name}/>
+
+        <div className={styles.body}>
+          {this.getList()}
+        </div>
+      </div>
     );
   }
 }

@@ -10,7 +10,7 @@
 
   @include break(medium) {
     width: 300px;
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .1);
   }
 
   @include break(first-stop) {
@@ -21,9 +21,18 @@
 
 .header {
   flex: 0 0 auto;
+  color: $gray;
+  @include sidebar-header();
+}
+
+.headerTitle {
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
 }
 
 .body {
   flex: 1;
   box-sizing: border-box;
 }
+

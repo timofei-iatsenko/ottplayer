@@ -32,6 +32,10 @@ $row-height: 95px;
   background-color: $row-selected;
 }
 
+.hiddenItem {
+ display: none;
+}
+
 .icon {
   $canvas-bg: $graphite;
   width: 85px;

@@ -1,0 +1,89 @@
+@import '../../commons/colors';
+@import '../../commons/mixins';
+$tabHeight: 40px;
+$tabBg: #f8f9f9;
+
+%btn {
+  border: 0;
+  align-items: center;
+  justify-content: center;
+  height: $tabHeight;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+  box-sizing: border-box;
+  display: flex;
+}
+
+.host {
+  width: 100%;
+  height: $tabHeight;
+  display: flex;
+  user-select: none;
+  overflow: hidden;
+  border-bottom: 1px solid $borders-color;
+  flex-shrink: 0;
+}
+
+.tabsWrap {
+  height: $tabHeight;
+  display: flex;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.groupTab {
+  @extend %btn;
+  @include makeColorfulBtn($tabBg);
+  padding: 0 20px;
+  cursor: pointer;
+  border-left: 1px solid $borders-color;
+  outline: 0;
+}
+
+.selectedGroupTab {
+  @extend .groupTab;
+  background-color: mix($tabBg, $porcelain, 60%);
+  position: relative;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    background-color: $blue;
+  }
+}
+
+.navBtn {
+  @extend %btn;
+  position: relative;
+  z-index: 1;
+  width: 25px;
+  display: none;
+  flex-shrink: 0;
+  color: rgba(0,0,0,.38);
+  background-color: $tabBg;
+
+  svg {
+    $size: 18px;
+    width: $size;
+    height: $size;
+  }
+
+  @include break(medium) {
+    display: flex;
+  }
+}
+
+.navEnabled {
+  color: $black;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+  cursor: pointer;
+  @include makeColorfulBtn($tabBg)
+}

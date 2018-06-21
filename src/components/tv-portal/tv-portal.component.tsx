@@ -4,10 +4,9 @@ import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import { StopEpgSync } from '../../store/actions/epg.actions';
-import { RequestPlaylist } from '../../store/actions/playlist.actions';
+import { RequestPlaylist } from '../../store/actions/channels.actions';
 import { AppState } from '../../store';
 import { ChannelsPanel } from '../channels-panel/channels-panel.container';
-import { FavouritesEditor } from '../favourites-editor/favourites-editor';
 import { PlayerArea } from '../player-area/player-area.component';
 import styles from './tv-portal.scss';
 
@@ -36,7 +35,6 @@ export class TvPortalComponent extends PureComponent<Props> {
         {!this.props.playlistUrl ? <Redirect to='/settings'/> : null}
 
         <Switch>
-          <Route exact path={'/edit-favourites'} component={FavouritesEditor}/>
           <Route path={this.props.match.path} component={ChannelsPanel}/>
         </Switch>
 

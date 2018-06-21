@@ -6,7 +6,6 @@ import { castingReducer, CastingState } from './reducers/casting.reducer';
 import { epgReducer, EpgState } from './reducers/epg.reducer';
 import { channelsReducer, ChannelsState, initialState as initialChannelsState } from './reducers/channels.reducer';
 import { settingsReducer, SettingsState } from './reducers/settings.reducer';
-import { uiPreferencesReducer, UiPreferencesState } from './reducers/ui-preferences.reducer';
 import { rootSaga } from './sagas';
 
 export interface AppState {
@@ -14,7 +13,6 @@ export interface AppState {
 
   readonly settings: SettingsState;
   readonly epg: EpgState;
-  readonly uiPreferences: UiPreferencesState;
   readonly casting: CastingState;
 }
 
@@ -22,7 +20,6 @@ const ottApp = combineReducers<AppState>({
   channels: channelsReducer,
   settings: settingsReducer,
   epg: epgReducer,
-  uiPreferences: uiPreferencesReducer,
   casting: castingReducer,
 });
 
@@ -31,11 +28,9 @@ const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ||
 
 const favouritesStorage = LocalStorageFactory.create<number[]>('favourites');
 const settingsStorage = LocalStorageFactory.create<SettingsState>('settings');
-const uiPreferencesStorage = LocalStorageFactory.create<UiPreferencesState>('ui-preferences');
 const epgLastUpdateStorage = LocalStorageFactory.create<EpgState['lastUpdate']>('epgLastUpdate');
 
 const preloadState: Partial<AppState> = {
-  uiPreferences: uiPreferencesStorage.get(),
   settings: settingsStorage.get(),
   epg: {
     entries: {},
@@ -60,7 +55,6 @@ store.subscribe(() => {
   const state = store.getState();
   favouritesStorage.set(state.channels.favourites);
   settingsStorage.set(state.settings);
-  uiPreferencesStorage.set(state.uiPreferences);
   epgLastUpdateStorage.set(state.epg.lastUpdate);
 });
 

@@ -1,5 +1,5 @@
 import { on, reducer } from 'ts-action';
-import { ReceivePlaylist } from '../actions/playlist.actions';
+import { ReceivePlaylist, SetActiveGroup } from '../actions/channels.actions';
 import { Playlist } from '../../entities/playlist.model';
 import { extractGroups } from '../lib/extract-groups';
 import { createGroup } from '../lib/create-group';
@@ -25,8 +25,8 @@ export const initialState: ChannelsState = {
   urlEpg: null,
   urlLogo: null,
   channels: [],
-  groups: [],
-  selectedGroup: 'all',
+  groups: [createGroup(PredefinedGroup.all, [])],
+  selectedGroup: PredefinedGroup.all,
   favourites: [],
 };
 
@@ -40,6 +40,9 @@ export const channelsReducer = reducer<ChannelsState>([
     });
 
     return {...state, favourites: payload.favourites, groups};
+  }),
+  on(SetActiveGroup, (state, { payload }) => {
+    return {...state,  selectedGroup: payload.name };
   }),
   on(ReceivePlaylist, (state, { payload }) => {
     const newGroups = extractGroups(payload.playlist.channels);

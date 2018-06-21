@@ -1,28 +1,21 @@
 import { connect, MapDispatchToPropsParam, MapStateToPropsParam } from 'react-redux';
-import { SetChannelsListMode } from '../../store/actions/ui-preferences.actions';
-import { ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { AppState } from '../../store';
 import { withChannelNavigation } from '../hoc/with-channel-navigation';
-import { ChannelListMode } from '../list-switcher/channel-list-modes';
 import { ChannelsPanelComponent, DispatchProps, OwnProps, StateProps } from './channels-panel';
-
-function getFavouritesChannels(channels: ReadonlyChannelsCollection, favourites: ReadonlyArray<number>): ReadonlyChannelsCollection {
-  return channels.filter((channel) => favourites.includes(channel.id));
-}
+import { SetActiveGroup } from '../../store/actions/channels.actions';
 
 const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps, AppState> = (state: AppState) => {
   return {
-    favourites: getFavouritesChannels(state.channels.channels, state.channels.favourites),
-    channels: state.channels.channels,
     currentEpg: state.epg,
-    listMode: state.uiPreferences.channelListMode,
+    ...state.channels,
+    selectedGroup: state.channels.groups.find((group) => group.name === state.channels.selectedGroup),
   };
 };
 
 const mapDispatchToProps: MapDispatchToPropsParam<DispatchProps, OwnProps> = (dispatch) => {
   return {
-    onChangeListMode: (mode: ChannelListMode) => {
-      dispatch(new SetChannelsListMode({ mode }));
+    onSelectGroup: (group) => {
+      dispatch(new SetActiveGroup({ name: group.name }));
     },
   };
 };

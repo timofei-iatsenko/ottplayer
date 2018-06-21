@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './video-player.scss';
+import styles from './video-player.scss';
 import * as Hls from 'hls.js/dist/hls.light';
 
 interface VideoPlayerProps {
@@ -9,43 +9,55 @@ export class VideoPlayer extends Component<VideoPlayerProps> {
   private hls: Hls;
 
   public componentDidMount() {
+    if (this.props.src) {
+      this.startHls(this.props.src);
+    }
+  }
+
+  private startHls(src: string) {
     if (Hls.isSupported()) {
       const video = this.refs.video as HTMLVideoElement;
       this.hls = new Hls();
       this.hls.attachMedia(video);
-    }
 
-    if (this.props.src) {
-      this.updateSrc(this.props.src);
-    }
+      this.hls.on(Hls.Events.MANIFEST_PARSED, () => {
+        video.play();
+      });
 
-    this.hls.on(Hls.Events.ERROR, (_, data) => {
-      if (data.fatal) {
-        switch (data.type) {
-          case Hls.ErrorTypes.NETWORK_ERROR:
-            // try to recover network error
-            this.hls.startLoad();
-            break;
-          case Hls.ErrorTypes.MEDIA_ERROR:
-            this.hls.recoverMediaError();
-            break;
-          default:
-            // cannot recover
-            this.hls.destroy();
-            break;
+      this.hls.on(Hls.Events.ERROR, (_, data) => {
+        if (data.fatal) {
+          switch (data.type) {
+            case Hls.ErrorTypes.NETWORK_ERROR:
+              // try to recover network error
+              this.hls.startLoad();
+              break;
+            case Hls.ErrorTypes.MEDIA_ERROR:
+              this.hls.recoverMediaError();
+              break;
+            default:
+              // cannot recover
+              this.hls.destroy();
+              break;
+          }
         }
-      }
-    });
+      });
+
+      this.hls.loadSource(src);
+    }
   }
 
   public componentWillReceiveProps(nextProps: VideoPlayerProps) {
-    if (this.hls && nextProps.src && (nextProps.src !== this.props.src)) {
+    if (nextProps.src && (nextProps.src !== this.props.src)) {
       this.updateSrc(nextProps.src);
     }
   }
 
   private updateSrc(src: string) {
-    this.hls.loadSource(src);
+    if (this.hls) {
+      this.hls.destroy();
+    }
+
+    this.startHls(src);
   }
 
   public shouldComponentUpdate() {
@@ -54,7 +66,9 @@ export class VideoPlayer extends Component<VideoPlayerProps> {
 
   public render() {
     return (
-      <video ref='video' controls autoPlay></video>
+      <div className={styles.videoWrapper}>
+        <video ref='video' className={styles.video} controls></video>
+      </div>
     );
   }
 }

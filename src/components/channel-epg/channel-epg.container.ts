@@ -6,7 +6,7 @@ import { ChannelEpgComponent, OwnProps, StateProps } from './channel-epg';
 
 function filterOutdatedEntries(entries: EpgEntry[]) {
   const index = entries.findIndex(epgInAir);
-  return entries.slice(index);
+  return entries.slice(index - 1);
 }
 
 function mapStateToProps(state: AppState, ownProps: OwnProps): StateProps {

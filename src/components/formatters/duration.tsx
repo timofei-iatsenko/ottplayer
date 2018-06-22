@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-interface DurationProps {
+interface DurationProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: number;
 }
 export class Duration extends Component<DurationProps> {
@@ -16,6 +16,6 @@ export class Duration extends Component<DurationProps> {
   }
 
   public render() {
-    return <span>{this.format(this.props.children)}</span>;
+    return <span {...this.props}>{this.format(this.props.children)}</span>;
   }
 }

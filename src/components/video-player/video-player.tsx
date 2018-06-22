@@ -67,7 +67,7 @@ export class VideoPlayer extends Component<VideoPlayerProps> {
   public render() {
     return (
       <div className={styles.videoWrapper}>
-        <video ref='video' className={styles.video} controls></video>
+        <video ref='video' className={styles.video}></video>
       </div>
     );
   }

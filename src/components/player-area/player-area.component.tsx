@@ -5,7 +5,7 @@ import { Channel } from '../../entities/channel.model';
 import { ChannelEpg } from '../channel-epg/channel-epg.container';
 import { AppState } from '../../store';
 import { connect } from 'react-redux';
-import { withChannelNavigation } from '../hoc/with-channel-navigation';
+import { selectCurrentChannel } from '../../store/reducers/channels.reducer';
 
 interface Props {
   currentChannel: Readonly<Channel>;
@@ -62,7 +62,8 @@ function mapStateToProps(state: AppState): Partial<Props> {
   return {
     currentKey: state.settings.currentKey,
     castingSessionState: state.casting.sessionState,
+    currentChannel: selectCurrentChannel(state),
   };
 }
 
-export const PlayerArea = withChannelNavigation(connect(mapStateToProps)(PlayerAreaComponent));
+export const PlayerArea = connect(mapStateToProps)(PlayerAreaComponent);

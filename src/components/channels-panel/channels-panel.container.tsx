@@ -1,6 +1,5 @@
 import { connect, MapDispatchToPropsParam, MapStateToPropsParam } from 'react-redux';
 import { AppState } from '../../store';
-import { withChannelNavigation } from '../hoc/with-channel-navigation';
 import { ChannelsPanelComponent, DispatchProps, OwnProps, StateProps } from './channels-panel';
 import { SetActiveGroup } from '../../store/actions/channels.actions';
 
@@ -20,7 +19,7 @@ const mapDispatchToProps: MapDispatchToPropsParam<DispatchProps, OwnProps> = (di
   };
 };
 
-export const ChannelsPanel = withChannelNavigation(connect<StateProps, DispatchProps, OwnProps>(
+export const ChannelsPanel = connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps,
-)(ChannelsPanelComponent));
+)(ChannelsPanelComponent);

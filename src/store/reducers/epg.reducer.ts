@@ -1,6 +1,14 @@
 import { on, reducer } from 'ts-action';
 import { EpgEntry, EpgDictionary } from '../../entities/epg-entry';
 import { ReceiveEpg } from '../actions/epg.actions';
+import { AppState } from '../index';
+
+export const selectChannelEpg = (state: AppState, channelId: number): EpgEntry[] => {
+  if (!channelId || !state.epg.entries[channelId]) {
+    return [];
+  }
+  return state.epg.entries[channelId];
+};
 
 export interface EpgState {
   lastUpdate: number;

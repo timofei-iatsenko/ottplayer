@@ -3,7 +3,7 @@ import { connect, MapStateToPropsParam } from 'react-redux';
 import { Channel } from '../../../entities/channel.model';
 import { EpgEntry } from '../../../entities/epg-entry';
 import { AppState } from '../../../store';
-import { epgInAir } from '../../../store/reducers/epg.reducer';
+import { epgInAir, selectChannelEpg } from '../../../store/reducers/epg.reducer';
 import { Time } from '../../formatters/time';
 import { ProgressBar } from '../../progress-bar/progress-bar';
 import styles from './channels-detail.scss';
@@ -69,7 +69,7 @@ class ChannelDetailComponent extends PureComponent<Props> {
 
 const mapStateToProps: MapStateToPropsParam<StateProps, OwnProps, AppState> = (state: AppState, ownProps) => {
   return {
-    epg: state.epg.entries[ownProps.channel.id] || [],
+    epg: selectChannelEpg(state, ownProps.channel.id),
   };
 };
 

@@ -1,9 +1,30 @@
 import { on, reducer } from 'ts-action';
-import { ReceivePlaylist, SetActiveGroup } from '../actions/channels.actions';
+import { ReceivePlaylist, SetActiveGroup, SetChannelSlug } from '../actions/channels.actions';
 import { Playlist } from '../../entities/playlist.model';
 import { extractGroups } from '../lib/extract-groups';
 import { createGroup } from '../lib/create-group';
 import { SaveFavourites } from '../actions/favourites.actions';
+import { AppState } from '../index';
+
+export const selectChannel = (state: AppState, chid: number) => {
+  if (!state.channels.channels.length || !chid) {
+    return null;
+  }
+
+  return state.channels.channels.find((ch) => ch.id === chid);
+};
+
+export const selectCurrentChannel = (state: AppState) => {
+  return selectChannel(state, state.channels.selectedChannelId);
+};
+
+function getIdFromSlug(slug: string) {
+  if (!slug) {
+    return null;
+  }
+  const [id] = slug.match(/^[^-]+/);
+  return +id;
+}
 
 export enum PredefinedGroup {
   all = 'all',
@@ -12,6 +33,7 @@ export enum PredefinedGroup {
 
 export interface ChannelsState extends Playlist {
   selectedGroup: string;
+  selectedChannelId: number;
   groups: Group[];
   favourites: number[];
 }
@@ -27,6 +49,7 @@ export const initialState: ChannelsState = {
   channels: [],
   groups: [createGroup(PredefinedGroup.all, [])],
   selectedGroup: PredefinedGroup.all,
+  selectedChannelId: null,
   favourites: [],
 };
 
@@ -39,15 +62,26 @@ export const channelsReducer = reducer<ChannelsState>([
       return group;
     });
 
-    return {...state, favourites: payload.favourites, groups};
+    return { ...state, favourites: payload.favourites, groups };
   }),
   on(SetActiveGroup, (state, { payload }) => {
-    return {...state,  selectedGroup: payload.name };
+    return { ...state, selectedGroup: payload.name };
+  }),
+  on(SetChannelSlug, (state, { payload }) => {
+    return {
+      ...state,
+      selectedChannelId: getIdFromSlug(payload.slug),
+    };
   }),
   on(ReceivePlaylist, (state, { payload }) => {
-    const newGroups = extractGroups(payload.playlist.channels);
-    const groupAll = createGroup(PredefinedGroup.all, payload.playlist.channels.map((ch) => ch.id));
+    const channels = payload.playlist.channels;
+    const newGroups = extractGroups(channels);
+    const groupAll = createGroup(PredefinedGroup.all, channels.map((ch) => ch.id));
     const favourites = createGroup(PredefinedGroup.favourites, state.favourites);
-    return { ...state, ...payload.playlist, groups: [groupAll, favourites, ...newGroups] };
+    return {
+      ...state,
+      ...payload.playlist,
+      groups: [groupAll, favourites, ...newGroups],
+    };
   }),
 ], initialState);

@@ -5,3 +5,4 @@ export const RequestPlaylist = action('[Channels] Request playlist', payload<{pl
 export const ReceivePlaylist = action('[Channels] Receive playlist', payload<{playlist: Playlist}>());
 
 export const SetActiveGroup = action('[Channels] Set active group', payload<{name: string}>());
+export const SetChannelSlug = action('[Channels] Set active channel', payload<{slug: string}>());

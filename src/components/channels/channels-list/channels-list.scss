@@ -9,20 +9,20 @@ $row-height: 95px;
 }
 
 %base-item {
-  display: flex;
-  width: 100%;
-  height: $row-height;
-  border: 0;
   padding: 0;
-  box-sizing: border-box;
+  border: 0;
   border-bottom: 1px solid $borders-color;
   background-color: #fff;
+  width: 100%;
+  text-align: left;
+  outline: 0;
 }
 
 .item {
  @extend %base-item;
   cursor: pointer;
-  &:hover {
+
+  &:hover, &:focus {
     background-color: $row-hovered;
   }
 }
@@ -30,6 +30,12 @@ $row-height: 95px;
 .itemActive {
   @extend %base-item;
   background-color: $row-selected;
+}
+
+.itemWrapper {
+  display: flex;
+  height: $row-height;
+  box-sizing: border-box;
 }
 
 .hiddenItem {

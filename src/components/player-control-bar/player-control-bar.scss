@@ -1,0 +1,128 @@
+@import 'commons/mixins';
+
+.host {
+  height: 90px;
+  background-color: rgba(255,255,255,.95);
+  display: flex;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  box-shadow: 0 0 8px rgba(0,0,0,.4);
+  will-change: transform;
+}
+
+.wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.progress {
+  width: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.startTime, .endTime {
+  opacity: 0.6;
+  font-size: 11px;
+  position: absolute;
+  top: 8px;
+}
+.startTime {
+  left: 5px;
+}
+
+.endTime {
+  right: 5px;
+}
+.icon {
+  $canvas-bg: #16191f;
+  width: 85px;
+  height: 100%;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  background-color: $canvas-bg;
+  box-sizing: border-box;
+  padding: 10px;
+  position: relative;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    display: none;
+  }
+}
+
+
+.castOverlay {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  //background-color: rgba(0,0,0, 0.6);
+  color: #fff;
+
+  svg {
+    //position: absolute;
+    //right: 10px;
+    //bottom: 5px;
+    width: 50px;
+    height: 50px;
+    opacity: 0.8;
+  }
+}
+
+.programInfo {
+  padding: 10px;
+  min-width: 0;
+}
+
+.programName {
+    @include truncate-text;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.channelName {
+  opacity: 0.6;
+  font-size: 13px;
+}
+
+.buttons {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin-left: auto;
+}
+
+.playPauseBtn, .stopBtn  {
+  width: 40px;
+  height: 40px;
+  color: $gray;
+  margin-right: 10px;
+  padding: 0;
+  background: 0;
+  border: 0;
+
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.stopBtn {
+
+}
+
+

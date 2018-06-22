@@ -8,6 +8,7 @@ import { AppState } from '../../store';
 import { ChannelsPanel } from '../channels-panel/channels-panel.container';
 import { PlayerArea } from '../player-area/player-area.component';
 import styles from './tv-portal.scss';
+import { PlayerControlBar } from '../player-control-bar/player-control-bar';
 
 interface Props extends RouteComponentProps<{
   channelSlug: string;

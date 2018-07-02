@@ -1,46 +1,22 @@
 {
+  "compileOnSave": false,
   "compilerOptions": {
-    /* Basic Options */
-    "target": "es5",
-    "module": "es2015",
-    "lib": [
-      "dom",
-      "es7"
-    ],
-    "jsx": "react",
-    "importHelpers": true,
-    "downlevelIteration": true,
-    "allowJs": true,
-
-    /* Strict Type-Checking Options */
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-
-    /* Additional Checks */
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-
-    /* Module Resolution Options */
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-
-    /* Experimental Options */
-    "experimentalDecorators": true
-  },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ],
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true,
-    "useCache": true,
-    "cacheDirectory": ".cache"
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   }
 }

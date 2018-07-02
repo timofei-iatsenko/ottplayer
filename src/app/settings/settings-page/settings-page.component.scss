@@ -1,7 +1,7 @@
-@import 'commons/variables';
-@import 'commons/mixins';
+@import 'styles/variables';
+@import 'styles/mixins';
 
-.host {
+.settings-wrap {
   max-width: 500px;
   margin: 20px auto 0;
   background-color: #fff;
@@ -16,16 +16,17 @@
   font-weight: 400;
 }
 
-.gridForm {
+.grid-form {
   display: flex;
   flex-wrap: wrap;
 }
 
-.blockField {
+.block-field {
   height: 65px;
   width: 100%;
   position: relative;
   display: flex;
+
   input {
     margin-top: -1px;
     width: 100%;
@@ -46,11 +47,10 @@
 
   &:first-child input {
     margin-top: 0;
-    //border-bottom-width: 1px;
   }
 }
 
-.formActions {
+.form-actions {
   margin-top: 20px;
   display: flex;
   width: 100%;
@@ -58,7 +58,7 @@
 
 }
 
-.fieldLabel {
+.field-label {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -68,7 +68,7 @@
   z-index: 2;
 }
 
-@mixin formBtn($bg, $txtColor: #fff) {
+@mixin form-btn($bg, $txtColor: #fff) {
   color: $txtColor;
   border: 0;
   height: 30px;
@@ -78,11 +78,11 @@
   @include makeColorfulBtn($bg);
 }
 
-.submitBtn {
-  @include formBtn($blue);
+.submit-btn {
+  @include form-btn($blue);
 }
 
-.cancelBtn {
-  @include formBtn($gray);
+.cancel-btn {
+  @include form-btn($gray);
 }
 

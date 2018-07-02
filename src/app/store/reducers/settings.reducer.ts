@@ -1,5 +1,6 @@
 import { on, reducer } from 'ts-action';
 import { ChangeSettings } from '../actions/settings.actions';
+
 export interface SettingsState {
   readonly playlistUrl: string;
   readonly currentKey: string;

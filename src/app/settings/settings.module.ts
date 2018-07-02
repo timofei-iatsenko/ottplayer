@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {SettingsPageComponent} from './components/settings-page/settings-page.component';
-import {RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { SettingsPageComponent } from './settings-page/settings-page.component';
 
 @NgModule({
   imports: [

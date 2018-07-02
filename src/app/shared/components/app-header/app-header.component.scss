@@ -1,7 +1,7 @@
-@import "commons/variables";
-@import "commons/mixins";
+@import "styles/variables";
+@import "styles/mixins";
 
-.host {
+.header-wrap {
   @include headerHeight();
 
   display: flex;
@@ -17,11 +17,7 @@
   @include header-btn();
 }
 
-.channelsBtns {
-
-}
-
-.settingsBtns {
+.settings-btns {
   margin-left: auto;
   display: flex;
 }

@@ -7,7 +7,7 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "app",
+      "prefix": "",
       "schematics": {},
       "architect": {
         "build": {
@@ -25,6 +25,9 @@
             "styles": [
               "src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": ["./src"]
+            },
             "scripts": []
           },
           "configurations": {

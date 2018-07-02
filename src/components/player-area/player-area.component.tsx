@@ -14,12 +14,15 @@ import { epgInAir, selectChannelEpg } from '../../store/reducers/epg.reducer';
 import { ProgressBar } from '../progress-bar/progress-bar';
 import { Time } from '../formatters/time';
 import { Duration } from '../formatters/duration';
+import { Dispatch } from 'redux';
+import { ToggleMainPanel } from '../../store/actions/ui.actions';
 
 interface Props {
   currentChannel: Readonly<Channel>;
   currentKey: string;
   castingSessionState: cast.framework.SessionState;
   epg: EpgEntry[];
+  onTogglePanel: () => void;
 }
 
 class PlayerAreaComponent extends PureComponent<Props> {
@@ -56,7 +59,7 @@ class PlayerAreaComponent extends PureComponent<Props> {
 
   @autobind
   private goBack() {
-
+    this.props.onTogglePanel();
   }
 
   public render() {
@@ -109,10 +112,7 @@ class PlayerAreaComponent extends PureComponent<Props> {
                   {this.props.currentChannel.name}
                 </div>
               </div>
-
             </div>
-
-
             {this.props.currentChannel && <ChannelEpg channelId={this.props.currentChannel.id}/>}
           </Scrollbars>
         </div>
@@ -130,4 +130,10 @@ function mapStateToProps(state: AppState): Partial<Props> {
   };
 }
 
-export const PlayerArea = connect(mapStateToProps)(PlayerAreaComponent);
+function mapDispatchToProps(dispatch: Dispatch): Partial<Props> {
+  return {
+    onTogglePanel: () => dispatch(new ToggleMainPanel({ visible: false })),
+  };
+}
+
+export const PlayerArea = connect(mapStateToProps, mapDispatchToProps)(PlayerAreaComponent);

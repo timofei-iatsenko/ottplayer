@@ -15,6 +15,7 @@ interface Props extends RouteComponentProps<{
 }> {
   currentKey: string;
   playlistUrl: string;
+  appClasses: {[className: string]: boolean};
 
   onFetchData: (playlistUrl: string) => void;
   onUnmount: () => void;
@@ -37,9 +38,18 @@ export class TvPortalComponent extends PureComponent<Props> {
     this.props.onUnmount();
   }
 
+  private getAppClasses(): string[] {
+    return Object.keys(this.props.appClasses).reduce((acc, className) => {
+      if (this.props.appClasses[className]) {
+        acc.push(className);
+      }
+      return acc;
+    }, [styles.host]);
+  }
+
   public render() {
     return (
-      <div className={styles.host}>
+      <div className={this.getAppClasses().join(' ')}>
         {!this.props.playlistUrl ? <Redirect to='/settings'/> : null}
         <ChannelsPanel/>
         <PlayerArea/>
@@ -53,6 +63,7 @@ function mapStateToProps(state: AppState): Partial<Props> {
   return {
     currentKey: state.settings.currentKey,
     playlistUrl: state.settings.playlistUrl,
+    appClasses: state.ui.classes,
   };
 }
 

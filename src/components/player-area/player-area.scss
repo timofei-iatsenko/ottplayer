@@ -4,7 +4,6 @@
   flex-grow: 1;
   flex-direction: column;
   display: flex;
-  position: fixed;
   top: 0;
   bottom: 0;
   width: 100%;
@@ -12,11 +11,19 @@
   z-index: 2;
   background-color: #fff;
 
+  :global(.mainPanelVisible) & {
+    position: fixed;
+  }
+
   @include break(medium) {
     z-index: 0;
     position: static;
     padding: 0 20px;
     background-color: transparent;
+
+    :global(.mainPanelVisible) & {
+      position: static;
+    }
   }
 }
 

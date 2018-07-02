@@ -7,12 +7,14 @@ import { epgReducer, EpgState } from './reducers/epg.reducer';
 import { channelsReducer, ChannelsState, initialState as initialChannelsState } from './reducers/channels.reducer';
 import { settingsReducer, SettingsState } from './reducers/settings.reducer';
 import { rootSaga } from './sagas';
+import { UiState, uiReducer } from './reducers/ui.reducer';
 
 export interface AppState {
   readonly channels: ChannelsState;
 
   readonly settings: SettingsState;
   readonly epg: EpgState;
+  readonly ui: UiState;
   readonly casting: CastingState;
 }
 
@@ -20,6 +22,7 @@ const ottApp = combineReducers<AppState>({
   channels: channelsReducer,
   settings: settingsReducer,
   epg: epgReducer,
+  ui: uiReducer,
   casting: castingReducer,
 });
 

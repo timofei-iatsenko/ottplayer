@@ -1,29 +1,25 @@
-// import createSagaMiddleware from 'redux-saga';
-// import { initializeCastApi } from '../casting/initialize-casting-api';
-// import { LocalStorageFactory } from '../libs/storage';
-// import { castingReducer, CastingState } from './reducers/casting.reducer';
-// import { epgReducer, EpgState } from './reducers/epg.reducer';
-// import { channelsReducer, ChannelsState, initialState as initialChannelsState } from './reducers/channels.reducer';
+import { castingReducer, CastingState } from './reducers/casting.reducer';
+import { epgReducer, EpgState } from './reducers/epg.reducer';
+import { channelsReducer, ChannelsState } from './reducers/channels.reducer';
 import { settingsReducer, SettingsState } from './reducers/settings.reducer';
-// import { rootSaga } from './sagas';
-// import { UiState, uiReducer } from './reducers/ui.reducer';
+import { UiState, uiReducer } from './reducers/ui.reducer';
 import { ActionReducerMap } from '@ngrx/store';
 
 export interface AppState {
   readonly settings: SettingsState;
 
-  // readonly channels: ChannelsState;
-  // readonly epg: EpgState;
-  // readonly ui: UiState;
-  // readonly casting: CastingState;
+  readonly channels: ChannelsState;
+  readonly epg: EpgState;
+  readonly ui: UiState;
+  readonly casting: CastingState;
 }
 
 export const rootReducer: ActionReducerMap<AppState> = {
   settings: settingsReducer,
-  // channels: channelsReducer,
-  // epg: epgReducer,
-  // ui: uiReducer,
-  // casting: castingReducer,
+  channels: channelsReducer,
+  epg: epgReducer,
+  ui: uiReducer,
+  casting: castingReducer,
 };
 
 // const sagaMiddleware = createSagaMiddleware();

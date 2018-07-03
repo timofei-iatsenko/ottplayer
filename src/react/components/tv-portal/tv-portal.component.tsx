@@ -38,25 +38,6 @@ export class TvPortalComponent extends PureComponent<Props> {
     this.props.onUnmount();
   }
 
-  private getAppClasses(): string[] {
-    return Object.keys(this.props.appClasses).reduce((acc, className) => {
-      if (this.props.appClasses[className]) {
-        acc.push(className);
-      }
-      return acc;
-    }, [styles.host]);
-  }
-
-  public render() {
-    return (
-      <div className={this.getAppClasses().join(' ')}>
-        {!this.props.playlistUrl ? <Redirect to='/settings'/> : null}
-        <ChannelsPanel/>
-        <PlayerArea/>
-        <PlayerControlBar />
-      </div>
-    );
-  }
 }
 
 function mapStateToProps(state: AppState): Partial<Props> {

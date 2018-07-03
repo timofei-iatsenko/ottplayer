@@ -1,6 +1,6 @@
-@import 'commons/mixins';
+@import 'styles/mixins';
 
-.host {
+.panel-wrap {
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -21,7 +21,7 @@
 }
 
 .header {
- display: none;
+  display: none;
 
   @include break(medium) {
     flex: 0 0 auto;
@@ -33,7 +33,7 @@
   }
 }
 
-.headerTitle {
+.header-title {
   font-size: 14px;
   padding: 0;
   margin: 0;

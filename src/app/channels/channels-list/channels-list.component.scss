@@ -1,12 +1,9 @@
-@import 'commons/variables';
-@import 'commons/mixins';
+@import 'styles/variables';
+@import 'styles/mixins';
 
 $row-hovered: rgba($blue, .05);
 $row-selected: rgba($blue, .2);
 $row-height: 95px;
-
-.channelsList {
-}
 
 %base-item {
   padding: 0;
@@ -19,7 +16,7 @@ $row-height: 95px;
 }
 
 .item {
- @extend %base-item;
+  @extend %base-item;
   cursor: pointer;
 
   &:hover, &:focus {
@@ -27,19 +24,19 @@ $row-height: 95px;
   }
 }
 
-.itemActive {
+.item-active {
   @extend %base-item;
   background-color: $row-selected;
 }
 
-.itemWrapper {
+.item-wrapper {
   display: flex;
   height: $row-height;
   box-sizing: border-box;
 }
 
-.hiddenItem {
- display: none;
+.hidden-item {
+  display: none;
 }
 
 .icon {

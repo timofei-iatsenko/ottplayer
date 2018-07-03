@@ -1,5 +1,5 @@
-@import 'commons/variables';
-@import 'commons/mixins';
+@import 'styles/variables';
+@import 'styles/mixins';
 
 $row-hovered: rgba($blue, .05);
 $row-selected: rgba($blue, .2);
@@ -22,13 +22,13 @@ $row-height: 85px;
   line-height: 20px;
 }
 
-.currentProgram {
+.current-program {
   @include truncate-text;
   font-size: 14px;
   margin-bottom: 5px;
 }
 
-.nextProgram {
+.next-program {
   @include truncate-text;
   opacity: 0.6;
   font-size: 14px;

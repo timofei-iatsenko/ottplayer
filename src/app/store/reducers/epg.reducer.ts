@@ -2,8 +2,16 @@ import { on, reducer } from 'ts-action';
 import { EpgEntry, EpgDictionary } from '../../entities/epg-entry';
 import { ReceiveEpg } from '../actions/epg.actions';
 import { AppState } from '../index';
+import { LocalStorageFactory } from '../../libs/storage';
 
 export const selectChannelEpg = (state: AppState, channelId: number): EpgEntry[] => {
+  if (!channelId || !state.epg.entries[channelId]) {
+    return [];
+  }
+  return state.epg.entries[channelId];
+};
+
+export const channelEpgSelector = (channelId: number) => (state: AppState): EpgEntry[] => {
   if (!channelId || !state.epg.entries[channelId]) {
     return [];
   }
@@ -15,8 +23,10 @@ export interface EpgState {
   entries: EpgDictionary;
 }
 
+export const epgLastUpdateStorage = LocalStorageFactory.create<EpgState['lastUpdate']>('epgLastUpdate');
+
 const initialState: EpgState = {
-  lastUpdate: null,
+  lastUpdate: epgLastUpdateStorage.get(null),
   entries: {},
 };
 

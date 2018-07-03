@@ -1,14 +1,15 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AppHeaderComponent} from './components/app-header/app-header.component';
-import { CastButtonComponent } from './components/cast-button/cast-button.component';
+import { TimePipe } from './pipes/time.pipe';
+import { DurationPipe } from './pipes/duration.pipe';
+import { DatePipe } from './pipes/date.pipe';
 
 @NgModule({
   imports: [
     CommonModule
   ],
-  declarations: [AppHeaderComponent, CastButtonComponent],
-  exports: [AppHeaderComponent, CastButtonComponent],
+  declarations: [TimePipe, DurationPipe, DatePipe],
+  exports: [TimePipe, DurationPipe, DatePipe],
 })
 export class SharedModule {
 }

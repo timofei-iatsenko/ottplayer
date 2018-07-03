@@ -6,7 +6,7 @@ $row-selected: rgba($blue, .2);
 $row-height: 85px;
 
 
-.details {
+:host {
   position: relative;
   flex-grow: 1;
   padding: 10px 10px;

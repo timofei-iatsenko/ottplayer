@@ -1,5 +1,5 @@
-@import 'commons/variables';
-@import 'commons/mixins';
+@import 'styles/variables';
+@import 'styles/mixins';
 
 $row-selected: rgba($blue, .2);
 
@@ -23,12 +23,12 @@ $margin-between-lines: 10px;
   border-bottom: 1px solid $borders-color;
 }
 
-.entryActive {
+.entry-active {
   @extend .entry;
   background-color: $row-selected;
 }
 
-.mainInfo {
+.main-info {
   flex-direction: column;
   min-width: 0;
   flex-grow: 1;
@@ -49,15 +49,15 @@ $margin-between-lines: 10px;
   display: flex;
 }
 
-.startTime {
+.start-time {
 
 }
 
-.endTime {
+.end-time {
   margin-left: auto;
 }
 
-.sideInfo {
+.side-info {
   width: 100px;
   margin-left: auto;
   flex-shrink: 0;
@@ -69,7 +69,7 @@ $margin-between-lines: 10px;
   margin-bottom: $margin-between-lines;
 }
 
-.startTime, .endTime, .duration {
+.start-time, .end-tTime, .duration {
   font-size: 12px;
   color: $black;
 }

@@ -3,8 +3,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@store';
 import { RequestPlaylist, SetChannelSlug } from '@store/actions/channels.actions';
 import { StopEpgSync } from '@store/actions/epg.actions';
-import { Effect } from '@ngrx/effects';
-import { map } from 'rxjs/internal/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -21,8 +19,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ChannelPageComponent implements OnInit, OnDestroy {
   public appClasses$ = this.store.select((store) => this.getAppClasses(store.ui.classes));
-
-  //private app
 
   constructor(
     private store: Store<AppState>,

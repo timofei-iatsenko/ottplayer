@@ -20,7 +20,7 @@ import { ToggleMainPanel } from '@store/actions/ui.actions';
           <div class="icon">
             <img [src]="channel.logo" alt=''/>
           </div>
-          <!--<ChannelDetail channel={channel}/>-->
+          <channel-details [channel]="channel"></channel-details>
         </div>
       </button>
     </div>

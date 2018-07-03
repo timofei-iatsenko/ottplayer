@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { epgInAir, channelEpgSelector } from '@store/reducers/epg.reducer';
+import { epgInAir, channelEpgSelector, selectChannelEpg } from '@store/reducers/epg.reducer';
 import { AppState } from '@store';
 import { Store } from '@ngrx/store';
 import { Channel } from '../../entities/channel.model';
 import { map, withLatestFrom, distinctUntilChanged } from 'rxjs/internal/operators';
+import { timer } from 'rxjs/index';
 
 @Component({
   selector: 'channel-details',
@@ -11,16 +12,18 @@ import { map, withLatestFrom, distinctUntilChanged } from 'rxjs/internal/operato
     <div class="details">
       <h5 [title]="channel.name" class="name">{{channel.name}}</h5>
 
-      <div *ngIf="(currentEpg$ | async) as currentEpg" [title]="'Сейчас: ' + currentEpg.name" class="current-program">
+      <div *ngIf="(currentEpg$ | async) as currentEpg" [title]="'Сейчас: ' + currentEpg.name"
+           class="current-program">
         <span class="time">{{currentEpg.startTime | time}}</span>
         {{currentEpg.name}}
       </div>
 
-      <!--<progress-bar *ngIf="(currentEpg$ | async) as currentEpg"-->
-                   <!--[startTime]="currentEpg.startTime"-->
-                   <!--[endTime]="currentEpg.endTime"/>-->
+      <progress-bar *ngIf="(currentEpg$ | async) as currentEpg"
+                    [startTime]="currentEpg.startTime"
+                    [endTime]="currentEpg.endTime"></progress-bar>
 
-      <div *ngIf="(nextEpg$ | async) as nextEpg" [title]="'Далее:' + nextEpg.name" class="next-program">
+      <div *ngIf="(nextEpg$ | async) as nextEpg" [title]="'Далее:' + nextEpg.name"
+           class="next-program">
         <span class="time">{{nextEpg.startTime | time}}</span>
         {{nextEpg.name}}
       </div>
@@ -32,8 +35,12 @@ import { map, withLatestFrom, distinctUntilChanged } from 'rxjs/internal/operato
 export class ChannelDetailsComponent {
   @Input() public channel: Channel;
 
-  public epg$ = this.store
-    .select(channelEpgSelector(this.channel.id));
+  public epg$ = timer(0, 1000 * 5).pipe(
+    withLatestFrom(
+      this.store.select((store) => selectChannelEpg(store, this.channel.id)),
+      (i, epg) => epg,
+    )
+  );
 
   public currentEpg$ = this.epg$.pipe(
     map((epg) => epg.find(epgInAir)),
@@ -57,14 +64,4 @@ export class ChannelDetailsComponent {
   constructor(
     private store: Store<AppState>,
   ) {}
-
-  //public componentDidMount() {
-  //  this.timerId = window.setInterval(() => {
-  //    this.setState({time: Date.now()});
-  //  }, 1000 * 5);
-  //}
-  //
-  //public componentWillUnmount() {
-  //  window.clearInterval(this.timerId);
-  //}
 }

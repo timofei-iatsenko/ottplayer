@@ -1,7 +1,7 @@
 import { Actions, Effect } from '@ngrx/effects';
 import { ofType } from 'ts-action-operators';
-import { RequestPlaylist, ReceivePlaylist, SetChannelSlug } from '@store/actions/channels.actions';
-import { switchMap, withLatestFrom, filter, map } from 'rxjs/internal/operators';
+import { RequestPlaylist, ReceivePlaylist } from '@store/actions/channels.actions';
+import { switchMap, withLatestFrom, filter } from 'rxjs/internal/operators';
 import { AppState } from '@store';
 import { Store } from '@ngrx/store';
 import { fetchPlaylist } from '../../api/playlist.api';

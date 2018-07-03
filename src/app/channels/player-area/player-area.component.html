@@ -4,9 +4,9 @@
       <!--<ArrowLeft/>-->
     </button>
   </div>
-
-  <div class="playerContainer" *ngIf="isCastingEnabled$ | async">
-    <!--<VideoPlayer src={streamUrl$ | async}/>-->
+  <!--*ngIf="!(isCastingEnabled$ | async)"-->
+  <div class="player-container">
+    <video-player [src]="streamUrl$ | async"></video-player>
   </div>
 
 

@@ -25,7 +25,7 @@ export const selectStreamUrl = (state: AppState) => {
     .replace('{KEY}', state.settings.currentKey);
 };
 
-function getIdFromSlug(slug: string) {
+function getIdFromSlug(slug: string): number {
   if (!slug) {
     return null;
   }

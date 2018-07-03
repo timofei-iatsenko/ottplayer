@@ -1,22 +1,38 @@
-import React, { Component } from 'react';
-import styles from './video-player.scss';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ViewChild,
+  ElementRef,
+  OnChanges,
+  SimpleChanges,
+  Input,
+} from '@angular/core';
 import * as Hls from 'hls.js/dist/hls.light';
 
-interface VideoPlayerProps {
-  src: string;
-}
-export class VideoPlayer extends Component<VideoPlayerProps> {
+@Component({
+  selector: 'video-player',
+  template: `
+    <div class="video-wrapper">
+      <video #video class="video"></video>
+    </div>
+  `,
+  styleUrls: ['./video-player.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class VideoPlayerComponent implements OnChanges {
+  @ViewChild('video') public videoRef: ElementRef;
+  @Input() public src: string;
   private hls: Hls;
 
-  public componentDidMount() {
-    if (this.props.src) {
-      this.startHls(this.props.src);
+  public ngOnChanges(changes: SimpleChanges) {
+    if (this.src) {
+      this.updateSrc(this.src);
     }
   }
 
   private startHls(src: string) {
     if (Hls.isSupported()) {
-      const video = this.refs.video as HTMLVideoElement;
+      const video = this.videoRef.nativeElement as HTMLVideoElement;
       this.hls = new Hls();
       this.hls.attachMedia(video);
 
@@ -46,29 +62,11 @@ export class VideoPlayer extends Component<VideoPlayerProps> {
     }
   }
 
-  public componentWillReceiveProps(nextProps: VideoPlayerProps) {
-    if (nextProps.src && (nextProps.src !== this.props.src)) {
-      this.updateSrc(nextProps.src);
-    }
-  }
-
   private updateSrc(src: string) {
     if (this.hls) {
       this.hls.destroy();
     }
 
     this.startHls(src);
-  }
-
-  public shouldComponentUpdate() {
-    return false;
-  }
-
-  public render() {
-    return (
-      <div className={styles.videoWrapper}>
-        <video ref='video' className={styles.video}></video>
-      </div>
-    );
   }
 }

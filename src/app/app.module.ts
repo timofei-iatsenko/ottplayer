@@ -38,7 +38,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
-    (!environment.production) ? StoreDevtoolsModule.instrument({ maxAge: 2, }) : [],
+    (!environment.production) ? StoreDevtoolsModule.instrument({ maxAge: 10, }) : [],
   ],
   providers: [],
   bootstrap: [AppComponent]

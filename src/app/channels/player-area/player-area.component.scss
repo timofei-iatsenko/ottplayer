@@ -1,6 +1,6 @@
-@import 'commons/mixins';
+@import 'styles/mixins';
 
-.mainPanel {
+:host {
   flex-grow: 1;
   flex-direction: column;
   display: flex;
@@ -27,7 +27,7 @@
   }
 }
 
-.playerContainer {
+.player-container {
   background-color: #000;
   display: flex;
   justify-content: center;
@@ -37,14 +37,14 @@
 
 // mobile
 
-.topControls {
+.top-controls {
   position: absolute;
   top: 20px;
   left: 20px;
   z-index: 1;
 }
 
-.backBtn {
+.back-btn {
   padding: 0;
   border: 0;
   background: none;
@@ -54,7 +54,7 @@
   @include icon-size(30px);
 }
 
-.underWrap {
+.under-wrap {
   position: relative;
   background-color: #fff;
   flex: 1;
@@ -67,28 +67,28 @@
   z-index: 1;
 }
 
-.programDetails {
+.program-details {
   padding: 15px 10px 10px;
 }
 
-.programName {
+.program-name {
   @include truncate-text;
   font-size: 16px;
   margin-bottom: 5px;
 }
 
-.programTimebox {
+.program-timebox {
   opacity: 0.6;
   font-size: 12px;
   margin-bottom: 10px;
 }
 
-.programDescription {
+.program-description {
   font-size: 14px;
   line-height: 1.6;
 }
 
-.channelDetails {
+.channel-details {
   display: flex;
   height: 40px;
   padding: 0 10px;
@@ -100,14 +100,14 @@
   }
 }
 
-.channelName {
+.channel-name {
   flex-grow: 1;
   align-items: center;
   padding-left: 10px;
   display: flex;
 }
 
-.channelLogo {
+.channel-logo {
   $canvas-bg: $graphite;
   width: 85px;
   flex: 0 0 auto;
@@ -117,7 +117,6 @@
   padding: 2px;
   position: relative;
   margin: -1px 0;
-
 
   img {
     max-width: 100%;

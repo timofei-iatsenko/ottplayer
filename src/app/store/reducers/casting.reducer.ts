@@ -1,6 +1,7 @@
 import { action, on, payload, reducer } from 'ts-action';
 import CastState = cast.framework.CastState;
 import SessionState = cast.framework.SessionState;
+import { AppState } from '@store';
 
 export const CastStateChanged = action('[Casting] Cast state changed', payload<{state: string}>());
 export const SessionStateChanged = action('[Casting] Session state changed',  payload<{state: string}>());
@@ -13,6 +14,10 @@ export interface CastingState {
 const initialState: CastingState = {
   castState: null,
   sessionState: null,
+};
+
+export const selectCastingEnabled = (state: AppState) => {
+    return ['SESSION_STARTED', 'SESSION_RESUMED'].includes(state.casting.sessionState);
 };
 
 // tslint:disable no-shadowed-variable

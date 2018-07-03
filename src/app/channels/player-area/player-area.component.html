@@ -1,0 +1,50 @@
+<div class="main-panel">
+  <div class="top-controls">
+    <button type='button' (click)="goBack()" class="back-btn">
+      <!--<ArrowLeft/>-->
+    </button>
+  </div>
+
+  <div class="playerContainer" *ngIf="isCastingEnabled$ | async">
+    <!--<VideoPlayer src={streamUrl$ | async}/>-->
+  </div>
+
+
+  <div class="under-wrap" *ngIf="epg$ | async as epg">
+    <div class="progress">
+      <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
+    </div>
+
+    <!--<Scrollbars autoHide>-->
+      <div class="video-details">
+        <div class="program-details">
+          <div class="program-name">
+            {{epg.name}}
+          </div>
+
+          <div class="program-timebox">
+            {{epg.startTime | time}} - {{epg.endTime | time}} {{epg.endTime - epg.startTime | duration}}
+          </div>
+
+          <div class="program-description">
+            {{epg.descr}}
+          </div>
+        </div>
+
+        <div class="channel-details" *ngIf="(currentChannel$ | async) as currentChannel">
+          <div class="channel-logo">
+            <img [src]="currentChannel.logo"/>
+          </div>
+
+          <div class="channel-name">
+            {{currentChannel.name}}
+          </div>
+        </div>
+      </div>
+
+      <channel-epg *ngIf="(currentChannel$ | async) as currentChannel"
+                   [channelId]="currentChannel.id">
+      </channel-epg>
+    <!--</Scrollbars>-->
+  </div>
+</div>

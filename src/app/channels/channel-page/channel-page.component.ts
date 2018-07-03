@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
   template: `
     <div class="channels-page-wrap" [ngClass]="appClasses$ | async">
       <channels-panel></channels-panel>
-      <!--<PlayerArea/>-->
+      <player-area></player-area>
       <!--<PlayerControlBar />-->
     </div>
   `,

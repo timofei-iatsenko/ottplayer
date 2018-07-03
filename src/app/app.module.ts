@@ -13,6 +13,7 @@ import { SettingsEffects } from '@store/effects/settings.effects';
 import { EpgEffects } from '@store/effects/epg.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { CastEffects } from '@store/effects/cast.effects';
 
 const appRoutes: Routes = [
   { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
     GlobalModule,
     StoreModule.forRoot(rootReducer),
     EffectsModule.forRoot([
+      CastEffects,
       ChannelsEffects,
       SettingsEffects,
       EpgEffects,

@@ -2,8 +2,8 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { EpgEntry } from '../../entities/epg-entry';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store';
-import { channelEpgSelector, epgInAir } from '@store/reducers/epg.reducer';
-import { map } from 'rxjs/internal/operators';
+import { channelEpgSelector, epgInAir, selectChannelEpg } from '@store/reducers/epg.reducer';
+import { map, tap } from 'rxjs/internal/operators';
 
 @Component({
   selector: 'channel-epg',
@@ -35,8 +35,9 @@ export class ChannelEpgComponent {
   @Input() public channelId: number;
 
   public entries$ = this.store
-    .select(channelEpgSelector(this.channelId))
-    .pipe(map(this.filterOutdatedEntries));
+    .select((store) => selectChannelEpg(store, this.channelId)).pipe(
+      map(this.filterOutdatedEntries),
+    );
 
   constructor(
     private store: Store<AppState>,

@@ -5,6 +5,7 @@ import { extractGroups } from '../lib/extract-groups';
 import { createGroup } from '../lib/create-group';
 import { SaveFavourites } from '../actions/favourites.actions';
 import { AppState } from '../index';
+import { Channel } from '../../entities/channel.model';
 
 export const selectChannel = (state: AppState, chid: number) => {
   if (!state.channels.channels.length || !chid) {
@@ -16,6 +17,12 @@ export const selectChannel = (state: AppState, chid: number) => {
 
 export const selectCurrentChannel = (state: AppState) => {
   return selectChannel(state, state.channels.selectedChannelId);
+};
+
+export const selectStreamUrl = (state: AppState) => {
+  const channel = selectCurrentChannel(state);
+  return ((channel && channel.stream) || '')
+    .replace('{KEY}', state.settings.currentKey);
 };
 
 function getIdFromSlug(slug: string) {

@@ -8,6 +8,7 @@ import { ChannelPageComponent } from './channel-page/channel-page.component';
 import { RouterModule } from '@angular/router';
 import { ChannelEpgComponent } from './channel-epg/channel-epg.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { PlayerAreaComponent } from './player-area/player-area.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { ProgressBarComponent } from './progress-bar/progress-bar.component';
     ChannelPageComponent,
     ChannelEpgComponent,
     ProgressBarComponent,
+    PlayerAreaComponent,
   ],
 })
 export class ChannelsModule {}

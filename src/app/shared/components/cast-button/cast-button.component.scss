@@ -1,5 +1,5 @@
-@import "commons/variables";
-@import "commons/mixins";
+@import "styles/variables";
+@import "styles/mixins";
 
 .default {
   @include header-btn();

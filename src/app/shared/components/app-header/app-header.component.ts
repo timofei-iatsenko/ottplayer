@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <header class="header-wrap">
       <div class="settings-btns">
-        <!--<CastButton/>-->
+        <cast-button></cast-button>
         <button class="btn"
                 (click)="goToSettings()"
                 title="Settings"

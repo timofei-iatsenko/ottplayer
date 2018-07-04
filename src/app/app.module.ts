@@ -2,7 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import {RouterModule, Routes} from '@angular/router';
+import {
+  RouterModule,
+  Routes,
+  RouteReuseStrategy,
+  ActivatedRouteSnapshot,
+  DetachedRouteHandle,
+} from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { rootReducer } from '@store';
 import { GlobalModule } from './global/global.module';
@@ -17,13 +23,34 @@ import { CastEffects } from '@store/effects/cast.effects';
 
 const appRoutes: Routes = [
   { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
-  { path: ':channelSlug', loadChildren: './channels/channels.module#ChannelsModule', canActivate: [PlaylistGuard]},
-  //{ path: '', loadChildren: './channels/channels.module#ChannelsModule', canActivate: [PlaylistGuard]},
+  {
+    path: ':channelSlug',
+    data: { reuse: true },
+    loadChildren: './channels/channels.module#ChannelsModule',
+    canActivate: [PlaylistGuard],
+  },
+  {
+    path: '',
+    data: { reuse: true },
+    loadChildren: './channels/channels.module#ChannelsModule',
+    canActivate: [PlaylistGuard],
+  },
 ];
+
+export class CustomRouteReuseStrategy extends RouteReuseStrategy {
+  public shouldDetach(route: ActivatedRouteSnapshot): boolean { return false; }
+  public store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {}
+  public shouldAttach(route: ActivatedRouteSnapshot): boolean { return false; }
+  public retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle { return null; }
+
+  public shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
+    return (future.routeConfig === curr.routeConfig) || future.data.reuse;
+  }
+}
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,9 +65,15 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
-    (!environment.production) ? StoreDevtoolsModule.instrument({ maxAge: 10, }) : [],
+    (!environment.production) ? StoreDevtoolsModule.instrument({ maxAge: 10 }) : [],
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: CustomRouteReuseStrategy,
+    },
+  ],
+  bootstrap: [AppComponent],
+
 })
-export class AppModule { }
+export class AppModule {}

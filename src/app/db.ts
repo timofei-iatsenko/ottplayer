@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 import { EpgEntry } from './entities/epg-entry';
 import { Injectable } from '@angular/core';
 import { fromPromise } from 'rxjs/internal/observable/fromPromise';
-import { Observable } from 'rxjs/index';
+import { Observable, of } from 'rxjs/index';
 
 
 @Injectable({
@@ -20,6 +20,9 @@ export class OttDataBase extends Dexie {
   }
 
   public queryChannelEpg(channelId: number): Observable<EpgEntry[]> {
+    if (!channelId) {
+      return of([]);
+    }
     return fromPromise(this.epg
       .where({ chId: channelId })
       .toArray());

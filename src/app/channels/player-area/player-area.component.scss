@@ -20,6 +20,7 @@
     position: static;
     padding: 0 20px;
     background-color: transparent;
+    min-width: 0;
 
     :global(.mainPanelVisible) & {
       position: static;
@@ -33,7 +34,6 @@
   justify-content: center;
   flex-shrink: 0;
 }
-
 
 // mobile
 .top-controls {

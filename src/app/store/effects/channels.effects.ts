@@ -7,14 +7,12 @@ import { Store } from '@ngrx/store';
 import { fetchPlaylist } from '../../api/playlist.api';
 import { GetEpg } from '@store/actions/epg.actions';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Injectable()
 export class ChannelsEffects {
   constructor(
     private actions$: Actions,
     private store: Store<AppState>,
-    private route: ActivatedRoute,
   ) {}
 
   @Effect()

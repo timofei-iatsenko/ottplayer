@@ -5,7 +5,6 @@ import { extractGroups } from '../lib/extract-groups';
 import { createGroup } from '../lib/create-group';
 import { SaveFavourites } from '../actions/favourites.actions';
 import { AppState } from '../index';
-import { Channel } from '../../entities/channel.model';
 
 export const selectChannel = (state: AppState, chid: number) => {
   if (!state.channels.channels.length || !chid) {

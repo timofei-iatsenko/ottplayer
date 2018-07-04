@@ -1,9 +1,16 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { epgInAir, channelEpgSelector, selectChannelEpg } from '@store/reducers/epg.reducer';
+import { epgInAir } from '@store/reducers/epg.reducer';
 import { AppState } from '@store';
 import { Store } from '@ngrx/store';
 import { Channel } from '../../entities/channel.model';
-import { map, withLatestFrom, distinctUntilChanged } from 'rxjs/internal/operators';
+import {
+  map,
+  withLatestFrom,
+  distinctUntilChanged,
+  switchMap,
+  shareReplay,
+} from 'rxjs/internal/operators';
+import { OttDataBase } from '../../db';
 import { timer } from 'rxjs/index';
 
 @Component({
@@ -12,15 +19,15 @@ import { timer } from 'rxjs/index';
     <div class="details">
       <h5 [title]="channel.name" class="name">{{channel.name}}</h5>
 
-      <div *ngIf="(currentEpg$ | async) as currentEpg" [title]="'Сейчас: ' + currentEpg.name"
-           class="current-program">
-        <span class="time">{{currentEpg.startTime | time}}</span>
-        {{currentEpg.name}}
-      </div>
-
-      <progress-bar *ngIf="(currentEpg$ | async) as currentEpg"
-                    [startTime]="currentEpg.startTime"
-                    [endTime]="currentEpg.endTime"></progress-bar>
+      <ng-container *ngIf="(currentEpg$ | async) as currentEpg">
+        <div [title]="'Сейчас: ' + currentEpg.name"
+             class="current-program">
+          <span class="time">{{currentEpg.startTime | time}}</span>
+          {{currentEpg.name}}
+        </div>
+        <progress-bar [startTime]="currentEpg.startTime"
+                      [endTime]="currentEpg.endTime"></progress-bar>
+      </ng-container>
 
       <div *ngIf="(nextEpg$ | async) as nextEpg" [title]="'Далее:' + nextEpg.name"
            class="next-program">
@@ -35,25 +42,25 @@ import { timer } from 'rxjs/index';
 export class ChannelDetailsComponent {
   @Input() public channel: Channel;
 
-  public epg$ = timer(0, 1000 * 5).pipe(
-    withLatestFrom(
-      this.store.select((store) => selectChannelEpg(store, this.channel.id)),
-      (i, epg) => epg,
-    )
+  private epg$ = this.store.select((state) => state.epg.lastUpdate).pipe(
+    switchMap(() => this.db.queryChannelEpg(this.channel.id)),
+    shareReplay(1),
   );
 
-  public currentEpg$ = this.epg$.pipe(
+  public currentEpg$ = timer(0, 1000 * 5).pipe(
+    switchMap(() => this.epg$),
     map((epg) => epg.find(epgInAir)),
     distinctUntilChanged(),
+    shareReplay(),
   );
 
-  public nextEpg$ = this.epg$.pipe(
-    withLatestFrom(this.currentEpg$),
-    map(([epg, current]) => {
-      const currentIndex = epg.indexOf(current);
+  public nextEpg$ = this.currentEpg$.pipe(
+    withLatestFrom(this.epg$),
+    map(([current, all]) => {
+      const currentIndex = all.indexOf(current);
 
-      if (currentIndex + 1 <= epg.length) {
-        return epg[currentIndex + 1];
+      if (currentIndex + 1 <= all.length) {
+        return all[currentIndex + 1];
       }
 
       return null;
@@ -63,5 +70,6 @@ export class ChannelDetailsComponent {
 
   constructor(
     private store: Store<AppState>,
+    private db: OttDataBase,
   ) {}
 }

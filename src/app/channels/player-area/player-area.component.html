@@ -10,7 +10,7 @@
   </div>
 
 
-  <div class="under-wrap" *ngIf="epg$ | async as epg">
+  <div class="under-wrap" *ngIf="currentEpg$ | async as epg">
     <div class="progress">
       <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
     </div>
@@ -43,7 +43,7 @@
       </div>
 
       <channel-epg *ngIf="(currentChannel$ | async) as currentChannel"
-                   [channelId]="currentChannel.id">
+                   [entries]="epg$ | async">
       </channel-epg>
     <!--</Scrollbars>-->
   </div>

@@ -18,7 +18,7 @@ import { CastEffects } from '@store/effects/cast.effects';
 const appRoutes: Routes = [
   { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
   { path: ':channelSlug', loadChildren: './channels/channels.module#ChannelsModule', canActivate: [PlaylistGuard]},
-  { path: '', loadChildren: './channels/channels.module#ChannelsModule', canActivate: [PlaylistGuard]},
+  //{ path: '', loadChildren: './channels/channels.module#ChannelsModule', canActivate: [PlaylistGuard]},
 ];
 
 @NgModule({

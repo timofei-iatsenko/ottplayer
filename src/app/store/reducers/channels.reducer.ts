@@ -5,6 +5,7 @@ import { extractGroups } from '../lib/extract-groups';
 import { createGroup } from '../lib/create-group';
 import { SaveFavourites } from '../actions/favourites.actions';
 import { AppState } from '../index';
+import { LocalStorageFactory } from '../../libs/storage';
 
 export const selectChannel = (state: AppState, chid: number) => {
   if (!state.channels.channels.length || !chid) {
@@ -49,12 +50,14 @@ export interface Group {
   channels: number[];
 }
 
+export const savedGroupStorage = LocalStorageFactory.create<string>('selectedGroup');
+
 export const initialState: ChannelsState = {
   urlEpg: null,
   urlLogo: null,
   channels: [],
   groups: [createGroup(PredefinedGroup.all, [])],
-  selectedGroup: PredefinedGroup.all,
+  selectedGroup: savedGroupStorage.get(PredefinedGroup.all),
   selectedChannelId: null,
   favourites: [],
 };

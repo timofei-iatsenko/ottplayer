@@ -1,12 +1,13 @@
 import { Actions, Effect } from '@ngrx/effects';
-import { ofType } from 'ts-action-operators';
-import { RequestPlaylist, ReceivePlaylist } from '@store/actions/channels.actions';
-import { switchMap, withLatestFrom, filter } from 'rxjs/internal/operators';
+import { ofType, toPayload } from 'ts-action-operators';
+import { RequestPlaylist, ReceivePlaylist, SetActiveGroup } from '@store/actions/channels.actions';
+import { switchMap, withLatestFrom, filter, tap } from 'rxjs/internal/operators';
 import { AppState } from '@store';
 import { Store } from '@ngrx/store';
 import { fetchPlaylist } from '../../api/playlist.api';
 import { GetEpg } from '@store/actions/epg.actions';
 import { Injectable } from '@angular/core';
+import { savedGroupStorage } from '@store/reducers/channels.reducer';
 
 @Injectable()
 export class ChannelsEffects {
@@ -25,5 +26,12 @@ export class ChannelsEffects {
       new ReceivePlaylist({ playlist }),
       new GetEpg(),
     ]),
+  );
+
+  @Effect({dispatch: false})
+  public saveGroupPersistent$ = this.actions$.pipe(
+    ofType(SetActiveGroup),
+    toPayload(),
+    tap(({ name }) => savedGroupStorage.set(name)),
   );
 }

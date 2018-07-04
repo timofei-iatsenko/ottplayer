@@ -1,5 +1,5 @@
-@import 'commons/variables';
-@import 'commons/mixins';
+@import 'styles/variables';
+@import 'styles/mixins';
 $tabBg: #f8f9f9;
 
 %btn {
@@ -26,7 +26,7 @@ $tabBg: #f8f9f9;
   flex-shrink: 0;
 }
 
-.tabsWrap {
+.tabs-wrap {
   @include headerHeight();
 
   display: flex;
@@ -38,31 +38,30 @@ $tabBg: #f8f9f9;
   }
 }
 
-.groupTab {
+.group-tab {
   @extend %btn;
   @include makeColorfulBtn($tabBg);
   padding: 0 20px;
   cursor: pointer;
   border-left: 1px solid $borders-color;
   outline: 0;
-}
 
-.selectedGroupTab {
-  @extend .groupTab;
-  background-color: mix($tabBg, $porcelain, 60%);
-  position: relative;
+  &.selected {
+    background-color: mix($tabBg, $porcelain, 60%);
+    position: relative;
 
-  &::after {
-    content: '';
-    width: 100%;
-    height: 2px;
-    position: absolute;
-    bottom: 0;
-    background-color: $blue;
+    &::after {
+      content: '';
+      width: 100%;
+      height: 2px;
+      position: absolute;
+      bottom: 0;
+      background-color: $blue;
+    }
   }
 }
 
-.navBtn {
+.nav-btn {
   $width: 25px;
 
   @extend %btn;
@@ -91,14 +90,16 @@ $tabBg: #f8f9f9;
 
   @include break(medium) {
     &:first-of-type, &:last-of-type {
-     margin: 0;
+      margin: 0;
     }
   }
+
+  &.enabled {
+    color: $black;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    cursor: pointer;
+    @include makeColorfulBtn($tabBg)
+  }
+
 }
 
-.navEnabled {
-  color: $black;
-  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
-  cursor: pointer;
-  @include makeColorfulBtn($tabBg)
-}

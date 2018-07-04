@@ -11,19 +11,21 @@ import { SetActiveGroup } from '@store/actions/channels.actions';
       <div class="header">
         <h3 class="header-title">Channels</h3>
       </div>
-      <div class="body">
-        <!--<tabs-component *ngIf="channels.length"-->
-        <!--[items]="this.props.groups"-->
-        <!--(onSelect)="handleSelectGroup($event)"-->
-        <!--[selected]="selectedGroup.name"/>-->
-        <div class="list">
-          <channels-list
-            [channels]="channels$ | async"
-            [selectedChannelId]="selectedChannelId$ | async"
-            [visibleIds]="visibleChannels$ | async"
-          ></channels-list>
+      <ng-container *ngIf="channels$ | async as channels">
+        <div class="body" *ngIf="channels.length">
+          <tabs [items]="groups$ | async"
+                (select)="handleSelectGroup($event)"
+                [selected]="selectedGroup$ | async">
+          </tabs>
+          <div class="list">
+            <channels-list
+              [channels]="channels"
+              [selectedChannelId]="selectedChannelId$ | async"
+              [visibleIds]="visibleChannels$ | async"
+            ></channels-list>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
   `,
   styleUrls: ['./channels-panel.component.scss'],
@@ -31,11 +33,12 @@ import { SetActiveGroup } from '@store/actions/channels.actions';
 })
 export class ChannelsPanelComponent {
   public channels$ = this.store.select((state) => state.channels.channels);
+  public groups$ = this.store.select((state) => state.channels.groups);
+  public selectedGroup$ = this.store.select((state) => state.channels.selectedGroup);
   public selectedChannelId$ = this.store.select((state) => state.channels.selectedChannelId);
-  public visibleChannels$ = this.store.select(
-    (state) =>
-      state.channels.groups.find((group) => group.name === state.channels.selectedGroup).channels,
-  );
+  public visibleChannels$ = this.store.select((state) => {
+    return state.channels.groups.find((group) => group.name === state.channels.selectedGroup).channels;
+  });
 
   constructor(
     private store: Store<AppState>,

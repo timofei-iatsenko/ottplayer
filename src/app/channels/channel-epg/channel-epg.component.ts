@@ -5,7 +5,7 @@ import { epgInAir } from '@store/reducers/epg.reducer';
 @Component({
   selector: 'channel-epg',
   template: `
-    <div class="host">
+    <div class="host" *ngIf="entries">
       <div class="entries">
         <div class="entry" *ngFor="let entry of filterOutdatedEntries(entries); trackBy: trackEntries">
           <div class="mainInfo">

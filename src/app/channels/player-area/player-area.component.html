@@ -4,12 +4,12 @@
       <i class="material-icons">keyboard_arrow_left</i>
     </button>
   </div>
-  <!--*ngIf="!(isCastingEnabled$ | async)"-->
-  <div class="player-container">
+
+  <div class="player-container" *ngIf="!(isCastingEnabled$ | async)">
     <video-player [src]="streamUrl$ | async"></video-player>
-  </div>
-  <div class="progress" *ngIf="currentEpg$ | async as epg">
-    <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
+    <div class="progress" *ngIf="currentEpg$ | async as epg">
+      <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
+    </div>
   </div>
 
   <div class="under-wrap" >

@@ -58,3 +58,7 @@ declare namespace cast.framework {
     public loadMedia(request: any): Promise<string>;
   }
 }
+
+interface Window {
+  __onGCastApiAvailable: (isAvailable: boolean) => void;
+}

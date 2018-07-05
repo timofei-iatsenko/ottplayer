@@ -65,6 +65,7 @@ export class ChannelsListComponent implements AfterViewInit {
   }
 
   public handleChannelClick(channel: Channel) {
+    if (this.isActive(channel)) { return; }
     this.router.navigate(['/' + this.getChannelSlug(channel)]);
     this.store.dispatch(new ToggleMainPanel({ visible: true }));
   }

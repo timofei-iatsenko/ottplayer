@@ -25,6 +25,7 @@ $row-height: 95px;
 
   &.active {
     background-color: $row-selected;
+    cursor: default;
   }
 
   &.hidden {

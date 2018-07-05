@@ -4,7 +4,6 @@
   height: 90px;
   background-color: rgba(255,255,255,.95);
   display: flex;
-
   position: fixed;
   bottom: 0;
   left: 0;
@@ -12,6 +11,10 @@
   z-index: 1;
   box-shadow: 0 0 8px rgba(0,0,0,.4);
   will-change: transform;
+
+  @include break(medium) {
+    display: none;
+  }
 }
 
 .wrap {
@@ -41,6 +44,7 @@
 .end-time {
   right: 5px;
 }
+
 .icon {
   $canvas-bg: #16191f;
   width: 85px;
@@ -56,10 +60,12 @@
   img {
     max-width: 100%;
     max-height: 100%;
+  }
+
+  &.casting img {
     display: none;
   }
 }
-
 
 .cast-overlay {
   height: 100%;
@@ -67,16 +73,16 @@
   position: absolute;
   left: 0;
   top: 0;
-  display: flex;
   align-items: center;
   justify-content: center;
-  //background-color: rgba(0,0,0, 0.6);
   color: #fff;
+  display: none;
+
+  .casting & {
+    display: flex;
+  }
 
   svg {
-    //position: absolute;
-    //right: 10px;
-    //bottom: 5px;
     width: 50px;
     height: 50px;
     opacity: 0.8;
@@ -121,8 +127,5 @@
   }
 }
 
-.stop-btn {
-
-}
 
 

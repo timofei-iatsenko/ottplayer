@@ -3,14 +3,16 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@store';
 import { selectCurrentChannel } from '@store/reducers/channels.reducer';
 import { EpgStreamsFactory } from '../epg-streams.service';
+import { ToggleMainPanel } from '@store/actions/ui.actions';
+import { selectCastingEnabled } from '@store/reducers/casting.reducer';
 
 @Component({
   selector: 'player-control-bar',
   template: `
-    <div class="host" *ngIf="currentChannel$ | async as currentChannel">
-      <div class="icon">
+    <div class="host" *ngIf="currentChannel$ | async as currentChannel" (click)="clickOnBar()">
+      <div class="icon" [class.casting]="isCasting$ | async">
         <img [src]="currentChannel.logo"/>
-        <div class="cast-overlay" *ngIf="isCasting">
+        <div class="cast-overlay">
           <i class="material-icons">cast_connected</i>
         </div>
       </div>
@@ -48,13 +50,14 @@ import { EpgStreamsFactory } from '../epg-streams.service';
 })
 export class PlayerControlBarComponent {
   public currentChannel$ = this.store.select(selectCurrentChannel);
+  public isCasting$ = this.store.select(selectCastingEnabled);
 
   public epgStreams = this.epgStreamsFactory.create(
     this.store.select((state) => state.channels.selectedChannelId)
   );
 
-  public get isCasting() {
-    return true;
+  public clickOnBar() {
+    this.store.dispatch(new ToggleMainPanel({ visible: true }));
   }
 
   constructor(

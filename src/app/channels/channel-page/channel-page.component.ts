@@ -11,7 +11,7 @@ import { ActivatedRoute } from '@angular/router';
     <div class="channels-page-wrap" [ngClass]="appClasses$ | async">
       <channels-panel></channels-panel>
       <player-area></player-area>
-      <!--<PlayerControlBar />-->
+      <player-control-bar></player-control-bar>
     </div>
   `,
   styleUrls: ['./channel-page.component.scss'],

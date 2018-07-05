@@ -1,4 +1,4 @@
-@import 'commons/mixins';
+@import 'styles/mixins';
 
 .host {
   height: 90px;
@@ -28,17 +28,17 @@
   top: 0;
 }
 
-.startTime, .endTime {
+.start-time, .end-time {
   opacity: 0.6;
   font-size: 11px;
   position: absolute;
   top: 8px;
 }
-.startTime {
+.start-time {
   left: 5px;
 }
 
-.endTime {
+.end-time {
   right: 5px;
 }
 .icon {
@@ -61,7 +61,7 @@
 }
 
 
-.castOverlay {
+.cast-overlay {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -83,18 +83,18 @@
   }
 }
 
-.programInfo {
+.program-info {
   padding: 10px;
   min-width: 0;
 }
 
-.programName {
-    @include truncate-text;
-    font-size: 14px;
-    margin-bottom: 5px;
+.program-name {
+  @include truncate-text;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 
-.channelName {
+.channel-name {
   opacity: 0.6;
   font-size: 13px;
 }
@@ -106,7 +106,7 @@
   margin-left: auto;
 }
 
-.playPauseBtn, .stopBtn  {
+.play-pause-btn, .stop-btn  {
   width: 40px;
   height: 40px;
   color: $gray;
@@ -121,7 +121,7 @@
   }
 }
 
-.stopBtn {
+.stop-btn {
 
 }
 

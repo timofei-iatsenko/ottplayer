@@ -7,14 +7,14 @@
 
   <div class="player-container" *ngIf="!(isCastingEnabled$ | async)">
     <video-player [src]="streamUrl$ | async"></video-player>
-    <div class="progress" *ngIf="currentEpg$ | async as epg">
+    <div class="progress" *ngIf="epgStreams.currentEpg$ | async as epg">
       <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
     </div>
   </div>
 
   <div class="under-wrap" >
       <div class="video-details">
-        <div class="program-details" *ngIf="currentEpg$ | async as epg">
+        <div class="program-details" *ngIf="epgStreams.currentEpg$ | async as epg">
           <div class="program-name">
             {{epg.name}}
           </div>
@@ -40,7 +40,7 @@
       </div>
 
       <channel-epg *ngIf="(currentChannel$ | async) as currentChannel"
-                   [entries]="epg$ | async">
+                   [entries]="epgStreams.epg$ | async">
       </channel-epg>
   </div>
 </div>

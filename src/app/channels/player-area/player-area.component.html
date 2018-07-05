@@ -12,9 +12,9 @@
     <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
   </div>
 
-  <div class="under-wrap" *ngIf="currentEpg$ | async as epg">
+  <div class="under-wrap" >
       <div class="video-details">
-        <div class="program-details">
+        <div class="program-details" *ngIf="currentEpg$ | async as epg">
           <div class="program-name">
             {{epg.name}}
           </div>

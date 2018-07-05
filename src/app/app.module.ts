@@ -10,7 +10,7 @@ import {
   DetachedRouteHandle,
 } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
-import { rootReducer } from '@store';
+import { rootReducer, REDUCER_TOKEN } from '@store';
 import { GlobalModule } from './global/global.module';
 import { EffectsModule } from '@ngrx/effects';
 import { ChannelsEffects } from '@store/effects/channels.effects';
@@ -55,7 +55,7 @@ export class CustomRouteReuseStrategy extends RouteReuseStrategy {
   imports: [
     BrowserModule,
     GlobalModule,
-    StoreModule.forRoot(rootReducer),
+    StoreModule.forRoot(REDUCER_TOKEN),
     EffectsModule.forRoot([
       CastEffects,
       ChannelsEffects,
@@ -71,6 +71,10 @@ export class CustomRouteReuseStrategy extends RouteReuseStrategy {
     {
       provide: RouteReuseStrategy,
       useClass: CustomRouteReuseStrategy,
+    },
+    {
+      provide: REDUCER_TOKEN,
+      useFactory: () => rootReducer,
     },
   ],
   bootstrap: [AppComponent],

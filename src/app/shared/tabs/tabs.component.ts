@@ -25,7 +25,7 @@ interface Item {
 
       </div>
       <div class="tabs-wrap" #container>
-        <button *ngFor="let item of items; trackBy: item?.name"
+        <button *ngFor="let item of items; trackBy: trackItems"
                 type='button'
                 class="group-tab"
                 [class.selected]="isSelected(item)"
@@ -88,6 +88,10 @@ export class TabsComponent implements AfterViewInit {
 
   public goRight() {
     this.container.scrollLeft = this.container.scrollLeft + 60;
+  }
+
+  public trackItems(index: number, item: Item) {
+    return item.name;
   }
 
   private updateStyles() {

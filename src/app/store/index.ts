@@ -4,6 +4,9 @@ import { channelsReducer, ChannelsState } from './reducers/channels.reducer';
 import { settingsReducer, SettingsState } from './reducers/settings.reducer';
 import { UiState, uiReducer } from './reducers/ui.reducer';
 import { ActionReducerMap } from '@ngrx/store';
+import { InjectionToken } from '@angular/core';
+
+export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('Registered Reducers');
 
 export interface AppState {
   readonly settings: SettingsState;

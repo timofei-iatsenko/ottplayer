@@ -18,7 +18,7 @@ import { ActivatedRoute } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelPageComponent implements OnInit, OnDestroy {
-  public appClasses$ = this.store.select((store) => this.getAppClasses(store.ui.classes));
+  public appClasses$ = this.store.select((store) => store.ui.classes);
 
   constructor(
     private store: Store<AppState>,
@@ -35,14 +35,5 @@ export class ChannelPageComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy() {
     this.store.dispatch(new StopEpgSync());
-  }
-
-  private getAppClasses(appClassesMap: {[className: string]: boolean}): string[] {
-    return Object.keys(appClassesMap).reduce((acc, className) => {
-      if (appClassesMap[className]) {
-        acc.push(className);
-      }
-      return acc;
-    }, []);
   }
 }

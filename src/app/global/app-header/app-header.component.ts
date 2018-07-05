@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent {
+  constructor(
+    private router: Router,
+  ) {}
+
   public goToSettings() {
-    //
+    this.router.navigate(['/settings']);
   }
 }

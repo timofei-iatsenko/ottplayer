@@ -8,13 +8,11 @@
   <div class="player-container">
     <video-player [src]="streamUrl$ | async"></video-player>
   </div>
-
+  <div class="progress" *ngIf="currentEpg$ | async as epg">
+    <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
+  </div>
 
   <div class="under-wrap" *ngIf="currentEpg$ | async as epg">
-    <div class="progress">
-      <progress-bar [startTime]="epg.startTime" [endTime]="epg.endTime"></progress-bar>
-    </div>
-
     <!--<Scrollbars autoHide>-->
       <div class="video-details">
         <div class="program-details">

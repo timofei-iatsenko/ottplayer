@@ -28,11 +28,17 @@
   }
 }
 
+.main-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .player-container {
   background-color: #000;
-  //display: flex;
   justify-content: center;
   flex-shrink: 0;
+  position: relative;
 }
 
 // mobile
@@ -56,14 +62,12 @@
 .under-wrap {
   position: relative;
   background-color: #fff;
+  overflow-y: auto;
   flex: 1;
 }
 
 .progress {
   width: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 1;
 }
 
 .program-details {

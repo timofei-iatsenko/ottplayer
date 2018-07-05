@@ -1,9 +1,5 @@
 @import 'styles/mixins';
 
-//:global {
-//  @import "~normalize.css";
-//}
-
 body {
   margin: 0;
   padding: 0;
@@ -18,4 +14,22 @@ button, input, optgroup, select, textarea {
 
 a {
   color: $blue;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #dedede;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  transition: background .3s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $blue;
 }

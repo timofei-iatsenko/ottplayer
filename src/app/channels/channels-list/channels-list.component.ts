@@ -1,35 +1,39 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  ElementRef,
+  AfterViewInit,
+} from '@angular/core';
 import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
 import { Router } from '@angular/router';
-import { AppState } from '../../store';
+import { AppState } from '@store';
 import { Store } from '@ngrx/store';
 import { ToggleMainPanel } from '@store/actions/ui.actions';
 
 @Component({
   selector: 'channels-list',
   template: `
-    <!--<Scrollbars autoHide ref={(ref) => this.scroll = ref}>-->
-    <div>
-      <button
-        type="button"
-        *ngFor="let channel of channels; trackBy: trackChannel"
-        (click)="handleChannelClick(channel)"
-        [class]="getStyles(channel)"
-      >
-        <div class="item-wrapper">
-          <div class="icon">
-            <img [src]="channel.logo" alt=''/>
-          </div>
-          <channel-details [channel]="channel"></channel-details>
+    <button
+      type="button"
+      *ngFor="let channel of channels; trackBy: trackChannel"
+      (click)="handleChannelClick(channel)"
+      [class.hidden]="!isVisible(channel)"
+      [class.active]="isActive(channel)"
+      class="item"
+    >
+      <div class="item-wrapper">
+        <div class="icon">
+          <img [src]="channel.logo" alt=''/>
         </div>
-      </button>
-    </div>
-    <!--</Scrollbars>-->
+        <channel-details [channel]="channel"></channel-details>
+      </div>
+    </button>
   `,
   styleUrls: ['./channels-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChannelsListComponent {
+export class ChannelsListComponent implements AfterViewInit {
   @Input() public channels: ReadonlyChannelsCollection;
   @Input() public selectedChannelId: number;
   @Input() public visibleIds: number[];
@@ -37,17 +41,22 @@ export class ChannelsListComponent {
   constructor(
     private router: Router,
     private store: Store<AppState>,
+    private elementRef: ElementRef,
   ) {}
+
+  public ngAfterViewInit() {
+    this.scrollToActiveChannel();
+  }
 
   public trackChannel(index: number, item: Channel) {
     return item.id;
   }
 
-  private isActive(chanel: Channel): boolean {
+  public isActive(chanel: Channel): boolean {
     return chanel.id === this.selectedChannelId;
   }
 
-  private isVisible(chanel: Channel): boolean {
+  public isVisible(chanel: Channel): boolean {
     return this.visibleIds.includes(chanel.id);
   }
 
@@ -57,39 +66,14 @@ export class ChannelsListComponent {
 
   public handleChannelClick(channel: Channel) {
     this.router.navigate(['/' + this.getChannelSlug(channel)]);
-    this.store.dispatch(new ToggleMainPanel({visible: true}));
+    this.store.dispatch(new ToggleMainPanel({ visible: true }));
   }
-  //private isInitiallyScrolled = false;
-  //
-  //private scrollToActiveChannel() {
-  //  if (!this.isInitiallyScrolled && this.scroll && this.activeElementRef) {
-  //    this.isInitiallyScrolled = true;
-  //
-  //    const values = this.scroll.getValues();
-  //
-  //    const topPoint = values.scrollTop;
-  //    const bottomPoint = values.clientHeight + values.scrollTop;
-  //    const elementTop = this.activeElementRef.offsetTop;
-  //
-  //    if (topPoint < elementTop && bottomPoint < elementTop) {
-  //      this.scroll.scrollTop(elementTop);
-  //    }
-  //  }
-  //}
 
-  //public componentDidMount() {
-  //  this.scrollToActiveChannel();
-  //}
-  //
-  //public componentDidUpdate() {
-  //  this.scrollToActiveChannel();
-  //}
+  private scrollToActiveChannel() {
+    const activeElement = (this.elementRef.nativeElement as HTMLElement).querySelector('.active');
 
-  // todo: rewrite in angular style
-  public getStyles(channel: Channel): string {
-    if (!this.isVisible(channel)) {
-      return 'hidden-item';
+    if (activeElement) {
+      activeElement.scrollIntoView();
     }
-    return this.isActive(channel) ? 'item-active' : 'item';
   }
 }

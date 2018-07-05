@@ -22,21 +22,20 @@ $row-height: 95px;
   &:hover, &:focus {
     background-color: $row-hovered;
   }
-}
 
-.item-active {
-  @extend %base-item;
-  background-color: $row-selected;
+  &.active {
+    background-color: $row-selected;
+  }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .item-wrapper {
   display: flex;
   height: $row-height;
   box-sizing: border-box;
-}
-
-.hidden-item {
-  display: none;
 }
 
 .icon {
@@ -59,7 +58,7 @@ $row-height: 95px;
     background-color: mix($canvas-bg, $row-hovered);
   }
 
-  .itemActive & {
+  .item.active & {
     background-color: mix($canvas-bg, $row-selected);
   }
 }

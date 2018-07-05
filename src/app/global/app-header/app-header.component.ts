@@ -10,7 +10,7 @@ import { Component } from '@angular/core';
                 (click)="goToSettings()"
                 title="Settings"
                 type='button'>
-          <!--<Cog/>-->
+          <i class="material-icons">settings</i>
         </button>
       </div>
     </header>`,

@@ -21,7 +21,8 @@ interface Item {
       <div class="nav-btn"
            #leftBtn
            (click)="this.goLeft()">
-        <!--<ArrowLeft/>-->
+        <i class="material-icons">keyboard_arrow_left</i>
+
       </div>
       <div class="tabs-wrap" #container>
         <button *ngFor="let item of items; trackBy: item?.name"
@@ -35,7 +36,7 @@ interface Item {
       <div class="nav-btn"
            #rightBtn
            (click)="this.goRight()">
-        <!--<ArrowRight/>-->
+        <i class="material-icons">keyboard_arrow_right</i>
       </div>
     </div>
   `,

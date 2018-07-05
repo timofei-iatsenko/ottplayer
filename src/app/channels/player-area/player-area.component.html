@@ -1,7 +1,7 @@
 <div class="main-panel">
   <div class="top-controls">
     <button type='button' (click)="goBack()" class="back-btn">
-      <!--<ArrowLeft/>-->
+      <i class="material-icons">keyboard_arrow_left</i>
     </button>
   </div>
   <!--*ngIf="!(isCastingEnabled$ | async)"-->
@@ -13,7 +13,6 @@
   </div>
 
   <div class="under-wrap" *ngIf="currentEpg$ | async as epg">
-    <!--<Scrollbars autoHide>-->
       <div class="video-details">
         <div class="program-details">
           <div class="program-name">
@@ -43,6 +42,5 @@
       <channel-epg *ngIf="(currentChannel$ | async) as currentChannel"
                    [entries]="epg$ | async">
       </channel-epg>
-    <!--</Scrollbars>-->
   </div>
 </div>

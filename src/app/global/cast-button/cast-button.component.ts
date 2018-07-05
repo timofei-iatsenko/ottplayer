@@ -9,7 +9,7 @@ import { AppState } from '@store';
             (click)="requestCastSession()"
             title='Cast to...'
             type='button'>
-      {{(isConnected$ | async) ? 'connected icon' : 'cast icon'}}
+      <i class="material-icons">{{(isConnected$ | async) ? 'cast_connected' : 'cast'}}</i>
     </button>
   `,
   styleUrls: ['./cast-button.component.scss'],

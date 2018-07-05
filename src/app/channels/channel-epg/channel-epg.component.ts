@@ -5,22 +5,13 @@ import { epgInAir } from '@store/reducers/epg.reducer';
 @Component({
   selector: 'channel-epg',
   template: `
-    <div class="host" *ngIf="entries">
-      <div class="entries">
-        <div class="entry" *ngFor="let entry of filterOutdatedEntries(entries); trackBy: trackEntries">
-          <div class="mainInfo">
-            <h5 class="name">{{entry.name}}</h5>
-
-            <div class="timing">
-              <div class="start-time">{{entry.startTime | time}}</div>
-              <div class="end-time">{{entry.endTime | time}}</div>
-            </div>
-          </div>
-
-          <div class="side-info">
-            <span class="date">{{entry.startTime | date}}</span>
-            <span class="duration">{{entry.duration | duration}}</span>
-          </div>
+    <div class="entries" *ngIf="entries">
+      <div class="entry"
+           *ngFor="let entry of filterOutdatedEntries(entries); trackBy: trackEntries">
+        <h5 class="name">{{entry.name}}</h5>
+        <div class="program-timebox">
+          {{entry.startTime | time}} - {{entry.endTime | time}}
+          {{entry.endTime - entry.startTime | duration}} ({{entry.startTime | date}})
         </div>
       </div>
     </div>

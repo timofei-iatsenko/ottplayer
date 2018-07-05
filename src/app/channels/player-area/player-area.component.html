@@ -12,35 +12,35 @@
     </div>
   </div>
 
-  <div class="under-wrap" >
-      <div class="video-details">
-        <div class="program-details" *ngIf="epgStreams.currentEpg$ | async as epg">
-          <div class="program-name">
-            {{epg.name}}
-          </div>
-
-          <div class="program-timebox">
-            {{epg.startTime | time}} - {{epg.endTime | time}} {{epg.endTime - epg.startTime | duration}}
-          </div>
-
-          <div class="program-description">
-            {{epg.descr}}
-          </div>
+  <div class="under-wrap">
+    <div class="video-details">
+      <div class="program-details" *ngIf="epgStreams.currentEpg$ | async as epg">
+        <div class="program-name">
+          {{epg.name}}
         </div>
 
-        <div class="channel-details" *ngIf="(currentChannel$ | async) as currentChannel">
-          <div class="channel-logo">
-            <img [src]="currentChannel.logo"/>
-          </div>
+        <div class="program-timebox">
+          {{epg.startTime | time}} - {{epg.endTime | time}} {{epg.endTime - epg.startTime | duration}}
+        </div>
 
-          <div class="channel-name">
-            {{currentChannel.name}}
-          </div>
+        <div class="program-description">
+          {{epg.descr}}
         </div>
       </div>
 
-      <channel-epg *ngIf="(currentChannel$ | async) as currentChannel"
-                   [entries]="epgStreams.epg$ | async">
-      </channel-epg>
+      <div class="channel-details" *ngIf="(currentChannel$ | async) as currentChannel">
+        <div class="channel-logo">
+          <img [src]="currentChannel.logo"/>
+        </div>
+
+        <div class="channel-name">
+          {{currentChannel.name}}
+        </div>
+      </div>
+    </div>
+
+    <channel-epg *ngIf="(currentChannel$ | async) as currentChannel"
+                 [entries]="epgStreams.epg$ | async">
+    </channel-epg>
   </div>
 </div>

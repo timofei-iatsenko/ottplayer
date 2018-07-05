@@ -1,6 +1,6 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
-import { timer } from 'rxjs/index';
-import { map, distinctUntilChanged } from 'rxjs/internal/operators';
+import { timer } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'progress-bar',

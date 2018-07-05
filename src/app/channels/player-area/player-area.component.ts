@@ -5,8 +5,8 @@ import { epgInAir } from '@store/reducers/epg.reducer';
 import { ToggleMainPanel } from '@store/actions/ui.actions';
 import { selectCurrentChannel, selectStreamUrl } from '@store/reducers/channels.reducer';
 import { selectCastingEnabled } from '@store/reducers/casting.reducer';
-import { map, distinctUntilChanged, switchMap, shareReplay } from 'rxjs/internal/operators';
-import { timer, combineLatest } from 'rxjs/index';
+import { map, distinctUntilChanged, switchMap, shareReplay } from 'rxjs/operators';
+import { timer, combineLatest } from 'rxjs';
 import { OttDataBase } from '../../db';
 
 @Component({

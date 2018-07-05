@@ -3,7 +3,7 @@ import { CanActivate, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store';
-import { tap } from 'rxjs/internal/operators';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'

@@ -9,9 +9,9 @@ import {
   distinctUntilChanged,
   switchMap,
   shareReplay,
-} from 'rxjs/internal/operators';
+} from 'rxjs/operators';
 import { OttDataBase } from '../../db';
-import { timer } from 'rxjs/index';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'channel-details',

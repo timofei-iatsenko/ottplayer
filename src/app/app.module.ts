@@ -20,6 +20,7 @@ import { EpgEffects } from '@store/effects/epg.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { CastEffects } from '@store/effects/cast.effects';
+import { PlayerEffects } from '@store/effects/player.effects';
 
 const appRoutes: Routes = [
   { path: 'settings', loadChildren: './settings/settings.module#SettingsModule' },
@@ -61,6 +62,7 @@ export class CustomRouteReuseStrategy extends RouteReuseStrategy {
       ChannelsEffects,
       SettingsEffects,
       EpgEffects,
+      PlayerEffects,
     ]),
     RouterModule.forRoot(
       appRoutes,

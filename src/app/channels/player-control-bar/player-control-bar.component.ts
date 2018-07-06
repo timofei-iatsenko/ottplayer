@@ -5,12 +5,14 @@ import { selectCurrentChannel } from '@store/reducers/channels.reducer';
 import { EpgStreamsFactory } from '../epg-streams.service';
 import { ToggleMainPanel } from '@store/actions/ui.actions';
 import { selectCastingEnabled } from '@store/reducers/casting.reducer';
+import { Router } from '@angular/router';
+import { TogglePlayback } from '@store/reducers/player.reducer';
 
 @Component({
   selector: 'player-control-bar',
   template: `
-    <div class="host" *ngIf="currentChannel$ | async as currentChannel" (click)="clickOnBar()">
-      <div class="icon" [class.casting]="isCasting$ | async">
+    <div class="host" *ngIf="currentChannel$ | async as currentChannel">
+      <div class="icon" [class.casting]="isCasting$ | async" (click)="clickOnBar()">
         <img [src]="currentChannel.logo"/>
         <div class="cast-overlay">
           <i class="material-icons">cast_connected</i>
@@ -35,11 +37,15 @@ import { selectCastingEnabled } from '@store/reducers/casting.reducer';
         </div>
 
         <div class="buttons">
-          <button class="play-pause-btn">
-            <i class="material-icons">play_arrow</i>
+          <button class="play-pause-btn"
+                  (click)="togglePlayBack()"
+                  [disabled]="!(isPlayerReady$ | async)">
+            <i class="material-icons">{{(isPaused$ | async) ? 'play_arrow': 'pause'}}</i>
           </button>
-          <button class="stop-btn">
-            <i class="material-icons">stop</i>
+          <button class="stop-btn"
+                  (click)="close()"
+                  [disabled]="!(isPlayerReady$ | async)">
+            <i class="material-icons">close</i>
           </button>
         </div>
       </div>
@@ -49,19 +55,30 @@ import { selectCastingEnabled } from '@store/reducers/casting.reducer';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerControlBarComponent {
+  constructor(
+    private store: Store<AppState>,
+    private epgStreamsFactory: EpgStreamsFactory,
+    private router: Router,
+  ) {}
+
   public currentChannel$ = this.store.select(selectCurrentChannel);
   public isCasting$ = this.store.select(selectCastingEnabled);
+  public isPlayerReady$ = this.store.select((store) => store.player.ready);
+  public isPaused$ = this.store.select((store) => store.player.paused);
 
   public epgStreams = this.epgStreamsFactory.create(
-    this.store.select((state) => state.channels.selectedChannelId)
+    this.store.select((state) => state.channels.selectedChannelId),
   );
 
   public clickOnBar() {
     this.store.dispatch(new ToggleMainPanel({ visible: true }));
   }
 
-  constructor(
-    private store: Store<AppState>,
-    private epgStreamsFactory: EpgStreamsFactory,
-  ) {}
+  public togglePlayBack() {
+    this.store.dispatch(new TogglePlayback());
+  }
+
+  public close() {
+    this.router.navigate(['/']);
+  }
 }

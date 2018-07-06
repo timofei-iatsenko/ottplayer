@@ -9,13 +9,14 @@ import { RouterModule } from '@angular/router';
 import { ChannelEpgComponent } from './channel-epg/channel-epg.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { PlayerAreaComponent } from './player-area/player-area.component';
-import { VideoPlayerComponent } from './video-player/video-player.component';
 import { PlayerControlBarComponent } from './player-control-bar/player-control-bar.component';
+import { PlayerModule } from '../player/player.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
+    PlayerModule,
     RouterModule.forChild([
       {path: '', component: ChannelPageComponent}
     ])
@@ -28,7 +29,6 @@ import { PlayerControlBarComponent } from './player-control-bar/player-control-b
     ChannelEpgComponent,
     ProgressBarComponent,
     PlayerAreaComponent,
-    VideoPlayerComponent,
     PlayerControlBarComponent,
   ],
 })

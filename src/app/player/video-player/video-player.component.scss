@@ -12,3 +12,13 @@
   width: 100%;
   height: 100%;
 }
+
+video::-webkit-media-controls {
+  &-timeline,
+  &-current-time-display,
+  &-time-remaining-display,
+  &-timeline-container
+  {
+    display: none;
+  }
+}

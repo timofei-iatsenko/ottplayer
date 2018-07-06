@@ -5,6 +5,7 @@ import { settingsReducer, SettingsState } from './reducers/settings.reducer';
 import { UiState, uiReducer } from './reducers/ui.reducer';
 import { ActionReducerMap } from '@ngrx/store';
 import { InjectionToken } from '@angular/core';
+import { playerReducer, PlayerState } from '@store/reducers/player.reducer';
 
 export const REDUCER_TOKEN = new InjectionToken<ActionReducerMap<AppState>>('Registered Reducers');
 
@@ -15,6 +16,7 @@ export interface AppState {
   readonly epg: EpgState;
   readonly ui: UiState;
   readonly casting: CastingState;
+  readonly player: PlayerState;
 }
 
 export const rootReducer: ActionReducerMap<AppState> = {
@@ -23,44 +25,5 @@ export const rootReducer: ActionReducerMap<AppState> = {
   epg: epgReducer,
   ui: uiReducer,
   casting: castingReducer,
+  player: playerReducer,
 };
-
-// const sagaMiddleware = createSagaMiddleware();
-// const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-// const favouritesStorage = LocalStorageFactory.create<number[]>('favourites');
-// const settingsStorage = LocalStorageFactory.create<SettingsState>('settings');
-// const epgLastUpdateStorage = LocalStorageFactory.create<EpgState['lastUpdate']>('epgLastUpdate');
-// const selectedGroup = LocalStorageFactory.create<ChannelsState['selectedGroup']>('selectedGroup');
-
-// const preloadState: Partial<AppState> = {
-//   settings: settingsStorage.get(),
-//   epg: {
-//     entries: {},
-//     lastUpdate: epgLastUpdateStorage.get(),
-//   },
-//   channels: {
-//     ...initialChannelsState,
-//     selectedGroup: selectedGroup.get(initialChannelsState.selectedGroup),
-//     favourites: favouritesStorage.get(initialChannelsState.favourites),
-//   },
-// };
-
-// export const store = createStore(ottApp,
-//   preloadState as AppState,
-//   composeEnhancers(applyMiddleware(
-//     sagaMiddleware,
-//   )),
-// );
-
-// sagaMiddleware.run(rootSaga);
-
-// store.subscribe(() => {
-//   const state = store.getState();
-//   favouritesStorage.set(state.channels.favourites);
-//   settingsStorage.set(state.settings);
-//   epgLastUpdateStorage.set(state.epg.lastUpdate);
-//   selectedGroup.set(state.channels.selectedGroup);
-// });
-
-// initializeCastApi(store);

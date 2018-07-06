@@ -1,6 +1,6 @@
 @import 'styles/mixins';
 
-.panel-wrap {
+:host {
   background-color: #fff;
   display: flex;
   flex-direction: column;

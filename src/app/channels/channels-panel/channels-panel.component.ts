@@ -7,26 +7,24 @@ import { SetActiveGroup } from '@store/actions/channels.actions';
 @Component({
   selector: 'channels-panel',
   template: `
-    <div class="panel-wrap">
-      <div class="header">
-        <h3 class="header-title">Channels</h3>
-      </div>
-      <ng-container *ngIf="channels$ | async as channels">
-        <div class="body" *ngIf="channels.length">
-          <tabs [items]="groups$ | async"
-                (select)="handleSelectGroup($event)"
-                [selected]="selectedGroup$ | async">
-          </tabs>
-          <div class="list">
-            <channels-list
-              [channels]="channels"
-              [selectedChannelId]="selectedChannelId$ | async"
-              [visibleIds]="visibleChannels$ | async"
-            ></channels-list>
-          </div>
-        </div>
-      </ng-container>
+    <div class="header">
+      <h3 class="header-title">Channels</h3>
     </div>
+    <ng-container *ngIf="channels$ | async as channels">
+      <div class="body" *ngIf="channels.length">
+        <tabs [items]="groups$ | async"
+              (select)="handleSelectGroup($event)"
+              [selected]="selectedGroup$ | async">
+        </tabs>
+        <div class="list">
+          <channels-list
+            [channels]="channels"
+            [selectedChannelId]="selectedChannelId$ | async"
+            [visibleIds]="visibleChannels$ | async"
+          ></channels-list>
+        </div>
+      </div>
+    </ng-container>
   `,
   styleUrls: ['./channels-panel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

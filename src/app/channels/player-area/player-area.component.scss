@@ -3,28 +3,26 @@
 :host {
   flex-grow: 1;
   flex-direction: column;
-  display: flex;
+  display: none;
   top: 0;
   bottom: 0;
   width: 100%;
   height: 100vh;
   z-index: 2;
   background-color: #fff;
+  position: fixed;
 
   .mainPanelVisible & {
-    position: fixed;
+    display: flex;
   }
 
   @include break(medium) {
+    display: flex;
     z-index: 0;
     position: static;
     padding: 0 20px;
     background-color: transparent;
     min-width: 0;
-
-    .mainPanelVisible & {
-      position: static;
-    }
   }
 }
 

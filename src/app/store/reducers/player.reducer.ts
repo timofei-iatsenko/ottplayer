@@ -3,6 +3,7 @@ import { action, on, payload, reducer } from 'ts-action';
 export const PlayerPlayingStateChanged = action('[Player] Playing started', payload<{paused: boolean}>());
 export const TogglePlayback = action('[Player] Toggle playback');
 export const PlayerReady = action('[Player] Playing ready', payload<{ready: boolean}>());
+export const LaunchMedia = action('[Player] Launch media', payload<{streamUrl: string}>());
 
 export interface PlayerState {
   readonly paused: boolean;
@@ -10,8 +11,8 @@ export interface PlayerState {
 }
 
 const initialState: PlayerState = {
-  paused: null,
-  ready: null,
+  paused: true,
+  ready: false,
 };
 
 // tslint:disable no-shadowed-variable

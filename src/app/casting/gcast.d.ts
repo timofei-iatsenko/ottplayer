@@ -6,6 +6,40 @@ declare namespace cast.framework {
     sessionState: SessionState;
   }
 
+  class RemotePlayer {
+    public canControlVolume: boolean;
+    public canPause: boolean;
+    public canSeek: boolean;
+    public currentTime: number;
+    public displayName: string;
+    public displayStatus: string;
+    public duration: number;
+    public imageUrl?: string;
+    public isConnected: boolean;
+    public isMediaLoaded: boolean;
+    public isMuted: boolean;
+    public isPaused: boolean;
+    public mediaInfo: chrome.cast.media.MediaInfo;
+    public playerState: any;
+    public savedPlayerState: any;
+    public statusText: string;
+    public title?: string;
+    public volumeLevel: number;
+  }
+
+  class RemotePlayerController {
+    constructor(player: RemotePlayer);
+    public addEventListener(type: string, listener: any): void;
+    public removeEventListener(type: string, listener: any): void;
+    public muteOrUnmute(): void;
+    public playOrPause(): void;
+    public seek(): void;
+    public setVolumeLevel(): void;
+    public stop(): void;
+    public getFormattedTime(timeInSec: number): void;
+    public getSeekPosition(currentTime: number, duration: number): number;
+  }
+
   export interface CastStateEventData {
     castState: CastState;
   }
@@ -30,6 +64,12 @@ declare namespace cast.framework {
   export enum CastContextEventType {
     CAST_STATE_CHANGED = 'CAST_STATE_CHANGED',
     SESSION_STATE_CHANGED = 'SESSION_STATE_CHANGED',
+  }
+
+  export enum RemotePlayerEventType {
+    ANY_CHANGE = 'ANY_CHANGE',
+    IS_PAUSED_CHANGED = 'IS_PAUSED_CHANGED',
+    CAN_PAUSE_CHANGED = 'CAN_PAUSE_CHANGED',
   }
 
   class CastContext {

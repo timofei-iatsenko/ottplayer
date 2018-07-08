@@ -5,7 +5,8 @@ import { AppState } from '@store';
 @Component({
   selector: 'cast-button',
   template: `
-    <button [class]="(isConnected$ | async) ? 'active' : 'default'"
+    <button class="btn"
+            [class.active] = "isConnected$ | async"
             (click)="requestCastSession()"
             title='Cast to...'
             type='button'>

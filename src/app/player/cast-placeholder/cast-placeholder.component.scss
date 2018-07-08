@@ -1,0 +1,44 @@
+:host {
+  position: relative;
+  padding-bottom: 56.25%; // keep aspect ratio 16:9
+  height: 0;
+  display: block;
+  width: 100%;
+  color: #fff;
+}
+
+.btn {
+  background: none;
+  color: #fff;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.play, .stop {
+  $size: 60px;
+  position: absolute;
+
+  margin: #{-$size / 2} 0 0 #{-$size / 2};
+  left: 50%;
+  top: 50%;
+
+  .icon {
+    font-size: $size;
+  }
+}
+
+.cast-icon {
+  position: absolute;
+  left: 10px;
+  bottom: 3px;
+  font-size: 30px;
+}
+
+.cast-to {
+  position: absolute;
+  bottom: 8px;
+  left: 50px;
+}

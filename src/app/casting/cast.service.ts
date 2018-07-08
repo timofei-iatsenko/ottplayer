@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { CastStateChanged, SessionStateChanged } from '@store/reducers/casting.reducer';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store';
+import { PlayerPlayingStateChanged, PlayerReady } from '@store/reducers/player.reducer';
 
 const LIB_URL = 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1';
 
@@ -9,6 +10,9 @@ const LIB_URL = 'https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCast
   providedIn: 'root',
 })
 export class CastService {
+  public player: cast.framework.RemotePlayer;
+  public controller: cast.framework.RemotePlayerController;
+
   constructor(
     private store: Store<AppState>,
   ) {
@@ -22,7 +26,10 @@ export class CastService {
     window.document.body.appendChild(script);
 
     window.__onGCastApiAvailable = (isAvailable: boolean) => {
-      if (isAvailable) { this.initializeCastApi(); }
+      if (isAvailable) {
+        this.initializeCastApi();
+        this.initRemotePlayer();
+      }
     };
   }
 
@@ -36,11 +43,11 @@ export class CastService {
 
     context.addEventListener(
       cast.framework.CastContextEventType.CAST_STATE_CHANGED,
-      (event) => this.store.dispatch(new CastStateChanged({state: event.castState})),
+      (event) => this.store.dispatch(new CastStateChanged({ state: event.castState })),
     );
     context.addEventListener(
       cast.framework.CastContextEventType.SESSION_STATE_CHANGED,
-      (event) => this.store.dispatch(new SessionStateChanged({state: event.sessionState})),
+      (event) => this.store.dispatch(new SessionStateChanged({ state: event.sessionState })),
     );
   }
 
@@ -55,5 +62,15 @@ export class CastService {
     mediaInfo.metadata.title = title;
 
     castSession.loadMedia(request);
+  }
+
+  private initRemotePlayer() {
+    this.player = new cast.framework.RemotePlayer();
+    this.controller = new cast.framework.RemotePlayerController(this.player);
+
+    this.controller.addEventListener(cast.framework.RemotePlayerEventType.ANY_CHANGE, () => {
+      this.store.dispatch(new PlayerPlayingStateChanged({ paused: this.player.isPaused }));
+      this.store.dispatch(new PlayerReady({ ready: this.player.canPause }));
+    });
   }
 }

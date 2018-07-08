@@ -1,13 +1,13 @@
 import { Actions, Effect } from '@ngrx/effects';
 import { ofType } from 'ts-action-operators';
-import { SetChannelSlug } from '@store/actions/channels.actions';
-import { withLatestFrom, filter, tap } from 'rxjs/internal/operators';
+import { withLatestFrom, filter, tap } from 'rxjs/operators';
 import { AppState } from '@store';
 import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { selectCurrentChannel, selectStreamUrl } from '@store/reducers/channels.reducer';
 import { selectCastingEnabled } from '@store/reducers/casting.reducer';
 import { CastService } from '../../casting/cast.service';
+import { LaunchMedia } from '@store/reducers/player.reducer';
 
 @Injectable()
 export class CastEffects {
@@ -19,14 +19,20 @@ export class CastEffects {
 
   @Effect({dispatch: false})
   public setMedia$ = this.actions$.pipe(
-    ofType(SetChannelSlug),
+    ofType(LaunchMedia),
     withLatestFrom(
       this.store.select(selectCurrentChannel),
       this.store.select(selectCastingEnabled),
       this.store.select(selectStreamUrl),
       (action, channel, castingEnabled, streamUrl) => ({channel, castingEnabled, streamUrl})
     ),
-    filter(({castingEnabled, streamUrl}) => castingEnabled && !!streamUrl),
-    tap(({channel, streamUrl}) => this.castService.launchMedia(channel.name, streamUrl))
+    filter(({castingEnabled}) => castingEnabled),
+    tap(({channel, streamUrl}) => {
+      if (!!streamUrl) {
+        this.castService.launchMedia(channel.name, streamUrl);
+      } else {
+        this.castService.controller.stop();
+      }
+    })
   );
 }

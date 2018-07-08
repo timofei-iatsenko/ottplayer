@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { PlayerService } from '../../player/player.service';
 import { TogglePlayback } from '@store/reducers/player.reducer';
+import { CastService } from '../../casting/cast.service';
+import { selectCastingEnabled } from '@store/reducers/casting.reducer';
 
 @Injectable()
 export class PlayerEffects {
@@ -13,6 +15,7 @@ export class PlayerEffects {
     private actions$: Actions,
     private store: Store<AppState>,
     private playerService: PlayerService,
+    private castService: CastService,
   ) {}
 
   @Effect({ dispatch: false })
@@ -20,9 +23,14 @@ export class PlayerEffects {
     ofType(TogglePlayback),
     withLatestFrom(
       this.store.select((store) => store.player),
+      this.store.select(selectCastingEnabled)
     ),
-    tap(([action, playerState]) => {
-      playerState.paused ? this.playerService.play() : this.playerService.pause();
+    tap(([action, playerState, isCasting]) => {
+      if (!isCasting) {
+        playerState.paused ? this.playerService.play() : this.playerService.pause();
+      } else {
+        this.castService.controller.playOrPause();
+      }
     }),
   );
 }

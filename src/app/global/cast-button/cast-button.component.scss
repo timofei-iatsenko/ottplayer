@@ -1,11 +1,10 @@
 @import "styles/variables";
 @import "styles/mixins";
 
-.default {
+.btn {
   @include header-btn();
 }
 
 .active {
-  @include header-btn();
   color: $blue;
 }

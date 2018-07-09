@@ -30,7 +30,7 @@ export class CastEffects {
     tap(({channel, streamUrl}) => {
       if (!!streamUrl) {
         this.castService.launchMedia(channel.name, streamUrl);
-      } else {
+      } else if (this.castService.controller) {
         this.castService.controller.stop();
       }
     })

@@ -6,10 +6,9 @@ import {
   AfterViewInit,
 } from '@angular/core';
 import { Channel, ReadonlyChannelsCollection } from '../../entities/channel.model';
-import { Router } from '@angular/router';
 import { AppState } from '@store';
 import { Store } from '@ngrx/store';
-import { ToggleMainPanel } from '@store/actions/ui.actions';
+import { NavigateToChannel } from '@store/actions/channels.actions';
 
 @Component({
   selector: 'channels-list',
@@ -39,7 +38,6 @@ export class ChannelsListComponent implements AfterViewInit {
   @Input() public visibleIds: number[];
 
   constructor(
-    private router: Router,
     private store: Store<AppState>,
     private elementRef: ElementRef,
   ) {}
@@ -60,14 +58,9 @@ export class ChannelsListComponent implements AfterViewInit {
     return this.visibleIds.includes(chanel.id);
   }
 
-  private getChannelSlug(channel: Channel) {
-    return channel.id;
-  }
 
   public handleChannelClick(channel: Channel) {
-    if (this.isActive(channel)) { return; }
-    this.router.navigate(['/' + this.getChannelSlug(channel)]);
-    this.store.dispatch(new ToggleMainPanel({ visible: true }));
+    this.store.dispatch(new NavigateToChannel({ channel }));
   }
 
   private scrollToActiveChannel() {
